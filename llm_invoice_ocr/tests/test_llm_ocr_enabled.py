@@ -12,9 +12,13 @@ plus, for the menu-visibility tests, res.users.
 """
 
 from odoo.exceptions import UserError
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
 
+# Creating vendor bills needs a chart of accounts and journals, which are only
+# loaded after the at_install tests of this module have run.
+@tagged("post_install", "-at_install")
 class TestLlmOcrEnabled(TransactionCase):
     @classmethod
     def setUpClass(cls):

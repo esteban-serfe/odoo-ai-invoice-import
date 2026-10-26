@@ -19,6 +19,7 @@ import base64
 import json
 from unittest.mock import MagicMock, patch
 
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
 MOCK_OCR_TEXT = (
@@ -78,6 +79,8 @@ def _fake_responses_sse(text):
     return fake_response
 
 
+# Needs a chart of accounts and journals, see test_llm_ocr_enabled.py.
+@tagged("post_install", "-at_install")
 class TestInvoiceImportLiteLLM(TransactionCase):
     @classmethod
     def setUpClass(cls):

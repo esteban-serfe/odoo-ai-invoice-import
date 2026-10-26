@@ -38,9 +38,10 @@ class LiteLLMClient:
                 pass
             raise Exception(f"LiteLLM API error: {error_msg}") from e
 
-    def chat_completion(self, messages, model, stream=False):
+    def chat_completion(self, messages, model, stream=False, **kwargs):
         """Create chat completion"""
         data = {"model": model, "messages": messages, "stream": stream}
+        data.update(kwargs)
         response = self._make_request(
             "POST", "/chat/completions", data=data, stream=stream
         )

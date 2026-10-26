@@ -1,3 +1,5 @@
+import json
+
 from odoo import api, models
 
 from .http_client import LiteLLMClient
@@ -5,6 +7,79 @@ from .http_client import LiteLLMClient
 
 class LLMProvider(models.Model):
     _inherit = "llm.provider"
+
+    def litellm_format_messages(self, messages, system_prompt=None):
+        """Convert Odoo messages to the JSON shape expected by LiteLLM."""
+        formatted = []
+        if system_prompt:
+            formatted.append({"role": "system", "content": str(system_prompt)})
+
+        for message in messages or []:
+            if isinstance(message, dict):
+                values = message.copy()
+            else:
+                values = {
+                    "role": getattr(message, "llm_role", None) or "user",
+                    "content": getattr(message, "body", "") or "",
+                }
+                body_json = getattr(message, "body_json", None) or {}
+                if values["role"] == "tool":
+                    values["content"] = json.dumps(
+                        body_json.get("result", body_json), default=str
+                    )
+                    tool_call_id = body_json.get("tool_call_id")
+                    if tool_call_id:
+                        values["tool_call_id"] = tool_call_id
+                elif values["role"] == "assistant":
+                    tool_calls = body_json.get("tool_calls")
+                    if tool_calls:
+                        values["tool_calls"] = tool_calls
+
+            role = values.get("role") or "user"
+            content = values.get("content", "")
+            if isinstance(content, (list, tuple)):
+                content = list(content)
+            elif not isinstance(content, (str, dict)):
+                content = str(content)
+
+            item = {"role": role, "content": content}
+            for key in ("name", "tool_call_id", "tool_calls"):
+                if values.get(key) is not None:
+                    item[key] = values[key]
+            formatted.append(item)
+
+        return formatted
+
+    def litellm_format_tools(self, tools):
+        """Format Odoo tools as OpenAI-compatible function definitions."""
+        formatted = []
+        for tool in tools or []:
+            schema = tool.input_schema
+            if schema:
+                try:
+                    schema = json.loads(schema)
+                except (TypeError, json.JSONDecodeError):
+                    schema = None
+            schema = schema or tool.get_input_schema() or {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }
+            formatted.append(
+                {
+                    "type": "function",
+                    "function": {
+                        "name": tool.name,
+                        "description": tool.description or "",
+                        "parameters": {
+                            "type": "object",
+                            "properties": schema.get("properties", {}),
+                            "required": schema.get("required", []),
+                        },
+                    },
+                }
+            )
+        return formatted
 
     def action_push_models(self):
         """Open the push models wizard"""
@@ -38,20 +113,49 @@ class LLMProvider(models.Model):
     def litellm_chat(self, messages, model=None, stream=False, **kwargs):
         """Send chat messages using LiteLLM proxy"""
         model = self.get_model(model, "chat")
+        messages = self.litellm_format_messages(messages)
+        tools = kwargs.get("tools")
+        params = {
+            "messages": messages,
+            "model": model.name,
+            "stream": stream,
+        }
+        if tools:
+            params["tools"] = self.litellm_format_tools(tools)
+            params["tool_choice"] = kwargs.get("tool_choice", "auto")
 
         # Send chat request
-        response = self.client.chat_completion(
-            messages=messages, model=model.name, stream=stream
-        )
+        response = self.client.chat_completion(**params)
 
         if not stream:
             choice = response["choices"][0]["message"]
-            yield {"role": choice["role"], "content": choice["content"]}
+            result = {"role": choice["role"], "content": choice.get("content")}
+            if choice.get("tool_calls"):
+                result["tool_calls"] = choice["tool_calls"]
+            yield result
         else:
+            tool_calls = {}
             for chunk in response:
                 delta = chunk["choices"][0].get("delta", {})
                 if "content" in delta and delta["content"]:
                     yield {"role": "assistant", "content": delta["content"]}
+                for tool_call in delta.get("tool_calls", []):
+                    index = tool_call.get("index", 0)
+                    current = tool_calls.setdefault(
+                        index,
+                        {
+                            "id": "",
+                            "type": "function",
+                            "function": {"name": "", "arguments": ""},
+                        },
+                    )
+                    current["id"] = tool_call.get("id") or current["id"]
+                    current["type"] = tool_call.get("type") or current["type"]
+                    function = tool_call.get("function") or {}
+                    current["function"]["name"] += function.get("name") or ""
+                    current["function"]["arguments"] += function.get("arguments") or ""
+            if tool_calls:
+                yield {"tool_calls": list(tool_calls.values())}
 
     def litellm_embedding(self, texts, model=None):
         """Generate embeddings using LiteLLM proxy"""

@@ -1,0 +1,4 @@
+# account_invoice_import (+ base_business_document_import, pdf_helper): required by account_invoice_import_llm
+edi https://github.com/OCA/edi 16.0
+# account_tax_unece, uom_unece: required by base_business_document_import
+community-data-files https://github.com/OCA/community-data-files 16.0

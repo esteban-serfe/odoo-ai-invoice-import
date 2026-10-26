@@ -42,13 +42,18 @@ LITELLM_API_KEY=sk-...
 
 There is no default URL. If either variable is missing the install continues without a provider, which you can then create by hand.
 
-## Tests
+## Tests and lint
 
 ```
-odoo -d test_db -i llm_litellm_responses,llm_access_groups,llm_invoice_ocr --test-tags /llm_litellm_responses,/llm_access_groups,/llm_invoice_ocr --stop-after-init
+scripts/run-tests.sh                      # all modules
+scripts/run-tests.sh llm_invoice_ocr      # some modules
+pre-commit run --all-files                # black, isort, flake8, pylint-odoo
 ```
 
-Run them on a clean database, with `LITELLM_API_KEY` and `LITELLM_API_BASE` unset. The tests do not need network access.
+Needs Docker. The script clones the OCA repos of `oca_dependencies.txt` into `.oca/`, builds an Odoo 16 image
+(`scripts/Dockerfile`, or set `ODOO_IMAGE`), and runs the tests on a clean throwaway database, on an internal
+Docker network (no internet) and without `LITELLM_API_BASE` / `LITELLM_API_KEY`.
+Lint covers only the modules written in this repo; the vendored ones are excluded to keep them diffable against upstream.
 
 ## License
 

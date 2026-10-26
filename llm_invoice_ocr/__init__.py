@@ -1,7 +1,6 @@
 import logging
 
 from odoo import SUPERUSER_ID, api
-
 from odoo.addons.llm_litellm_responses import PROVIDER_NAME
 
 from . import models, wizard  # noqa: F401
@@ -31,7 +30,8 @@ def post_init_hook(cr, registry):
         _logger.warning(
             "LiteLLM provider not found; skipping invoice_extraction "
             "assistant wiring. Ensure llm_litellm_responses's "
-            "post_init_hook ran (requires LITELLM_API_BASE and LITELLM_API_KEY at install time)."
+            "post_init_hook ran (requires LITELLM_API_BASE and "
+            "LITELLM_API_KEY at install time)."
         )
         return
 

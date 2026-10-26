@@ -145,4 +145,7 @@ JsonEditorField.props = {
 JsonEditorField.supportedFieldTypes = ["text", "char", "json"];
 
 // Register the field widget
-registry.category("fields").add("json_editor", JsonEditorField);
+const fieldsRegistry = registry.category("fields");
+fieldsRegistry.add("json_editor", JsonEditorField);
+// Keep the widget name used by the vendored LLM views.
+fieldsRegistry.add("json_inline", JsonEditorField);

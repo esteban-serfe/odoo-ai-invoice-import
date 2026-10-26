@@ -1,0 +1,316 @@
+# Translation of Odoo Server.
+# This file contains Spanish (Argentina) translations for the Finance-facing
+# vendor-bill LLM/OCR import flow.
+#
+# IMPORTANT (verified against odoo/tools/translate.py - CodeTranslations):
+# a .po file placed outside its own module only works for model/model_terms
+# entries (menu names, view labels, button strings, field labels) - Odoo
+# resolves those generically by (model, xmlid, field) regardless of which
+# module's i18n/ shipped the translation. Python _()-string translations
+# ("code" type - chatter/banner messages, raised errors) are NOT: Odoo looks
+# them up strictly from the i18n/ folder of the module whose source file
+# contains the _() call (see CodeTranslations._get_po_paths). So this file
+# can translate OCA/Apexive's own menu/view/button strings (they're
+# model/model_terms), but NOT their own Python-raised messages - those stay
+# English unless a .po is added inside those modules' own i18n/ directories,
+# which this project has decided not to do (keeps third-party modules
+# pristine). Only llm_invoice_ocr's own _()-wrapped messages below are
+# translated here, since this IS their owning module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_import
+#: model:ir.actions.act_window,name:account_invoice_import.account_invoice_import_action
+#: model:ir.ui.menu,name:account_invoice_import.account_invoice_import_menu
+#, python-format
+msgid "Import Vendor Bills"
+msgstr "Importar Facturas de Proveedor"
+
+#. module: account_invoice_import
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: account_invoice_import
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_form
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_partner_create_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_invoice_import
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_bank_statement_line__import_warnings
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_move__import_warnings
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_payment__import_warnings
+msgid "Import Warnings"
+msgstr "Advertencias de Importación"
+
+#. module: account_invoice_import
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_bank_statement_line__show_import_warnings
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_move__show_import_warnings
+#: model:ir.model.fields,field_description:account_invoice_import.field_account_payment__show_import_warnings
+msgid "Show Import Warnings"
+msgstr "Mostrar Advertencias de Importación"
+
+#. module: account_invoice_import
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_form
+msgid ""
+"Upload below the vendor bills/refunds as PDF or XML file: Odoo will create a"
+" draft vendor bills refund for each file."
+msgstr ""
+"Suba a continuación las facturas o notas de crédito de proveedor en PDF o "
+"XML: Odoo creará un borrador de factura o nota de crédito por cada "
+"archivo."
+
+#. module: account_invoice_import
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_form
+msgid "Supported formats:"
+msgstr "Formatos admitidos:"
+
+#. module: account_invoice_import
+#: model_terms:ir.ui.view,arch_db:account_invoice_import.account_invoice_import_form
+msgid ""
+"If the format you need is not listed above, you should install an "
+"additionnal Odoo module that adds support for that format (e.g. "
+"<em>account_invoice_import_facturx</em>, "
+"<em>account_invoice_import_ubl</em>, "
+"<em>account_invoice_import_simple_pdf</em>, etc)."
+msgstr ""
+"Si el formato que necesita no aparece en la lista anterior, debe instalar "
+"un módulo adicional de Odoo que agregue soporte para ese formato (por "
+"ejemplo, <em>account_invoice_import_facturx</em>, "
+"<em>account_invoice_import_ubl</em>, "
+"<em>account_invoice_import_simple_pdf</em>, etc.)."
+
+#. module: account_invoice_import_llm
+#: model_terms:ir.ui.view,arch_db:account_invoice_import_llm.view_move_form_process_llm
+msgid "Process with AI"
+msgstr "Procesar con IA"
+
+#. module: account_invoice_import_llm
+#: model_terms:ir.ui.view,arch_db:account_invoice_import_llm.view_move_form_process_llm
+msgid "Extract invoice data from attached PDF/image using AI"
+msgstr "Extraer los datos de la factura desde el PDF/imagen adjunto usando IA"
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid "OCR returned empty text. The document may be unreadable or empty."
+msgstr ""
+"El OCR devolvió texto vacío. El documento puede ser ilegible o estar "
+"vacío."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"AI-based invoice import is currently disabled.\n"
+"\n"
+"Go to LLM → Configuration → Assistants, filter by Archived, open 'Invoice "
+"Extraction', and re-enable it to turn AI import back on."
+msgstr ""
+"La importación de facturas por IA está desactivada actualmente.\n"
+"\n"
+"Vaya a LLM → Configuración → Asistentes, filtre por Archivados, abra "
+"'Invoice Extraction' y reactívelo para volver a habilitar la "
+"importación por IA."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"Invoice Extraction Assistant Not Found\n"
+"\n"
+"Go to LLM → Configuration → Assistants and create an assistant with code "
+"'invoice_extraction'."
+msgstr ""
+"No se Encontró el Asistente de Extracción de Facturas\n"
+"\n"
+"Vaya a LLM → Configuración → Asistentes y cree un asistente con código "
+"'invoice_extraction'."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"Invoice Extraction Assistant Has No Model\n"
+"\n"
+"Go to LLM → Configuration → Assistants, open 'Invoice Extraction', and "
+"configure a model."
+msgstr ""
+"El Asistente de Extracción de Facturas no Tiene Modelo\n"
+"\n"
+"Vaya a LLM → Configuración → Asistentes, abra 'Invoice Extraction' y "
+"configure un modelo."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"OCR is only supported for LiteLLM providers. The Invoice Extraction "
+"assistant's model is configured on a '%s' provider."
+msgstr ""
+"El OCR solo es compatible con proveedores LiteLLM. El modelo del "
+"asistente de Extracción de Facturas está configurado en un proveedor "
+"'%s'."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"Invoice Extraction Assistant Has No Prompt\n"
+"\n"
+"Go to LLM → Configuration → Assistants, open 'Invoice Extraction', and "
+"configure a prompt."
+msgstr ""
+"El Asistente de Extracción de Facturas no Tiene Prompt\n"
+"\n"
+"Vaya a LLM → Configuración → Asistentes, abra 'Invoice Extraction' y "
+"configure un prompt."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid "Other Charge"
+msgstr "Otro Cargo"
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"Invoice data extracted using LLM-OCR technology. Please verify the "
+"extracted information."
+msgstr ""
+"Los datos de la factura fueron extraídos usando tecnología LLM-OCR. Por "
+"favor verifique la información extraída."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid ""
+"This document does not appear to be an invoice. Please review the "
+"attached file and complete the invoice manually."
+msgstr ""
+"Este documento no parece ser una factura. Por favor revise el archivo "
+"adjunto y complete la factura manualmente."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_move.py:0
+#, python-format
+msgid ""
+"Can only process draft invoices. This invoice is already posted or "
+"cancelled."
+msgstr ""
+"Solo se pueden procesar facturas en borrador. Esta factura ya está "
+"contabilizada o cancelada."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_move.py:0
+#, python-format
+msgid ""
+"No PDF or image attachment found on this invoice. Please attach an "
+"invoice document first."
+msgstr ""
+"No se encontró ningún adjunto en PDF o imagen en esta factura. Por favor "
+"adjunte primero un comprobante."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/wizard/invoice_import.py:0
+#, python-format
+msgid ""
+"AI-based invoice import is currently disabled. Go to LLM → Configuration "
+"→ Assistants to re-enable it, or use the 'Upload' button on the Vendor "
+"Bills list instead."
+msgstr ""
+"La importación de facturas por IA está desactivada actualmente. Vaya a "
+"LLM → Configuración → Asistentes para reactivarla, o utilice el botón "
+"'Subir' en la lista de Facturas de Proveedor."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/wizard/invoice_import.py:0
+#, python-format
+msgid ""
+"Automatic data extraction failed for this document. Please review the "
+"attached file and complete the invoice manually."
+msgstr ""
+"La extracción automática de datos falló para este documento. Por favor "
+"revise el archivo adjunto y complete la factura manualmente."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_journal.py:0
+#, python-format
+msgid ""
+"AI-based data extraction is currently disabled - uploading the file. "
+"Please review and complete the invoice manually."
+msgstr ""
+"La extracción de datos por IA está desactivada actualmente - se subirá "
+"el archivo. Por favor revise y complete la factura manualmente."
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid "Invoice Line (no details extracted)"
+msgstr "Línea de factura (sin detalle extraído)"
+
+#. module: llm_invoice_ocr
+#: model:ir.model,name:llm_invoice_ocr.model_account_invoice_import_ocr
+msgid "Invoice data extraction using LLM and OCR"
+msgstr "Extracción de datos de facturas con LLM y OCR"
+
+#. module: llm_invoice_ocr
+#: model:ir.model.fields,field_description:llm_invoice_ocr.field_account_bank_statement_line__llm_ocr_enabled
+#: model:ir.model.fields,field_description:llm_invoice_ocr.field_account_move__llm_ocr_enabled
+#: model:ir.model.fields,field_description:llm_invoice_ocr.field_account_payment__llm_ocr_enabled
+msgid "Llm Ocr Enabled"
+msgstr "OCR con IA habilitado"
+
+#. module: llm_invoice_ocr
+#. odoo-python
+#: code:addons/llm_invoice_ocr/wizard/invoice_import.py:0
+#, python-format
+msgid ""
+"The extracted VAT rate (%(old)s) did not match the invoice totals; it was "
+"adjusted to %(new)s based on the reported total amount."
+msgstr ""
+"El porcentaje de IVA extraído (%(old)s) no coincidía con los totales de la "
+"factura; se ajustó a %(new)s según el importe total informado."
+
+#. module: llm_invoice_ocr
+#: model:ir.model.fields,help:llm_invoice_ocr.field_account_bank_statement_line__llm_ocr_enabled
+#: model:ir.model.fields,help:llm_invoice_ocr.field_account_move__llm_ocr_enabled
+#: model:ir.model.fields,help:llm_invoice_ocr.field_account_payment__llm_ocr_enabled
+msgid ""
+"Whether the invoice_extraction llm.assistant is active. Drives visibility of"
+" the 'Process with AI' button."
+msgstr ""
+"Indica si el asistente LLM invoice_extraction está activo. Controla la "
+"visibilidad del botón 'Procesar con IA'."
+
+#. module: llm_invoice_ocr
+#: model:ir.model,name:llm_invoice_ocr.model_account_invoice_import
+msgid "Wizard to import supplier invoices/refunds"
+msgstr "Asistente para importar facturas y notas de crédito de proveedores"

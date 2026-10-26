@@ -1,0 +1,38 @@
+# llm_litellm_responses
+Odoo 16 module that extends `llm_litellm` with the LiteLLM Responses API, OCR through file inputs, and automatic provider creation. It leaves `llm_litellm` untouched: everything is done through `_inherit` and a client subclass.
+
+## What is this for?
+- **Provider auto-provisioning:** on install, creates or updates an `llm.provider` named `LiteLLM` (service `litellm`, current company, active) from the environment.
+- **Non-streaming `chat_completion()`** returns the parsed dict instead of a generator.
+- **Responses API:** models with `model_info.mode == "responses"` are routed through `/responses`, except when tools are present, in which case `/chat/completions` is used.
+- **Orphaned tool messages** are stripped before sending, avoiding "No tool call found for function call output" errors.
+- **OCR** through the Responses API `input_file` / `input_image`, retrying up to 3 times on transient `invalid_file` errors.
+- **Model info:** model listing is enriched with `model_info` from LiteLLM's `/model/info`, and the *Fetch Models* wizard copies it onto `llm.model.model_info`.
+
+## Requirements / Dependencies
+- Odoo 16 (Community)
+- Odoo modules: `llm_litellm`
+- A reachable [LiteLLM](https://github.com/BerriAI/litellm) proxy and an API key for it
+
+## Installation
+1. Make the addon and `llm_litellm` available in your addons path.
+2. Set the environment variables below in the Odoo process **before** installing.
+3. Install the module (Apps, or `-i llm_litellm_responses`).
+
+If `LITELLM_API_BASE` or `LITELLM_API_KEY` is missing, the install logs a warning and skips the provider creation without failing (useful for test/CI databases). Create the provider by hand, or set both variables and reinstall.
+
+## Configuration
+
+| Variable | Description |
+|---|---|
+| `LITELLM_API_BASE` | LiteLLM proxy base URL. Required, there is no default. A trailing `/` is stripped. |
+| `LITELLM_API_KEY` | API key for the LiteLLM proxy. Required. |
+
+## Security / Access
+No groups, ACLs or record rules are added. The API key is stored on `llm.provider`, readable by *LLM Manager*.
+
+## Multi-company behavior
+The provider is created for the company active at install time (`env.company`).
+
+## Licence
+LGPL-3

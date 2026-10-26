@@ -1,3 +1,5 @@
+Copyright © 2026-present Serfe S.A.
+
 This repository contains modules under different licenses. Each module declares
 its license in the "license" key of its __manifest__.py. The full texts are in
 the LICENSES/ directory.

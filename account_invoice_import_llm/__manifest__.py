@@ -10,7 +10,10 @@
     "depends": [
         "account_invoice_import",  # OCA invoice import wizard (fallback_parse_pdf_invoice)
         "llm_assistant",  # Includes llm, llm_thread, llm_tool
-        "llm_mistral",  # Mistral provider (for OCR)
+        # llm_mistral replaced by llm_litellm: OCR goes through the LiteLLM
+        # provider (see llm_invoice_ocr). llm_mistral only pulled in llm_openai
+        # and the openai library, which were never used.
+        "llm_litellm",
     ],
     "author": "Apexive Solutions LLC",
     "website": "https://github.com/apexive/odoo-llm",

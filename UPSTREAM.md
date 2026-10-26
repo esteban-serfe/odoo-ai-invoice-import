@@ -23,7 +23,7 @@ Eight modules are vendored, without history, from
 Unmodified: `llm`, `llm_tool`, `llm_training`.
 
 To list them again: compare each module directory with the same path at the base
-commit, e.g. `git diff 1cfbc17 HEAD --stat -- llm_thread web_json_editor
+commit, e.g. `git diff a6a229d-vendor HEAD --stat -- llm_thread web_json_editor
 llm_assistant llm_litellm account_invoice_import_llm`.
 
 ## Updating

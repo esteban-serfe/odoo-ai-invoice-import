@@ -193,7 +193,6 @@
                   widget="ace"
                   readonly="1"
                   options="{'mode': 'text'}"
-                  attrs="{'options': [('template_format', '=', 'text'), {'mode': 'text'}], 'options': [('template_format', '=', 'yaml'), {'mode': 'yaml'}], 'options': [('template_format', '=', 'json'), {'mode': 'json'}]}"
                 />
                             </group>
                             <div class="mt-3">

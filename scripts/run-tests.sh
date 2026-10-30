@@ -46,7 +46,7 @@ docker run -d --rm --name "$PG" --network "$NET" --tmpfs /var/lib/postgresql/dat
     postgres:15 >/dev/null
 until docker exec "$PG" pg_isready -q; do sleep 1; done
 
-docker run --rm --network "$NET" -u 1001 --entrypoint odoo "${MOUNTS[@]}" "$ODOO_IMAGE" \
+docker run --rm --network "$NET" -u odoo --entrypoint odoo "${MOUNTS[@]}" "$ODOO_IMAGE" \
     -c /dev/null -d oai_test --db_host "$PG" --db_user odoo --db_password odoo \
     --addons-path="$ADDONS_PATH" -i "$MODULES" --test-tags "$TAGS" \
     --stop-after-init --log-level=test

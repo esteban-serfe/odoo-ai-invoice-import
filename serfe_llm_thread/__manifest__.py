@@ -1,5 +1,5 @@
 {
-    "name": "Easy AI Chat (Serfe fork)",
+    "name": "Easy AI Chat",
     "summary": "Simple AI Chat for Odoo",
     "description": """
 Easy AI Chat for Odoo

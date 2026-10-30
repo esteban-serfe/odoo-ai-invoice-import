@@ -1,5 +1,5 @@
 {
-    "name": "LiteLLM Proxy Integration (Serfe fork)",
+    "name": "LiteLLM Proxy Integration",
     "summary": "LiteLLM proxy integration for LLM module",
     "description": """
         Implements LiteLLM proxy service for the LLM integration module.

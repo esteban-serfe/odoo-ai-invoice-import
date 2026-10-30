@@ -1,5 +1,5 @@
 {
-    "name": "LLM Assistant (Serfe fork)",
+    "name": "LLM Assistant",
     "summary": """
         LLM/AI Assistant module with prompt templates for Odoo
     """,
@@ -37,7 +37,7 @@ Use cases include creating specialized assistants for customer support, data ana
         "serfe_web_json_editor",
     ],
     "external_dependencies": {
-        "python": ["jinja2", "pyyaml"],
+        "python": ["jinja2", "jsonschema", "pyyaml"],
     },
     "author": "Apexive Solutions LLC, Serfe",
     "website": "https://github.com/apexive/odoo-llm",

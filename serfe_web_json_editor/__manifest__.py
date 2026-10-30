@@ -1,6 +1,6 @@
 {
-    "name": "Web JSON Editor (Serfe fork)",
-    "version": "1.0",
+    "name": "Web JSON Editor",
+    "version": "16.0.1.0.0",
     "category": "Web",
     "summary": "JSON Editor widget for Odoo",
     "description": """

@@ -16,8 +16,8 @@ Odoo 16 module that extends `llm_litellm` with the LiteLLM Responses API, OCR th
 
 ## Installation
 1. Make the addon and `llm_litellm` available in your addons path.
-2. Set the environment variables below in the Odoo process **before** installing.
-3. Install the module (Apps, or `-i llm_litellm_responses`).
+2. Install the module (Apps, or `-i llm_litellm_responses`).
+3. Configure the provider from the UI (*LLM → Configuration → Providers*: *API Base* and *API Key*), or set the optional environment variables below in the Odoo process **before** installing so the provider is created for you.
 
 If `LITELLM_API_BASE` or `LITELLM_API_KEY` is missing, the install logs a warning and skips the provider creation without failing (useful for test/CI databases). Create the provider by hand, or set both variables and reinstall.
 
@@ -25,8 +25,10 @@ If `LITELLM_API_BASE` or `LITELLM_API_KEY` is missing, the install logs a warnin
 
 | Variable | Description |
 |---|---|
-| `LITELLM_API_BASE` | LiteLLM proxy base URL. Required, there is no default. A trailing `/` is stripped. |
-| `LITELLM_API_KEY` | API key for the LiteLLM proxy. Required. |
+| `LITELLM_API_BASE` | LiteLLM proxy base URL. Optional, there is no default. A trailing `/` is stripped. |
+| `LITELLM_API_KEY` | API key for the LiteLLM proxy. Optional. |
+
+Both are needed together to create the provider on install. They are not read at runtime: after install the provider record is the source of truth.
 
 ## Security / Access
 No groups, ACLs or record rules are added. The API key is stored on `llm.provider`, readable by *LLM Manager*.

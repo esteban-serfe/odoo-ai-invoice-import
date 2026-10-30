@@ -20,12 +20,12 @@ The vendor bill import is focused on Argentina (CUIT, voucher letters, AFIP taxe
 * Odoo 16 Community.
 * `account_invoice_import` from [OCA/edi](https://github.com/OCA/edi), plus the other repositories in `oca_dependencies.txt`.
 * An AI provider account (OpenAI, Anthropic, Mistral, etc.) and a [LiteLLM](https://github.com/BerriAI/litellm) proxy in front of it, both provided and operated by you. Serfe does not supply the AI service. LiteLLM works with the API of each provider: see the [LiteLLM documentation](https://docs.litellm.ai/) and your provider's documentation to set it up.
-* Environment variables for the Odoo process:
+* The URL and API key of your LiteLLM proxy. You enter them in the *LiteLLM* provider from the Odoo UI (see Configuration). Optionally, you can provide them as environment variables of the Odoo process so the provider is created on install:
 
 | Variable | Description |
 |---|---|
-| `LITELLM_API_BASE` | URL of your LiteLLM proxy. Required, there is no default. |
-| `LITELLM_API_KEY` | API key of your LiteLLM proxy. Required. |
+| `LITELLM_API_BASE` | URL of your LiteLLM proxy. Optional, there is no default. |
+| `LITELLM_API_KEY` | API key of your LiteLLM proxy. Optional. |
 
 ## Modules
 
@@ -51,12 +51,12 @@ Each module has its own README.
 1. Clone this repository (branch `16.0`) and the repositories listed in `oca_dependencies.txt`.
 2. Add them to the `addons_path` of Odoo.
 3. Install the Python dependencies: `pip install -r requirements.txt`.
-4. Set `LITELLM_API_BASE` and `LITELLM_API_KEY` in the environment of the Odoo process.
-5. Update the apps list and install the modules you need. `llm_litellm_responses` creates the *LiteLLM* provider on install; without both variables it installs but skips the provider.
+4. Update the apps list and install the modules you need.
+5. Optional: if `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in the environment of the Odoo process, `llm_litellm_responses` creates the *LiteLLM* provider on install. Without them it installs normally and you configure the provider from the UI.
 
 ## Configuration Instructions
 
-1. Open *LLM → Configuration → Providers → LiteLLM* and use *Fetch Models* to import the models of the proxy.
+1. Open *LLM → Configuration → Providers*, create or open the *LiteLLM* provider (service *LiteLLM*), and fill in the *API Base* (your proxy URL) and *API Key*. Skip this if the provider was already created from the environment variables. Then use *Fetch Models* to import the models of the proxy.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*) to enable `llm_invoice_ocr`.
 3. Add the users who may chat with the LLM to the *User: LLM Chatter* group (`llm_access_groups`). *LLM Manager* includes it.
 

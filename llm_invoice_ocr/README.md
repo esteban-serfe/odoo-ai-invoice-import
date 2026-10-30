@@ -26,8 +26,8 @@ It extends `account_invoice_import_llm` so it works through the LiteLLM provider
 
 ## Installation
 1. Make the addon and its dependencies available in your addons path.
-2. Install `llm_litellm_responses` with `LITELLM_API_BASE` and `LITELLM_API_KEY` set, so the *LiteLLM* provider exists.
-3. Fetch the models of that provider (*LLM → Configuration → Providers → Fetch Models*).
+2. Install `llm_litellm_responses`. If `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in the environment, it creates the *LiteLLM* provider; otherwise create it from the UI (*LLM → Configuration → Providers*) with your proxy URL and API key.
+3. Fetch the models of that provider (*Fetch Models* in the provider form).
 4. Install the module (Apps, or `-i llm_invoice_ocr`).
 
 If a model already exists on the provider, the install sets it on the *Invoice Extraction* assistant. If not, it only logs a warning: assign a model to the assistant under *LLM → Configuration → Assistants*, or upgrade the module again once a model is fetched.

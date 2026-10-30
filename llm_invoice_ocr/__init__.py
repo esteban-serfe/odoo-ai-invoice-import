@@ -29,9 +29,10 @@ def post_init_hook(cr, registry):
     if not provider:
         _logger.warning(
             "LiteLLM provider not found; skipping invoice_extraction "
-            "assistant wiring. Ensure llm_litellm_responses's "
-            "post_init_hook ran (requires LITELLM_API_BASE and "
-            "LITELLM_API_KEY at install time)."
+            "assistant wiring. Create the LiteLLM provider (or set "
+            "LITELLM_API_BASE and LITELLM_API_KEY when installing "
+            "llm_litellm_responses), fetch its models and assign one to "
+            "the assistant."
         )
         return
 

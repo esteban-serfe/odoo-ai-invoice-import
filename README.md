@@ -60,6 +60,15 @@ Each module has its own README.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*) to enable `llm_invoice_ocr`.
 3. Add the users who may chat with the LLM to the *User: LLM Chatter* group (`llm_access_groups`). *LLM Manager* includes it.
 
+## Publishing in the Odoo Apps store
+
+The store reads a git repository whose branch is named after the Odoo version, and it resolves dependencies on its own.
+This repository stays self-contained (it vendors `llm`, `llm_tool` and `llm_training`), so it is not published as is:
+`llm`, `llm_tool` and `llm_training` already exist in the store under Apexive's name and the store provides them.
+`scripts/export-store.sh <dir>` copies the eight modules to publish into `<dir>` and checks that every dependency is exported
+or provided by the store (a missing one makes the scan fail and unpublishes the whole repository). Commit that directory to a
+separate repository, branch `16.0`, and register it in the store.
+
 ## Contributing
 
 1. Fork the repository and create a branch from `16.0`.

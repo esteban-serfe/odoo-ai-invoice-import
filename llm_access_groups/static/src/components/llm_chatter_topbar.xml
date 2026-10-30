@@ -6,7 +6,7 @@
     t-inherit-mode="extension"
     owl="1"
   >
-        <!-- Hide the llm_thread "AI" button (and its divider) from users outside "User: LLM Chatter" -->
+        <!-- Hide the serfe_llm_thread "AI" button (and its divider) from users outside "User: LLM Chatter" -->
         <xpath
       expr="//button[@t-on-click='chatterTopbar.chatter.toggleLLMChat']"
       position="attributes"

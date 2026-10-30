@@ -1,12 +1,12 @@
 import json
 
-from odoo.addons.llm_litellm.models.http_client import LiteLLMClient
+from odoo.addons.serfe_llm_litellm.models.http_client import LiteLLMClient
 
 
 class LiteLLMResponsesClient(LiteLLMClient):
     """LiteLLMClient extended with the Responses API endpoints the LiteLLM
     deployment needs for chatgpt-5.x models, kept as a subclass so the
-    vendored llm_litellm module stays untouched.
+    vendored serfe_llm_litellm module stays untouched.
     """
 
     def chat_completion(self, messages, model, stream=False, **kwargs):

@@ -46,7 +46,7 @@ class TestLLMChatterGroup(TransactionCase):
         self.assertIn(self.group, self.manager.groups_id)
 
     def test_chat_menu_is_restricted_to_group(self):
-        menu = self.env.ref("llm_thread.menu_llm_chat")
+        menu = self.env.ref("serfe_llm_thread.menu_llm_chat")
         self.assertEqual(menu.groups_id, self.group)
 
     def test_session_flag_follows_group(self):

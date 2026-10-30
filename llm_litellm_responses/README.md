@@ -1,5 +1,5 @@
 # llm_litellm_responses
-Odoo 16 module that extends `llm_litellm` with the LiteLLM Responses API, OCR through file inputs, and automatic provider creation. It leaves `llm_litellm` untouched: everything is done through `_inherit` and a client subclass.
+Odoo 16 module that extends `serfe_llm_litellm` with the LiteLLM Responses API, OCR through file inputs, and automatic provider creation. It leaves `serfe_llm_litellm` untouched: everything is done through `_inherit` and a client subclass.
 
 ## What is this for?
 - **Provider auto-provisioning:** on install, creates or updates an `llm.provider` named `LiteLLM` (service `litellm`, current company, active) from the environment.
@@ -11,11 +11,11 @@ Odoo 16 module that extends `llm_litellm` with the LiteLLM Responses API, OCR th
 
 ## Requirements / Dependencies
 - Odoo 16 (Community)
-- Odoo modules: `llm_litellm`
+- Odoo modules: `serfe_llm_litellm`
 - A reachable [LiteLLM](https://github.com/BerriAI/litellm) proxy and an API key for it
 
 ## Installation
-1. Make the addon and `llm_litellm` available in your addons path.
+1. Make the addon and `serfe_llm_litellm` available in your addons path.
 2. Install the module (Apps, or `-i llm_litellm_responses`).
 3. Configure the provider from the UI (*LLM → Configuration → Providers*: *API Base* and *API Key*), or set the optional environment variables below in the Odoo process **before** installing so the provider is created for you.
 

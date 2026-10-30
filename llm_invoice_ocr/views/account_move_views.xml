@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 Hides the "Process with AI" button (added by
-account_invoice_import_llm/views/account_move_views.xml) when the
+serfe_account_invoice_import_llm/views/account_move_views.xml) when the
 invoice_extraction llm.assistant is disabled (archived), and also
 restricts it to vendor bills/refunds (move_type in ('in_invoice',
 'in_refund'), same scope as account_journal.py's _VENDOR_MOVE_TYPES) -
@@ -18,7 +18,7 @@ same button.
         <field name="model">account.move</field>
         <field
             name="inherit_id"
-            ref="account_invoice_import_llm.view_move_form_process_llm"
+            ref="serfe_account_invoice_import_llm.view_move_form_process_llm"
         />
         <field name="arch" type="xml">
             <button name="action_process_with_llm" position="attributes">

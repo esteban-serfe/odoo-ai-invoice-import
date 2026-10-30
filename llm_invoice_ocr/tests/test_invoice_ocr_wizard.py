@@ -10,7 +10,7 @@ seam, so both the OCR and the extraction call go through the real
 LiteLLMClient/litellm_provider code end to end, and no LLM tokens are
 consumed.
 
-Relocated from account_invoice_import_llm/tests/test_import_wizard_litellm.py
+Relocated from serfe_account_invoice_import_llm/tests/test_import_wizard_litellm.py
 as part of extracting the Argentina-specific invoice OCR behavior out of that
 (now pristine, unmodified) third-party module.
 """

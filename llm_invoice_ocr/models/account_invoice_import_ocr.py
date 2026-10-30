@@ -1,7 +1,7 @@
 """
 Invoice OCR Extraction — Argentina overrides
 
-Extends account_invoice_import_llm's account.invoice.import.ocr abstract
+Extends serfe_account_invoice_import_llm's account.invoice.import.ocr abstract
 model (left unmodified) with LiteLLM-based OCR (instead of Mistral) and
 Argentine/AFIP-specific extraction behavior. _call_llm_for_extraction() and
 _parse_llm_response() are generic glue code with no provider- or

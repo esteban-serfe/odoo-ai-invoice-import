@@ -91,13 +91,13 @@ msgstr ""
 "<em>account_invoice_import_ubl</em>, "
 "<em>account_invoice_import_simple_pdf</em>, etc.)."
 
-#. module: account_invoice_import_llm
-#: model_terms:ir.ui.view,arch_db:account_invoice_import_llm.view_move_form_process_llm
+#. module: serfe_account_invoice_import_llm
+#: model_terms:ir.ui.view,arch_db:serfe_account_invoice_import_llm.view_move_form_process_llm
 msgid "Process with AI"
 msgstr "Procesar con IA"
 
-#. module: account_invoice_import_llm
-#: model_terms:ir.ui.view,arch_db:account_invoice_import_llm.view_move_form_process_llm
+#. module: serfe_account_invoice_import_llm
+#: model_terms:ir.ui.view,arch_db:serfe_account_invoice_import_llm.view_move_form_process_llm
 msgid "Extract invoice data from attached PDF/image using AI"
 msgstr "Extraer los datos de la factura desde el PDF/imagen adjunto usando IA"
 

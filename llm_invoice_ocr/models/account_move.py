@@ -21,10 +21,10 @@ class AccountMove(models.Model):
             move.llm_ocr_enabled = enabled
 
     def action_process_with_llm(self):
-        """Re-raise account_invoice_import_llm's two guard-clause errors as
+        """Re-raise serfe_account_invoice_import_llm's two guard-clause errors as
         translatable messages before delegating to super().
 
-        account_invoice_import_llm/models/account_move.py raises these two
+        serfe_account_invoice_import_llm/models/account_move.py raises these two
         as plain Python string literals (not _()-wrapped), so no .po file
         can translate them - see Ticket 0140997. Conditions copied verbatim
         from the pristine method; keep them in sync if that method changes.

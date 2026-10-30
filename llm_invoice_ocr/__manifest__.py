@@ -3,15 +3,15 @@
     "version": "16.0.1.0.0",
     "summary": (
         "Argentine-tuned LLM/OCR invoice extraction, built as extensions on "
-        "top of the unmodified account_invoice_import_llm module"
+        "top of the unmodified serfe_account_invoice_import_llm module"
     ),
     "author": "Serfe",
     "license": "AGPL-3",
     "category": "Accounting",
     "depends": [
         "llm_litellm_responses",
-        "account_invoice_import_llm",
-        "llm_litellm",
+        "serfe_account_invoice_import_llm",
+        "serfe_llm_litellm",
     ],
     "data": [
         "data/invoice_extraction_assistant_data.xml",

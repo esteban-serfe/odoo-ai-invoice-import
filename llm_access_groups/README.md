@@ -8,7 +8,7 @@ Odoo 16 module that restricts who can use the `odoo-llm` features. It leaves tho
 
 ## Requirements / Dependencies
 - Odoo 16 (Community)
-- Odoo modules: `llm_assistant`, `llm_thread`, `llm_training`
+- Odoo modules: `serfe_llm_assistant`, `serfe_llm_thread`, `llm_training`
 
 ## Installation
 Add the addon to your addons path and install it (Apps, or `-i llm_access_groups`).

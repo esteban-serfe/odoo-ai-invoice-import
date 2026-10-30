@@ -32,18 +32,18 @@ The vendor bill import is focused on Argentina (CUIT, voucher letters, AFIP taxe
 | Module | Description | Origin |
 |---|---|---|
 | `llm` | Providers, models, publishers | [apexive/odoo-llm](https://github.com/apexive/odoo-llm) |
-| `llm_thread` | Chat threads and chatter integration | apexive/odoo-llm |
+| `serfe_llm_thread` | Chat threads and chatter integration | fork of apexive/odoo-llm `llm_thread` |
 | `llm_tool` | Tools callable by the model | apexive/odoo-llm |
-| `llm_assistant` | Assistants and prompts | apexive/odoo-llm |
-| `llm_litellm` | LiteLLM provider | apexive/odoo-llm |
+| `serfe_llm_assistant` | Assistants and prompts | fork of `llm_assistant` |
+| `serfe_llm_litellm` | LiteLLM provider | fork of `llm_litellm` |
 | `llm_training` | Training datasets and jobs | apexive/odoo-llm |
-| `web_json_editor` | JSON editor field widget | apexive/odoo-llm |
-| `account_invoice_import_llm` | Vendor bill import with LLM and OCR | apexive/odoo-llm |
+| `serfe_web_json_editor` | JSON editor field widget | fork of `web_json_editor` |
+| `serfe_account_invoice_import_llm` | Vendor bill import with LLM and OCR | fork of `account_invoice_import_llm` |
 | `llm_litellm_responses` | Responses API, OCR retries, provider auto-provisioning | this repo |
 | `llm_access_groups` | *LLM Chatter* group, manager-only LLM menus | this repo |
 | `llm_invoice_ocr` | Argentine (AFIP) tuning for the invoice import | this repo |
 
-The vendored modules keep their original authorship. See [UPSTREAM.md](UPSTREAM.md) for the base commit and the local changes.
+The vendored modules keep their original authorship. The five we had to modify are renamed with the `serfe_` prefix so they do not clash with Apexive's modules of the same name in the Odoo Apps store; do not install both. See [UPSTREAM.md](UPSTREAM.md) for the base commit and the local changes.
 Each module has its own README.
 
 ## Installation Guide

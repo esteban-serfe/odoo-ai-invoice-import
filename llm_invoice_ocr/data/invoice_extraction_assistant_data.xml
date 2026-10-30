@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- Patches the EXISTING invoice_extraction assistant record owned by
-         account_invoice_import_llm (external ID
-         account_invoice_import_llm.llm_assistant_invoice_extraction) with
+         serfe_account_invoice_import_llm (external ID
+         serfe_account_invoice_import_llm.llm_assistant_invoice_extraction) with
          an Argentine/AFIP-tuned prompt, instead of creating a second
          llm.assistant with the same code="invoice_extraction" - that would
          make llm.assistant.get_assistant_by_code()'s limit=1 search pick
          one of the two arbitrarily. -->
     <record
-    id="account_invoice_import_llm.llm_assistant_invoice_extraction"
+    id="serfe_account_invoice_import_llm.llm_assistant_invoice_extraction"
     model="llm.assistant"
   >
         <field

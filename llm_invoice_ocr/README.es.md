@@ -6,7 +6,7 @@ Módulo de Odoo 16 que afina la importación de facturas con IA para comprobante
 
 ## Para qué sirve
 
-Extiende `account_invoice_import_llm` para que funcione con el proveedor LiteLLM de `llm_litellm_responses` y entienda comprobantes AFIP.
+Extiende `serfe_account_invoice_import_llm` para que funcione con el proveedor LiteLLM de `llm_litellm_responses` y entienda comprobantes AFIP.
 
 - **LiteLLM en lugar del proveedor OCR por defecto:** la factura se transcribe y analiza con el modelo configurado en el asistente *Invoice Extraction*, de modo que OCR y extracción usan el mismo proveedor. Solo se admiten proveedores LiteLLM.
 - **Prompt argentino:** el prompt del asistente se reemplaza por uno afinado para comprobantes AFIP. Primero decide si el documento es realmente una factura, lee el CUIT del proveedor, interpreta las fechas día-mes-año, extrae punto de venta y número tal como están impresos, la letra del comprobante (A/B/C) y los cargos a nivel documento. Pide la alícuota de IVA impresa con su evidencia en lugar de una recordada.
@@ -20,7 +20,7 @@ Extiende `account_invoice_import_llm` para que funcione con el proveedor LiteLLM
 
 ## Requisitos / Dependencias
 - Odoo 16 (Community)
-- Módulos de Odoo: `llm_litellm_responses`, `account_invoice_import_llm`, `llm_litellm`
+- Módulos de Odoo: `llm_litellm_responses`, `serfe_account_invoice_import_llm`, `serfe_llm_litellm`
 - Opcional: `l10n_ar` para el comportamiento argentino
 - Un proxy LiteLLM y una cuenta con un proveedor de IA, ambos provistos por vos (ver `llm_litellm_responses`). LiteLLM funciona con la API de cada proveedor: consultá la documentación de LiteLLM y del proveedor para configurarlos.
 
@@ -44,4 +44,4 @@ No tiene variables de entorno ni parámetros de sistema propios. La configuraci�
 Las alícuotas de IVA y el impuesto *IVA No Corresponde* se leen de la compañía de la factura, de modo que cada compañía usa sus propios impuestos. El prompt nombra a la compañía que importa y su CUIT para que el modelo no la confunda con el proveedor. El asistente y el proveedor se comparten tal como estén configurados.
 
 ## Licencia
-AGPL-3 (depende de `account_invoice_import_llm`, que es AGPL-3).
+AGPL-3 (depende de `serfe_account_invoice_import_llm`, que es AGPL-3).

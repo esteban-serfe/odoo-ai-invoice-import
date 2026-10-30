@@ -5,7 +5,7 @@
 Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: contact Serfe if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
 
 ## What is this for?
-It extends `account_invoice_import_llm` so it works through the LiteLLM provider of `llm_litellm_responses` and understands AFIP documents.
+It extends `serfe_account_invoice_import_llm` so it works through the LiteLLM provider of `llm_litellm_responses` and understands AFIP documents.
 
 - **LiteLLM instead of the default OCR provider:** the invoice is transcribed and analysed through the model configured on the *Invoice Extraction* assistant, so OCR and extraction use the same provider. Only LiteLLM providers are supported.
 - **Argentine prompt:** the assistant's prompt is replaced with one tuned for AFIP invoices. It first decides whether the document is really an invoice, reads the vendor's CUIT, reads dates day-first, extracts the point-of-sale and number as printed, the voucher letter (A/B/C), and document-level charges. It asks for the printed VAT rate with its evidence instead of a remembered one.
@@ -20,7 +20,7 @@ It extends `account_invoice_import_llm` so it works through the LiteLLM provider
 
 ## Requirements / Dependencies
 - Odoo 16 (Community)
-- Odoo modules: `llm_litellm_responses`, `account_invoice_import_llm`, `llm_litellm`
+- Odoo modules: `llm_litellm_responses`, `serfe_account_invoice_import_llm`, `serfe_llm_litellm`
 - Optional: `l10n_ar` for the Argentine behavior
 - A LiteLLM proxy and an AI provider account, both provided by you (see `llm_litellm_responses`). LiteLLM works with the API of each provider: refer to the LiteLLM and provider documentation to configure them.
 
@@ -44,4 +44,4 @@ No environment variables or system parameters of its own. Configuration is the m
 VAT rates and the *VAT Not Applicable* tax are read from the company of the bill, so each company uses its own configured taxes. The prompt names the importing company and its CUIT so the model does not confuse it with the vendor. The assistant and provider are shared as configured.
 
 ## Licence
-AGPL-3 (it depends on `account_invoice_import_llm`, which is AGPL-3).
+AGPL-3 (it depends on `serfe_account_invoice_import_llm`, which is AGPL-3).

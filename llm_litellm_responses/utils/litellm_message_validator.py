@@ -17,7 +17,7 @@ class LiteLLMMessageValidator:
        LiteLLM/OpenAI API
 
     Adapted from llm_openai's OpenAIMessageValidator and kept here (rather
-    than in the vendored llm_litellm module) so that module stays untouched.
+    than in the vendored serfe_llm_litellm module) so that module stays untouched.
     LiteLLM bridges this Chat-Completions-style payload to the Responses API
     for some model groups, and that translation surfaces orphaned tool
     messages as "No tool call found for function call output" errors.

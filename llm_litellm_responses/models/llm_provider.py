@@ -49,7 +49,7 @@ class LLMProvider(models.Model):
         instead.
 
         This overrides (rather than extends via super()) the vendored
-        llm_litellm implementation, which always returns a generator even
+        serfe_llm_litellm implementation, which always returns a generator even
         for stream=False - here a non-streaming call returns the result
         dict directly, which the rest of this module (and its callers)
         rely on.

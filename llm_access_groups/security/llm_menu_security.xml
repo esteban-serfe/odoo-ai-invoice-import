@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 Restrict the LLM app's non-Chat menus to LLM Manager - the vendored llm/
-llm_assistant/llm_training modules leave these menus ungated (and, for
+serfe_llm_assistant/llm_training modules leave these menus ungated (and, for
 Configuration's models, grant read access to every internal user), so any
 user could browse config, prompts, and training data. Patches only
 groups_id on the existing external IDs from each module's own menu views,
@@ -11,7 +11,7 @@ directly. <menuitem> shorthand tags are deliberately NOT used here: unlike
 to False/root when no parent= is given) and name (defaults to the raw
 external id string when no name= is given) on every load, so an update
 that only specifies groups= silently resets those two fields too.
-Chat (llm_thread's menu_llm_chat) is handled in
+Chat (serfe_llm_thread's menu_llm_chat) is handled in
 llm_chatter_security.xml.
 -->
 <odoo>
@@ -29,20 +29,20 @@ llm_chatter_security.xml.
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
 
-    <!-- Prompts (llm_assistant) -->
-    <record id="llm_assistant.menu_llm_assistant" model="ir.ui.menu">
+    <!-- Prompts (serfe_llm_assistant) -->
+    <record id="serfe_llm_assistant.menu_llm_assistant" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_assistant.llm_prompt_menu" model="ir.ui.menu">
+    <record id="serfe_llm_assistant.llm_prompt_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_assistant.llm_prompt_configuration_menu" model="ir.ui.menu">
+    <record id="serfe_llm_assistant.llm_prompt_configuration_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_assistant.llm_prompt_category_menu" model="ir.ui.menu">
+    <record id="serfe_llm_assistant.llm_prompt_category_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_assistant.llm_prompt_tag_menu" model="ir.ui.menu">
+    <record id="serfe_llm_assistant.llm_prompt_tag_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
     </record>
 

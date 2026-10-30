@@ -7,8 +7,8 @@
     "license": "LGPL-3",
     "category": "Technical",
     "depends": [
-        "llm_assistant",
-        "llm_thread",
+        "serfe_llm_assistant",
+        "serfe_llm_thread",
         "llm_training",
     ],
     "data": [

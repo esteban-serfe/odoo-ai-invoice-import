@@ -21,16 +21,16 @@ class TestModuleInstalled(TransactionCase):
 
     def test_account_invoice_import_llm_dependency_is_installed(self):
         self.assertEqual(
-            self._get_module_state("account_invoice_import_llm"), "installed"
+            self._get_module_state("serfe_account_invoice_import_llm"), "installed"
         )
 
     def test_llm_litellm_dependency_is_installed(self):
-        self.assertEqual(self._get_module_state("llm_litellm"), "installed")
+        self.assertEqual(self._get_module_state("serfe_llm_litellm"), "installed")
 
     def test_exactly_one_invoice_extraction_assistant(self):
         """Guards against data/invoice_extraction_assistant_data.xml
         accidentally creating a second llm.assistant with the same code
-        instead of patching account_invoice_import_llm's existing record -
+        instead of patching serfe_account_invoice_import_llm's existing record -
         get_assistant_by_code()'s limit=1 search would then pick one of the
         two arbitrarily.
         """

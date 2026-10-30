@@ -1,0 +1,8 @@
+<section class="pt-5 pb-4" style="background-color:#f8f9fa"><div class="container text-center">
+<h1 class="font-weight-bold" style="font-size:2.5rem">Access Groups for the LLM Modules</h1>
+<p class="mt-3" style="font-size:1.2rem;color:#495057">Decide who can configure the LLM features and who can chat with the AI.</p></div></section>
+<div class="container my-5">
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">What it does</h2><ul><li>Limits the <em>LLM Configuration</em>, <em>Prompts</em> and <em>Training</em> menus to <em>LLM Manager</em>. The base modules leave them open to every internal user.</li><li>Adds the <em>User: LLM Chatter</em> group, required to use the AI chat: the chatter &ldquo;AI&rdquo; button, the <em>Chat</em> menu and the chat threads.</li><li>Hides the chatter &ldquo;AI&rdquo; button from users outside that group.</li></ul></section>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Configuration</h2><p>To let a user chat with the LLM, add them to <em>User: LLM Chatter</em>. <em>LLM Manager</em> includes it.</p></section>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Good to know</h2><ul><li>Hiding the button is cosmetic; the real restriction is the access rule on the chat threads.</li><li>Groups are global, not per company.</li></ul></section>
+</div>

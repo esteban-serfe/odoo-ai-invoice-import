@@ -1,5 +1,7 @@
 # odoo-ai-addons
 
+[Español](README.es.md)
+
 Odoo 16 addons to chat with LLMs, restrict who can use them, and import vendor bills with AI, through a LiteLLM proxy.
 
 ## Key Features
@@ -9,17 +11,21 @@ Odoo 16 addons to chat with LLMs, restrict who can use them, and import vendor b
 * Access control: a dedicated *LLM Chatter* group, and LLM configuration menus limited to *LLM Manager*.
 * Vendor bill import from PDF or image with an LLM, tuned for Argentine (AFIP) invoices.
 
+## Scope
+
+The vendor bill import is focused on Argentina (CUIT, voucher letters, AFIP taxes, `l10n_ar`). Other countries, such as Uruguay, are not covered: [contact us](https://www.serfe.com/en/) if you need them.
+
 ## Requirements
 
 * Odoo 16 Community.
 * `account_invoice_import` from [OCA/edi](https://github.com/OCA/edi), plus the other repositories in `oca_dependencies.txt`.
-* A [LiteLLM](https://github.com/BerriAI/litellm) proxy.
+* An AI provider account (OpenAI, Anthropic, Mistral, etc.) and a [LiteLLM](https://github.com/BerriAI/litellm) proxy in front of it, both provided and operated by you. Serfe does not supply the AI service. LiteLLM works with the API of each provider: see the [LiteLLM documentation](https://docs.litellm.ai/) and your provider's documentation to set it up.
 * Environment variables for the Odoo process:
 
 | Variable | Description |
 |---|---|
-| `LITELLM_API_BASE` | LiteLLM proxy URL. Required, there is no default. |
-| `LITELLM_API_KEY` | API key for the proxy. |
+| `LITELLM_API_BASE` | URL of your LiteLLM proxy. Required, there is no default. |
+| `LITELLM_API_KEY` | API key of your LiteLLM proxy. Required. |
 
 ## Modules
 
@@ -77,4 +83,4 @@ Mixed, per module. See [LICENSE](LICENSE).
 
 ## About Us
 
-Maintained by [Serfe](https://www.serfe.com/en/).
+Maintained by [Serfe](https://www.serfe.com/en/). Questions about setup or adapting the modules to your case are welcome: contact us.

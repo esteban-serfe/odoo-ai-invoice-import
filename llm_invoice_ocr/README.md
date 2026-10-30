@@ -1,5 +1,8 @@
 # llm_invoice_ocr
-Odoo 16 module that tunes the AI invoice import for Argentine vendor bills: it reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
+
+[Español](README.es.md)
+
+Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: contact Serfe if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
 
 ## What is this for?
 It extends `account_invoice_import_llm` so it works through the LiteLLM provider of `llm_litellm_responses` and understands AFIP documents.
@@ -19,7 +22,7 @@ It extends `account_invoice_import_llm` so it works through the LiteLLM provider
 - Odoo 16 (Community)
 - Odoo modules: `llm_litellm_responses`, `account_invoice_import_llm`, `llm_litellm`
 - Optional: `l10n_ar` for the Argentine behavior
-- A reachable LiteLLM provider (see `llm_litellm_responses`)
+- A LiteLLM proxy and an AI provider account, both provided by you (see `llm_litellm_responses`). LiteLLM works with the API of each provider: refer to the LiteLLM and provider documentation to configure them.
 
 ## Installation
 1. Make the addon and its dependencies available in your addons path.
@@ -34,7 +37,7 @@ No environment variables or system parameters of its own. Configuration is the m
 
 ## Security / Access
 - No groups, ACLs or record rules are added; standard accounting permissions apply.
-- The invoice document is sent to the AI service.
+- The invoice document is sent to the AI provider you configured through your LiteLLM proxy. Serfe does not receive it.
 - AI output is a suggestion: totals, taxes and the vendor must be checked before posting.
 
 ## Multi-company behavior

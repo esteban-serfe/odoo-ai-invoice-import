@@ -31,7 +31,7 @@ If `LITELLM_API_BASE` or `LITELLM_API_KEY` is missing, the install logs a warnin
 Both are needed together to create the provider on install. They are not read at runtime: after install the provider record is the source of truth.
 
 ## Security / Access
-No groups, ACLs or record rules are added. The API key is stored on `llm.provider`, readable by *LLM Manager*.
+No groups, ACLs or record rules are added. The API key is stored on `llm.provider` as a plain field, and every internal user can read that model, so the key is not hidden from them.
 
 ## Multi-company behavior
 The provider is created for the company active at install time (`env.company`).

@@ -44,8 +44,10 @@ Paths are relative to the renamed module directory.
 | `serfe_llm_litellm` | `models/litellm_provider.py` | Tool calling: message and tool formatting, `tool_choice`, streamed `tool_calls`. |
 | `serfe_account_invoice_import_llm` | `__manifest__.py` | Depend on `serfe_llm_litellm` instead of `llm_mistral`. |
 
-Besides these, every file that named a renamed module was updated, and the
-manifests add "Serfe" to the authors. Those changes are mechanical.
+Besides these, every file that named a renamed module was updated, the
+manifests add "Serfe" to the authors, and the icons are replaced with Serfe's. Those changes are mechanical.
+
+`serfe_account_invoice_import_llm` also has a rewritten README and store description: the upstream ones described Mistral OCR and made claims about accuracy and savings that do not apply here. Its `doc/index.rst` and the Mistral and ChatGPT screenshots were removed.
 
 To list the content changes against the base commit, ignoring the rename:
 

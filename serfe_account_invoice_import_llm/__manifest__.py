@@ -1,9 +1,17 @@
 {
     "name": "Invoice Import LLM",
-    "summary": "AI-powered invoice analysis assistant with OCR document parsing",
+    "summary": "Vendor bill data extraction with OCR and an LLM",
     "description": """
-        Intelligent invoice assistant that helps analyze vendor bills and invoices using AI.
-        Features document parsing with OCR, automated data extraction, and smart invoice validation.
+Reads a supplier invoice (PDF or image) with an OCR step and one LLM call, and
+creates a draft vendor bill through OCA's account_invoice_import: a "Process
+with AI" button and a fallback for the import wizard.
+
+The OCR step inherited from Apexive looks for a Mistral provider; in this
+repository llm_invoice_ocr replaces it with LiteLLM, so install it together
+with this module.
+
+Data notice: the documents are sent to the AI provider that you configure.
+The module does not send data to Serfe or to any fixed service.
     """,
     "category": "Accounting/AI",
     "version": "16.0.1.0.3",

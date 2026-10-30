@@ -31,9 +31,9 @@ Use cases include creating specialized assistants for customer support, data ana
         "base",
         "mail",
         "web",
-        "llm",
+        "serfe_llm",
         "serfe_llm_thread",
-        "llm_tool",
+        "serfe_llm_tool",
         "serfe_web_json_editor",
     ],
     "external_dependencies": {

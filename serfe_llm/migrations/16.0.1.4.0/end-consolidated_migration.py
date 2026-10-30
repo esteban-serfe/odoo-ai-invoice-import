@@ -17,9 +17,9 @@ def migrate(cr, version):
 
     # Migrate messages from old subtypes to new subtypes
     migrations = [
-        ('llm_mail_message_subtypes.mt_llm_user', 'llm.mt_user'),
-        ('llm_mail_message_subtypes.mt_llm_assistant', 'llm.mt_assistant'),
-        ('llm_mail_message_subtypes.mt_llm_tool_result', 'llm.mt_tool'),
+        ('llm_mail_message_subtypes.mt_llm_user', 'serfe_llm.mt_user'),
+        ('llm_mail_message_subtypes.mt_llm_assistant', 'serfe_llm.mt_assistant'),
+        ('llm_mail_message_subtypes.mt_llm_tool_result', 'serfe_llm.mt_tool'),
     ]
     
     total_migrated = 0

@@ -31,19 +31,19 @@ The vendor bill import is focused on Argentina (CUIT, voucher letters, AFIP taxe
 
 | Module | Description | Origin |
 |---|---|---|
-| `llm` | Providers, models, publishers | [apexive/odoo-llm](https://github.com/apexive/odoo-llm) |
+| `serfe_llm` | Providers, models, publishers | fork of [apexive/odoo-llm](https://github.com/apexive/odoo-llm) `llm` |
 | `serfe_llm_thread` | Chat threads and chatter integration | fork of apexive/odoo-llm `llm_thread` |
-| `llm_tool` | Tools callable by the model | apexive/odoo-llm |
+| `serfe_llm_tool` | Tools callable by the model | apexive/odoo-llm |
 | `serfe_llm_assistant` | Assistants and prompts | fork of `llm_assistant` |
 | `serfe_llm_litellm` | LiteLLM provider | fork of `llm_litellm` |
-| `llm_training` | Training datasets and jobs | apexive/odoo-llm |
+| `serfe_llm_training` | Training datasets and jobs | apexive/odoo-llm |
 | `serfe_web_json_editor` | JSON editor field widget | fork of `web_json_editor` |
 | `serfe_account_invoice_import_llm` | Vendor bill import with LLM and OCR | fork of `account_invoice_import_llm` |
 | `llm_litellm_responses` | Responses API, OCR retries, provider auto-provisioning | this repo |
 | `llm_access_groups` | *LLM Chatter* group, manager-only LLM menus | this repo |
 | `llm_invoice_ocr` | Argentine (AFIP) tuning for the invoice import | this repo |
 
-The vendored modules keep their original authorship. The five we had to modify are renamed with the `serfe_` prefix so they do not clash with Apexive's modules of the same name in the Odoo Apps store; do not install both. See [UPSTREAM.md](UPSTREAM.md) for the base commit and the local changes.
+The vendored modules keep their original authorship. All eight carry the `serfe_` prefix so they do not clash with Apexive's modules of the same name in the Odoo Apps store; do not install both. See [UPSTREAM.md](UPSTREAM.md) for the base commit and the local changes.
 Each module has its own README.
 
 ## Installation Guide
@@ -62,12 +62,7 @@ Each module has its own README.
 
 ## Publishing in the Odoo Apps store
 
-The store reads a git repository whose branch is named after the Odoo version, and it resolves dependencies on its own.
-This repository stays self-contained (it vendors `llm`, `llm_tool` and `llm_training`), so it is not published as is:
-`llm`, `llm_tool` and `llm_training` already exist in the store under Apexive's name and the store provides them.
-`scripts/export-store.sh <dir>` copies the eight modules to publish into `<dir>` and checks that every dependency is exported
-or provided by the store (a missing one makes the scan fail and unpublishes the whole repository). Commit that directory to a
-separate repository, branch `16.0`, and register it in the store.
+The store reads a git repository whose branch is named after the Odoo version (`16.0`) and resolves dependencies on its own. Every module in this repository carries the `serfe_` prefix, or is ours, and the OCA modules it depends on are published in the store, so the repository can be registered as is.
 
 ## Contributing
 

@@ -8,10 +8,10 @@
         <field
       name="tool_ids"
       eval="[(6, 0, [
-            ref('llm_tool.llm_tool_odoo_model_inspector'),
-            ref('llm_tool.llm_tool_odoo_record_retriever'),
-            ref('llm_tool.llm_tool_odoo_record_creator'),
-            ref('llm_tool.llm_tool_odoo_record_updater')
+            ref('serfe_llm_tool.llm_tool_odoo_model_inspector'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_retriever'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_creator'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_updater')
         ])]"
     />
     </record>
@@ -24,10 +24,10 @@
         <field
       name="tool_ids"
       eval="[(6, 0, [
-            ref('llm_tool.llm_tool_odoo_model_inspector'),
-            ref('llm_tool.llm_tool_odoo_record_retriever'),
-            ref('llm_tool.llm_tool_odoo_record_creator'),
-            ref('llm_tool.llm_tool_odoo_record_updater')
+            ref('serfe_llm_tool.llm_tool_odoo_model_inspector'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_retriever'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_creator'),
+            ref('serfe_llm_tool.llm_tool_odoo_record_updater')
         ])]"
     />
     </record>

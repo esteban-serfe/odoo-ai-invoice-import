@@ -67,7 +67,7 @@ After successful training, the fine-tuned model will be automatically added to y
 The module follows the standard two-tier security model:
 
 - Regular users (base.group_user) have read-only access
-- LLM Managers (llm.group_llm_manager) have full CRUD access
+- LLM Managers (serfe_llm.group_llm_manager) have full CRUD access
 
 ## Technical Information
 

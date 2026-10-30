@@ -247,11 +247,11 @@ def check_execution_permissions(self, user_id=None):
     user = self.env['res.users'].browse(user_id) if user_id else self.env.user
     
     # Check basic tool access
-    if not user.has_group('llm.group_llm_user'):
+    if not user.has_group('serfe_llm.group_llm_user'):
         return False, "User not in LLM User group"
     
     # Check tool-specific permissions
-    if self.destructive_hint and not user.has_group('llm.group_llm_manager'):
+    if self.destructive_hint and not user.has_group('serfe_llm.group_llm_manager'):
         return False, "Destructive operations require LLM Manager role"
     
     # Check model-specific permissions
@@ -651,7 +651,7 @@ def migrate_tool_messages(env):
 - **Version**: 16.0.3.0.0
 - **Category**: Technical
 - **License**: LGPL-3
-- **Dependencies**: `llm`, `mail`
+- **Dependencies**: `serfe_llm`, `mail`
 - **Author**: Apexive Solutions LLC
 
 ### Key Models
@@ -669,7 +669,7 @@ def migrate_tool_messages(env):
 
 ## Related Modules
 
-- **`llm`**: Base infrastructure and messaging system
+- **`serfe_llm`**: Base infrastructure and messaging system
 - **`llm_assistant`**: Assistant configuration with tool selection
 - **`llm_thread`**: Chat interface with tool execution display
 - **`llm_tool_knowledge`**: Knowledge base search tool

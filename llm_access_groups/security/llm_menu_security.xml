@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 Restrict the LLM app's non-Chat menus to LLM Manager - the vendored llm/
-serfe_llm_assistant/llm_training modules leave these menus ungated (and, for
+serfe_llm_assistant/serfe_llm_training modules leave these menus ungated (and, for
 Configuration's models, grant read access to every internal user), so any
 user could browse config, prompts, and training data. Patches only
 groups_id on the existing external IDs from each module's own menu views,
@@ -16,44 +16,44 @@ llm_chatter_security.xml.
 -->
 <odoo>
     <!-- Configuration (llm) -->
-    <record id="llm.menu_llm_config" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm.menu_llm_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
-    <record id="llm.menu_llm_provider" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm.menu_llm_provider" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
-    <record id="llm.menu_llm_publisher" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm.menu_llm_publisher" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
-    <record id="llm.menu_llm_model" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm.menu_llm_model" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
 
     <!-- Prompts (serfe_llm_assistant) -->
     <record id="serfe_llm_assistant.menu_llm_assistant" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
     <record id="serfe_llm_assistant.llm_prompt_menu" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
     <record id="serfe_llm_assistant.llm_prompt_configuration_menu" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
     <record id="serfe_llm_assistant.llm_prompt_category_menu" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
     <record id="serfe_llm_assistant.llm_prompt_tag_menu" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
 
-    <!-- Training (llm_training) -->
-    <record id="llm_training.menu_llm_training_root" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <!-- Training (serfe_llm_training) -->
+    <record id="serfe_llm_training.menu_llm_training_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_training.menu_llm_training_dataset" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm_training.menu_llm_training_dataset" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
-    <record id="llm_training.menu_llm_training_job" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('llm.group_llm_manager'))]" />
+    <record id="serfe_llm_training.menu_llm_training_job" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
 </odoo>

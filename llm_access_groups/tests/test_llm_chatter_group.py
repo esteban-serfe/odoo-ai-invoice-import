@@ -30,7 +30,7 @@ class TestLLMChatterGroup(TransactionCase):
             {
                 "name": "LLM Manager",
                 "login": "llm_manager_user",
-                "groups_id": [(6, 0, [cls.env.ref("llm.group_llm_manager").id])],
+                "groups_id": [(6, 0, [cls.env.ref("serfe_llm.group_llm_manager").id])],
             }
         )
 

@@ -9,7 +9,7 @@
         - Model management
 
     """,
-    "author": "Apexive Solutions LLC",
+    "author": "Apexive Solutions LLC, Serfe",
     "website": "https://github.com/apexive/odoo-llm",
     "category": "Technical",
     "version": "16.0.1.4.2",

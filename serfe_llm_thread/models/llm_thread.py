@@ -226,7 +226,7 @@ class LLMThread(models.Model):
             _, role_to_id = self.env["mail.message"].get_llm_roles()
             if llm_role in role_to_id:
                 # Get the xmlid from the role
-                subtype_xmlid = f"llm.mt_{llm_role}"
+                subtype_xmlid = f"serfe_llm.mt_{llm_role}"
                 kwargs["subtype_xmlid"] = subtype_xmlid
 
         # Handle LLM-specific subtypes and email_from generation
@@ -250,9 +250,9 @@ class LLMThread(models.Model):
         provider_name = self.provider_id.name
         model_name = self.model_id.name
 
-        if subtype_xmlid == "llm.mt_tool" or llm_role == "tool":
+        if subtype_xmlid == "serfe_llm.mt_tool" or llm_role == "tool":
             return f"Tool <tool@{provider_name.lower().replace(' ', '')}.ai>"
-        elif subtype_xmlid == "llm.mt_assistant" or llm_role == "assistant":
+        elif subtype_xmlid == "serfe_llm.mt_assistant" or llm_role == "assistant":
             return f"{model_name} <ai@{provider_name.lower().replace(' ', '')}.ai>"
 
         return None

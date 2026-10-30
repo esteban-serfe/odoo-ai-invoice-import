@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Vendored from apexive/odoo-llm at `a6a229d`: `llm`, `llm_tool`, `llm_training` as they are, and `llm_thread`, `llm_assistant`, `llm_litellm`, `web_json_editor`, `account_invoice_import_llm` renamed with the `serfe_` prefix (`serfe_llm_thread`, ...) so they do not clash with Apexive's modules of the same name in the Odoo Apps store.
+- Vendored from apexive/odoo-llm at `a6a229d`, renamed with the `serfe_` prefix so they do not clash with Apexive's modules in the Odoo Apps store: `serfe_llm`, `serfe_llm_thread`, `serfe_llm_tool`, `serfe_llm_assistant`, `serfe_llm_litellm`, `serfe_llm_training`, `serfe_web_json_editor`, `serfe_account_invoice_import_llm`.
 - `llm_litellm_responses`: Responses API, orphaned tool message cleanup, OCR with retries, `model_info`, provider auto-provisioning from `LITELLM_API_BASE` and `LITELLM_API_KEY`.
 - `llm_access_groups`: *LLM Chatter* group, LLM menus limited to *LLM Manager*, chatter "AI" button hidden from other users.
 - `llm_invoice_ocr`: Argentine (AFIP) extension of `serfe_account_invoice_import_llm`.
-- `scripts/export-store.sh`: exports the modules to publish in the Odoo Apps store, with an icon and a description for each.
+- Icon and description for the modules published in the Odoo Apps store.
 - Self-contained test runner (`scripts/run-tests.sh`) and lint configuration.
 
 ### Changed

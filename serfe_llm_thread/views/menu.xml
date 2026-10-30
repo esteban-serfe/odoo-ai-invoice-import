@@ -5,14 +5,14 @@
     id="menu_llm_chat"
     name="Chat"
     action="action_llm_chat"
-    parent="llm.menu_llm_root"
+    parent="serfe_llm.menu_llm_root"
     sequence="10"
   />
     <menuitem
     id="menu_llm_thread"
     name="Threads"
     action="llm_thread_action"
-    parent="llm.menu_llm_config"
+    parent="serfe_llm.menu_llm_config"
     sequence="27"
   />
 </odoo>

@@ -4,7 +4,7 @@
     <record id="access_push_models_wizard_manager" model="ir.model.access">
         <field name="name">llm.push.models.wizard.manager</field>
         <field name="model_id" ref="model_llm_push_models_wizard" />
-        <field name="group_id" ref="llm.group_llm_manager" />
+        <field name="group_id" ref="serfe_llm.group_llm_manager" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="1" />
         <field name="perm_create" eval="1" />
@@ -15,7 +15,7 @@
     <record id="access_push_models_line_manager" model="ir.model.access">
         <field name="name">llm.push.models.line.manager</field>
         <field name="model_id" ref="model_llm_push_models_line" />
-        <field name="group_id" ref="llm.group_llm_manager" />
+        <field name="group_id" ref="serfe_llm.group_llm_manager" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="1" />
         <field name="perm_create" eval="1" />
@@ -49,7 +49,7 @@
         <field name="name">LLM Manager Push Models Access</field>
         <field name="model_id" ref="model_llm_push_models_wizard" />
         <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="1" />
         <field name="perm_create" eval="1" />
@@ -61,7 +61,7 @@
         <field name="name">LLM Manager Push Model Lines Access</field>
         <field name="model_id" ref="model_llm_push_models_line" />
         <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="1" />
         <field name="perm_create" eval="1" />

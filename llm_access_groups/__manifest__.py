@@ -9,7 +9,7 @@
     "depends": [
         "serfe_llm_assistant",
         "serfe_llm_thread",
-        "llm_training",
+        "serfe_llm_training",
     ],
     "data": [
         "security/llm_menu_security.xml",

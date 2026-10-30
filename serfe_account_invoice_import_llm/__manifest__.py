@@ -9,7 +9,7 @@
     "version": "16.0.1.0.3",
     "depends": [
         "account_invoice_import",  # OCA invoice import wizard (fallback_parse_pdf_invoice)
-        "serfe_llm_assistant",  # Includes llm, llm_thread, llm_tool
+        "serfe_llm_assistant",  # Includes serfe_llm, serfe_llm_thread, serfe_llm_tool
         # llm_mistral replaced by llm_litellm: OCR goes through the LiteLLM
         # provider (see llm_invoice_ocr). llm_mistral only pulled in llm_openai
         # and the openai library, which were never used.

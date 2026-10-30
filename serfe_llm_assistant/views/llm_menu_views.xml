@@ -4,7 +4,7 @@
     <menuitem
     id="menu_llm_assistant"
     name="Assistants"
-    parent="llm.menu_llm_config"
+    parent="serfe_llm.menu_llm_config"
     action="action_llm_assistant"
     sequence="26"
   />
@@ -13,7 +13,7 @@
     <menuitem
     id="llm_prompt_menu"
     name="Prompts"
-    parent="llm.menu_llm_root"
+    parent="serfe_llm.menu_llm_root"
     action="llm_prompt_action"
     sequence="20"
   />
@@ -22,7 +22,7 @@
     <menuitem
     id="llm_prompt_configuration_menu"
     name="Prompts Configuration"
-    parent="llm.menu_llm_config"
+    parent="serfe_llm.menu_llm_config"
     sequence="30"
   />
 

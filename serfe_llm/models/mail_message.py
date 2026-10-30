@@ -7,10 +7,10 @@ class MailMessage(models.Model):
     _inherit = "mail.message"
 
     LLM_XMLIDS = (
-        "llm.mt_tool",
-        "llm.mt_user",
-        "llm.mt_assistant",
-        "llm.mt_system",
+        "serfe_llm.mt_tool",
+        "serfe_llm.mt_user",
+        "serfe_llm.mt_assistant",
+        "serfe_llm.mt_system",
     )
 
     llm_role = fields.Char(
@@ -54,7 +54,7 @@ class MailMessage(models.Model):
                 xmlid, raise_if_not_found=False
             )
             if subtype_id:
-                # Extract clean role name (e.g., 'user' from 'llm.mt_user')
+                # Extract clean role name (e.g., 'user' from 'serfe_llm.mt_user')
                 role = xmlid.split(".")[-1][3:]  # Remove 'mt_' prefix
                 id_to_role[subtype_id] = role
                 role_to_id[role] = subtype_id

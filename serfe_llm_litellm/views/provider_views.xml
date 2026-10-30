@@ -4,7 +4,7 @@
     <record id="llm_provider_view_form_inherit_litellm" model="ir.ui.view">
         <field name="name">llm.provider.view.form.inherit.litellm</field>
         <field name="model">llm.provider</field>
-        <field name="inherit_id" ref="llm.llm_provider_view_form" />
+        <field name="inherit_id" ref="serfe_llm.llm_provider_view_form" />
         <field name="arch" type="xml">
             <header position="inside">
                 <button

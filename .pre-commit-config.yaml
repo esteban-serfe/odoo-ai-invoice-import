@@ -1,6 +1,6 @@
 # Only the modules written in this repo are linted. The vendored odoo-llm modules
 # are excluded so they stay diffable against upstream (see UPSTREAM.md).
-exclude: ^(llm|llm_tool|llm_training|serfe_llm_thread|serfe_llm_assistant|serfe_llm_litellm|serfe_web_json_editor|serfe_account_invoice_import_llm)/
+exclude: ^(serfe_llm|serfe_llm_thread|serfe_llm_tool|serfe_llm_assistant|serfe_llm_litellm|serfe_llm_training|serfe_web_json_editor|serfe_account_invoice_import_llm)/
 repos:
   - repo: https://github.com/psf/black
     rev: 24.8.0

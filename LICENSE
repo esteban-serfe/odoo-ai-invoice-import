@@ -9,8 +9,8 @@ AGPL-3  (LICENSES/AGPL-3.txt)
     llm_invoice_ocr
 
 LGPL-3  (LICENSES/LGPL-3.txt)
-    llm, llm_tool, llm_training   (Apexive Solutions LLC)
-    serfe_llm_thread, serfe_llm_assistant, serfe_llm_litellm,
+    serfe_llm, serfe_llm_thread, serfe_llm_tool, serfe_llm_assistant,
+    serfe_llm_litellm, serfe_llm_training,
     serfe_web_json_editor        (Apexive Solutions LLC, Serfe)
     llm_litellm_responses
     llm_access_groups

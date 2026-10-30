@@ -396,7 +396,7 @@ None - this is a consolidation update with full backward compatibility.
 - **Version**: 16.0.1.4.0
 - **Category**: Productivity
 - **License**: LGPL-3
-- **Dependencies**: `llm`, `mail`
+- **Dependencies**: `serfe_llm`, `mail`
 - **Author**: Apexive Solutions LLC
 
 ### Key Models
@@ -422,9 +422,9 @@ None - this is a consolidation update with full backward compatibility.
 
 ## Related Modules
 
-- **`llm`**: Base infrastructure and provider management
+- **`serfe_llm`**: Base infrastructure and provider management
 - **`serfe_llm_thread`**: Chat interfaces and conversation management
-- **`llm_tool`**: Function calling and Odoo integration
+- **`serfe_llm_tool`**: Function calling and Odoo integration
 - **`llm_generate`**: Content generation with assistant integration
 - **`llm_knowledge`**: RAG and knowledge base integration
 

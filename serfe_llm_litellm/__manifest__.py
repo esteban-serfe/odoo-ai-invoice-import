@@ -13,7 +13,7 @@
     """,
     "category": "Technical",
     "version": "16.0.1.1.0",
-    "depends": ["llm"],
+    "depends": ["serfe_llm"],
     "external_dependencies": {
         "python": ["requests"],
     },

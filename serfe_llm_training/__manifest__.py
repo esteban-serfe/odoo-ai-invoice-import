@@ -8,11 +8,11 @@
         - Training job configuration and tracking
         - Integration with LLM providers for fine-tuning
     """,
-    "author": "Apexive Solutions LLC",
+    "author": "Apexive Solutions LLC, Serfe",
     "website": "https://github.com/apexive/odoo-llm",
     "category": "Technical",
     "version": "16.0.1.0.0",
-    "depends": ["base", "mail", "llm"],
+    "depends": ["base", "mail", "serfe_llm"],
     "data": [
         "security/llm_training_security.xml",
         "security/ir.model.access.csv",

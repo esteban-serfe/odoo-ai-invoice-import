@@ -24,7 +24,7 @@
         <field name="perm_write" eval="True" />
         <field name="perm_create" eval="True" />
         <field name="perm_unlink" eval="True" />
-        <field name="groups" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
 
     <record id="llm_training_job_rule_all" model="ir.rule">
@@ -46,6 +46,6 @@
         <field name="perm_write" eval="True" />
         <field name="perm_create" eval="True" />
         <field name="perm_unlink" eval="True" />
-        <field name="groups" eval="[(4, ref('llm.group_llm_manager'))]" />
+        <field name="groups" eval="[(4, ref('serfe_llm.group_llm_manager'))]" />
     </record>
 </odoo>

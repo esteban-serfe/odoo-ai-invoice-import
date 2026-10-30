@@ -21,7 +21,7 @@ This Odoo module provides functionality for managing and interacting with thread
 3. Navigate to **LLM → Chat** menu item in your Odoo instance.
 4. Click on "New Chat" to start a new conversation thread.
 5. You can create multiple threads, view existing ones, and interact with messages.
-6. If you have installed the llm_tool module, you can enable function calling capabilities that allow the AI to perform actions in Odoo, such as creating records, searching for information, or executing specific business logic.
+6. If you have installed the serfe_llm_tool module, you can enable function calling capabilities that allow the AI to perform actions in Odoo, such as creating records, searching for information, or executing specific business logic.
 
 ## Dependencies
 

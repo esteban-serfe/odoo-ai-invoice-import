@@ -8,26 +8,27 @@ Eight modules are vendored, without history, from
   local change is a separate commit after it (`git log --oneline`), so each one
   can be sent upstream on its own.
 
-## Renamed forks
+## Renamed modules
 
-Apexive publishes `llm_thread`, `llm_litellm` and others under the same technical
-names in the Odoo Apps store, so the five modules we had to modify are renamed
-with the prefix `serfe_` to avoid clashing with them:
+Apexive publishes `llm`, `llm_thread`, `llm_litellm` and others under the same technical
+names in the Odoo Apps store, where a technical name belongs to a single vendor. All
+eight modules are renamed with the prefix `serfe_`:
 
-| Upstream name | Name here |
-|---|---|
-| `llm_thread` | `serfe_llm_thread` |
-| `llm_assistant` | `serfe_llm_assistant` |
-| `llm_litellm` | `serfe_llm_litellm` |
-| `web_json_editor` | `serfe_web_json_editor` |
-| `account_invoice_import_llm` | `serfe_account_invoice_import_llm` |
+| Upstream name | Name here | Modified |
+|---|---|---|
+| `llm` | `serfe_llm` | no |
+| `llm_thread` | `serfe_llm_thread` | yes |
+| `llm_tool` | `serfe_llm_tool` | no |
+| `llm_assistant` | `serfe_llm_assistant` | yes |
+| `llm_litellm` | `serfe_llm_litellm` | yes |
+| `llm_training` | `serfe_llm_training` | no |
+| `web_json_editor` | `serfe_web_json_editor` | yes |
+| `account_invoice_import_llm` | `serfe_account_invoice_import_llm` | yes |
 
 Models, fields, tables and the Python/JS code are unchanged; only the module
 name changes (dependencies, external IDs, asset paths, OWL templates, imports,
 translation files). Do not install a `serfe_*` module together with the upstream
 module of the same name: they define the same models and data.
-
-`llm`, `llm_tool` and `llm_training` are unmodified and keep their names.
 
 ## Modified files
 
@@ -49,15 +50,12 @@ manifests add "Serfe" to the authors. Those changes are mechanical.
 To list the content changes against the base commit, ignoring the rename:
 
 ```
-git diff a6a229d-vendor HEAD -M --stat -- llm_thread serfe_llm_thread \
-    llm_assistant serfe_llm_assistant llm_litellm serfe_llm_litellm \
-    web_json_editor serfe_web_json_editor \
-    account_invoice_import_llm serfe_account_invoice_import_llm
+git diff a6a229d-vendor HEAD -M --stat
 ```
 
 ## Updating
 
 Fetch the upstream branch, diff the eight directories against the base commit
-(mapping the five renamed ones to their `serfe_` directory), and merge the
+(mapping each one to its `serfe_` directory), and merge the
 result. Record the new base commit here. Once Apexive accepts the fixes above,
 the matching `serfe_` module can be dropped in favour of the upstream one.

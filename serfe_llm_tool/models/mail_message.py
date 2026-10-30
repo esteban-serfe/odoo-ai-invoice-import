@@ -74,7 +74,7 @@ class MailMessage(models.Model):
                     "model": self.model,
                     "res_id": self.res_id,
                     "body_json": tool_data,
-                    "subtype_xmlid": "llm.mt_tool",
+                    "subtype_xmlid": "serfe_llm.mt_tool",
                     "author_id": False,
                     "body": f"Executing {tool_name}",
                 }
@@ -289,7 +289,7 @@ class MailMessage(models.Model):
                     "model": self.model,
                     "res_id": self.res_id,
                     "body_json": tool_data,
-                    "subtype_xmlid": "llm.mt_tool",
+                    "subtype_xmlid": "serfe_llm.mt_tool",
                     "author_id": False,
                 }
             )

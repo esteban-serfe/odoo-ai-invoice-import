@@ -46,7 +46,7 @@ def _fake_error_response(message):
 
 
 class _FakeTool:
-    """Duck-typed llm.tool stand-in, so this test doesn't need llm_tool as
+    """Duck-typed llm.tool stand-in, so this test doesn't need serfe_llm_tool as
     a dependency just to exercise litellm_format_tools().
     """
 

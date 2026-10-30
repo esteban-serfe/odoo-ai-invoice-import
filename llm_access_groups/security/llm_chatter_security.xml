@@ -11,11 +11,11 @@ implies this group, so managers and Settings/Admin keep access.
 <odoo>
     <record id="group_llm_chatter_user" model="res.groups">
         <field name="name">User: LLM Chatter</field>
-        <field name="category_id" ref="llm.module_category_llm" />
+        <field name="category_id" ref="serfe_llm.module_category_llm" />
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
     </record>
 
-    <record id="llm.group_llm_manager" model="res.groups">
+    <record id="serfe_llm.group_llm_manager" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('group_llm_chatter_user'))]" />
     </record>
 

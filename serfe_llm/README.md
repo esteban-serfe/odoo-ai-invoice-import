@@ -36,10 +36,10 @@ body_json = fields.Json()
 ### AI Message Subtypes
 
 Integrated message subtypes for AI interactions:
-- **`llm.mt_user`**: User messages in AI conversations
-- **`llm.mt_assistant`**: AI-generated responses
-- **`llm.mt_tool`**: Tool execution results and data  
-- **`llm.mt_system`**: System prompts and configuration messages
+- **`serfe_llm.mt_user`**: User messages in AI conversations
+- **`serfe_llm.mt_assistant`**: AI-generated responses
+- **`serfe_llm.mt_tool`**: Tool execution results and data  
+- **`serfe_llm.mt_system`**: System prompts and configuration messages
 
 ### Provider Framework
 
@@ -287,7 +287,7 @@ Build complete AI solutions by combining with specialized modules:
 
 - **`llm_assistant`**: AI assistants with prompt management
 - **`llm_thread`**: Chat interfaces and conversation management
-- **`llm_tool`**: Function calling and Odoo integration
+- **`serfe_llm_tool`**: Function calling and Odoo integration
 - **`llm_generate`**: Unified content generation API
 - **`llm_knowledge`**: RAG and knowledge base functionality
 - **`llm_store`**: Vector storage and similarity search

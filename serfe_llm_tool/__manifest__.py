@@ -22,10 +22,10 @@
         configure, and customize LLM tools, supporting intelligent Odoo assistants that automate workflows and enhance business
         automation.
     """,
-    "author": "Apexive Solutions LLC",
+    "author": "Apexive Solutions LLC, Serfe",
     "website": "https://github.com/apexive/odoo-llm",
     "license": "LGPL-3",
-    "depends": ["base", "mail", "llm"],
+    "depends": ["base", "mail", "serfe_llm"],
     "external_dependencies": {
         "python": ["pydantic>=2.0.0"],
     },

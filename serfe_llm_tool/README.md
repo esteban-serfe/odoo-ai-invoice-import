@@ -1,28 +1,30 @@
-# LLM Tool for Odoo
+# Herramientas LLM para Odoo
 
-Enhanced function calling framework with structured data storage, comprehensive error handling, and MCP integration. This module enables LLMs to interact with Odoo data and execute actions through a powerful and secure tool system.
+[English](README.en.md)
 
-## Overview
+Framework mejorado de function calling con almacenamiento de datos estructurados, manejo de errores completo e integración con MCP. Este módulo permite a los LLM interactuar con los datos de Odoo y ejecutar acciones a través de un sistema de herramientas potente y seguro.
 
-The LLM Tool module provides the foundation for AI function calling in Odoo, allowing LLMs to interact with business data, execute actions, and perform complex operations. With version 16.0.3.0.0, the module features a major refactoring with structured data storage in `body_json` and enhanced execution capabilities.
+## Descripción general
 
-### Core Capabilities
+El módulo LLM Tool es la base del function calling con IA en Odoo: permite a los LLM interactuar con datos de negocio, ejecutar acciones y realizar operaciones complejas. Con la versión 16.0.3.0.0, el módulo incorpora una refactorización importante con almacenamiento de datos estructurados en `body_json` y capacidades de ejecución mejoradas.
 
-- **Function Calling Framework** - Enable LLMs to execute Odoo methods and actions
-- **Structured Data Storage** - Tool results stored in `body_json` format for better organization
-- **MCP Integration** - Model Context Protocol compatibility for standardized tool definitions  
-- **Security Framework** - User consent system and permission-based access control
-- **Error Handling** - Comprehensive error propagation and recovery mechanisms
-- **Schema Generation** - Automatic input schema detection from method signatures
+### Capacidades principales
 
-## Key Features
+- **Framework de function calling** - Permite a los LLM ejecutar métodos y acciones de Odoo
+- **Almacenamiento de datos estructurados** - Los resultados de las herramientas se guardan en formato `body_json` para una mejor organización
+- **Integración con MCP** - Compatibilidad con Model Context Protocol para definiciones de herramientas estandarizadas  
+- **Marco de seguridad** - Sistema de consentimiento del usuario y control de acceso por permisos
+- **Manejo de errores** - Propagación de errores y mecanismos de recuperación completos
+- **Generación de esquemas** - Detección automática del esquema de entrada a partir de la firma de los métodos
 
-### Enhanced Tool System (Version 16.0.3.0.0)
+## Características clave
 
-**Structured Message Format:**
+### Sistema de herramientas mejorado (versión 16.0.3.0.0)
+
+**Formato de mensaje estructurado:**
 
 ```python
-# New body_json format for tool messages
+# Nuevo formato body_json para los mensajes de herramientas
 thread.message_post(
     body_json={
         "tool_call_id": "call_abc123",
@@ -43,16 +45,16 @@ thread.message_post(
 )
 ```
 
-**Benefits of New Format:**
-- **Better Organization**: All tool data in structured JSON format
-- **Enhanced Debugging**: Clear separation of input, output, and metadata
-- **Improved Analytics**: Easy analysis of tool usage patterns
-- **MCP Compatibility**: Standard format for tool call tracking
+**Ventajas del nuevo formato:**
+- **Mejor organización**: todos los datos de la herramienta en formato JSON estructurado
+- **Depuración mejorada**: separación clara de entrada, salida y metadatos
+- **Mejor analítica**: análisis sencillo de los patrones de uso de las herramientas
+- **Compatibilidad con MCP**: formato estándar para el seguimiento de llamadas a herramientas
 
-### Tool Implementation Types
+### Tipos de implementación de herramientas
 
-#### 1. Server Action Tools
-Execute existing Odoo server actions:
+#### 1. Herramientas de acción de servidor
+Ejecutan acciones de servidor existentes de Odoo:
 ```python
 class LLMToolServerAction(models.Model):
     _name = "llm.tool.server.action"
@@ -61,12 +63,12 @@ class LLMToolServerAction(models.Model):
     server_action_id = fields.Many2one('ir.actions.server', required=True)
     
     def server_action_execute(self, **kwargs):
-        """Execute server action with parameters"""
+        """Ejecuta la acción de servidor con parámetros"""
         return self.server_action_id.with_context(**kwargs).run()
 ```
 
-#### 2. Method Call Tools  
-Call specific model methods:
+#### 2. Herramientas de llamada a método  
+Llaman a métodos específicos de un modelo:
 ```python
 class LLMToolMethodCall(models.Model):
     _name = "llm.tool.method.call"
@@ -76,22 +78,22 @@ class LLMToolMethodCall(models.Model):
     target_method = fields.Char(required=True)
     
     def method_call_execute(self, record_ids=None, **kwargs):
-        """Execute method on target records"""
+        """Ejecuta el método sobre los registros de destino"""
         Model = self.env[self.target_model]
         records = Model.browse(record_ids) if record_ids else Model
         method = getattr(records, self.target_method)
         return method(**kwargs)
 ```
 
-#### 3. Search Tools
-Search and retrieve Odoo records:
+#### 3. Herramientas de búsqueda
+Buscan y recuperan registros de Odoo:
 ```python
 class LLMToolSearch(models.Model):
     _name = "llm.tool.search"
     _inherit = "llm.tool"
     
     def search_execute(self, model, domain=None, fields=None, limit=10, **kwargs):
-        """Search records with domain and return specified fields"""
+        """Busca registros con un dominio y devuelve los campos indicados"""
         Model = self.env[model]
         domain = domain or []
         
@@ -107,8 +109,8 @@ class LLMToolSearch(models.Model):
             } for rec in records]
 ```
 
-#### 4. Custom Function Tools
-Execute custom Python functions:
+#### 4. Herramientas de función personalizada
+Ejecutan funciones de Python personalizadas:
 ```python
 class LLMToolCustomFunction(models.Model):
     _name = "llm.tool.custom.function"
@@ -117,26 +119,26 @@ class LLMToolCustomFunction(models.Model):
     function_code = fields.Text(required=True)
     
     def custom_function_execute(self, **kwargs):
-        """Execute custom Python code safely"""
-        # Safe execution environment
+        """Ejecuta código Python personalizado de forma segura"""
+        # Entorno de ejecución seguro
         safe_globals = {
             'env': self.env,
             'fields': fields,
             'models': models,
             '_': _,
-            '__builtins__': {}  # Restricted builtins
+            '__builtins__': {}  # Builtins restringidos
         }
         
         exec(self.function_code, safe_globals, kwargs)
         return kwargs.get('result', 'Function executed successfully')
 ```
 
-### Automatic Schema Generation
+### Generación automática de esquemas
 
-**From Method Signatures:**
+**A partir de la firma de los métodos:**
 ```python
 def get_input_schema_from_method(self):
-    """Generate JSON schema from method signature"""
+    """Genera el esquema JSON a partir de la firma del método"""
     import inspect
     
     if self.implementation == 'search':
@@ -153,9 +155,9 @@ def get_input_schema_from_method(self):
         if param_name in ['self', 'kwargs']:
             continue
             
-        prop = {"type": "string"}  # Default type
+        prop = {"type": "string"}  # Tipo por defecto
         
-        # Type hint detection
+        # Detección por type hints
         if param.annotation != inspect.Parameter.empty:
             if param.annotation == int:
                 prop["type"] = "integer"
@@ -164,7 +166,7 @@ def get_input_schema_from_method(self):
             elif param.annotation == list:
                 prop["type"] = "array"
         
-        # Default value
+        # Valor por defecto
         if param.default != inspect.Parameter.empty:
             prop["default"] = param.default
         
@@ -173,9 +175,9 @@ def get_input_schema_from_method(self):
     return schema
 ```
 
-**Manual Schema Definition:**
+**Definición manual del esquema:**
 ```python
-# Custom JSON schema for complex tools
+# Esquema JSON personalizado para herramientas complejas
 tool_schema = {
     "type": "object",
     "properties": {
@@ -206,9 +208,9 @@ tool_schema = {
 }
 ```
 
-## Security Framework
+## Marco de seguridad
 
-### User Consent System
+### Sistema de consentimiento del usuario
 
 ```python
 class LLMTool(models.Model):
@@ -230,7 +232,7 @@ class LLMTool(models.Model):
     )
     
     def execute_with_consent(self, user_id, **kwargs):
-        """Execute tool with user consent validation"""
+        """Ejecuta la herramienta validando el consentimiento del usuario"""
         if self.requires_user_consent:
             consent = self._check_user_consent(user_id, **kwargs)
             if not consent:
@@ -239,22 +241,22 @@ class LLMTool(models.Model):
         return self.execute(**kwargs)
 ```
 
-### Permission Framework
+### Marco de permisos
 
 ```python
 def check_execution_permissions(self, user_id=None):
-    """Check if user has permission to execute this tool"""
+    """Verifica si el usuario tiene permiso para ejecutar esta herramienta"""
     user = self.env['res.users'].browse(user_id) if user_id else self.env.user
     
-    # Check basic tool access
+    # Verificar el acceso básico a la herramienta
     if not user.has_group('serfe_llm.group_llm_user'):
         return False, "User not in LLM User group"
     
-    # Check tool-specific permissions
+    # Verificar los permisos propios de la herramienta
     if self.destructive_hint and not user.has_group('serfe_llm.group_llm_manager'):
         return False, "Destructive operations require LLM Manager role"
     
-    # Check model-specific permissions
+    # Verificar los permisos sobre el modelo
     if hasattr(self, 'target_model'):
         Model = self.env[self.target_model]
         if not Model.check_access_rights('read', raise_exception=False):
@@ -263,9 +265,9 @@ def check_execution_permissions(self, user_id=None):
     return True, "Permission granted"
 ```
 
-## Tool Execution Examples
+## Ejemplos de ejecución de herramientas
 
-### CRM Tools
+### Herramientas de CRM
 
 ```python
 class CRMSearchTool(models.Model):
@@ -273,7 +275,7 @@ class CRMSearchTool(models.Model):
     _inherit = "llm.tool"
     
     def crm_search_execute(self, query=None, stage=None, user_id=None, limit=10):
-        """Search CRM opportunities with intelligent filtering"""
+        """Busca oportunidades del CRM con filtrado inteligente"""
         domain = []
         
         if query:
@@ -306,7 +308,7 @@ class CRMSearchTool(models.Model):
         }
 ```
 
-### Inventory Tools
+### Herramientas de inventario
 
 ```python
 class InventoryTool(models.Model):
@@ -314,7 +316,7 @@ class InventoryTool(models.Model):
     _inherit = "llm.tool"
     
     def inventory_check_execute(self, product_ids=None, location_id=None):
-        """Check inventory levels for products"""
+        """Consulta los niveles de inventario de los productos"""
         domain = []
         
         if product_ids:
@@ -344,7 +346,7 @@ class InventoryTool(models.Model):
         return inventory_data
 ```
 
-### Report Generation Tools
+### Herramientas de generación de reportes
 
 ```python
 class ReportGenerationTool(models.Model):
@@ -352,7 +354,7 @@ class ReportGenerationTool(models.Model):
     _inherit = "llm.tool"
     
     def report_generate_execute(self, report_name, record_ids, format='pdf'):
-        """Generate reports for specified records"""
+        """Genera reportes para los registros indicados"""
         report = self.env['ir.actions.report']._get_report_from_name(report_name)
         if not report:
             raise UserError(f"Report '{report_name}' not found")
@@ -377,13 +379,13 @@ class ReportGenerationTool(models.Model):
             raise UserError(f"Unsupported format: {format}")
 ```
 
-## MCP Integration
+## Integración con MCP
 
-### Tool Definition for MCP
+### Definición de herramientas para MCP
 
 ```python
 def get_mcp_tool_definition(self):
-    """Generate MCP-compatible tool definition"""
+    """Genera una definición de herramienta compatible con MCP"""
     return {
         "name": self.name,
         "description": self.description,
@@ -395,7 +397,7 @@ def get_mcp_tool_definition(self):
     }
 
 def execute_mcp_call(self, arguments):
-    """Execute tool call from MCP client"""
+    """Ejecuta una llamada a herramienta proveniente de un cliente MCP"""
     try:
         result = self.execute(**arguments)
         return {
@@ -418,7 +420,7 @@ def execute_mcp_call(self, arguments):
         }
 ```
 
-### MCP Server Integration
+### Integración con un servidor MCP
 
 ```python
 class MCPToolServer(models.Model):
@@ -426,12 +428,12 @@ class MCPToolServer(models.Model):
     _inherit = "llm.mcp.server"
     
     def get_available_tools(self):
-        """Return all available tools for MCP clients"""
+        """Devuelve todas las herramientas disponibles para los clientes MCP"""
         tools = self.env['llm.tool'].search([('active', '=', True)])
         return [tool.get_mcp_tool_definition() for tool in tools]
     
     def call_tool(self, name, arguments):
-        """Handle tool call from MCP client"""
+        """Atiende una llamada a herramienta de un cliente MCP"""
         tool = self.env['llm.tool'].search([('name', '=', name)], limit=1)
         if not tool:
             raise UserError(f"Tool '{name}' not found")
@@ -439,28 +441,28 @@ class MCPToolServer(models.Model):
         return tool.execute_mcp_call(arguments)
 ```
 
-## Error Handling & Logging
+## Manejo de errores y registro
 
-### Comprehensive Error Management
+### Gestión de errores completa
 
 ```python
 def execute_with_error_handling(self, **kwargs):
-    """Execute tool with comprehensive error handling"""
+    """Ejecuta la herramienta con manejo de errores completo"""
     execution_start = time.time()
     
     try:
-        # Validate inputs
+        # Validar las entradas
         self._validate_execution_inputs(**kwargs)
         
-        # Check permissions
+        # Verificar los permisos
         can_execute, error_msg = self.check_execution_permissions()
         if not can_execute:
             raise PermissionError(error_msg)
         
-        # Execute tool
+        # Ejecutar la herramienta
         result = self.execute(**kwargs)
         
-        # Log successful execution
+        # Registrar la ejecución exitosa
         self._log_tool_execution(
             status='success',
             duration=time.time() - execution_start,
@@ -494,11 +496,11 @@ def execute_with_error_handling(self, **kwargs):
         raise UserError(f"Tool execution failed: {str(e)}")
 ```
 
-### Execution Logging
+### Registro de ejecuciones
 
 ```python
 def _log_tool_execution(self, status, duration=None, error=None, result_size=None):
-    """Log tool execution for monitoring and debugging"""
+    """Registra la ejecución de la herramienta para monitoreo y depuración"""
     log_data = {
         'tool_id': self.id,
         'tool_name': self.name,
@@ -510,48 +512,48 @@ def _log_tool_execution(self, status, duration=None, error=None, result_size=Non
         'result_size_bytes': result_size
     }
     
-    # Create execution log record
+    # Crear el registro de ejecución
     self.env['llm.tool.execution.log'].create(log_data)
     
-    # Also log to system log for monitoring
+    # Registrar también en el log del sistema para monitoreo
     if status == 'success':
         _logger.info(f"Tool '{self.name}' executed successfully in {duration:.3f}s")
     else:
         _logger.warning(f"Tool '{self.name}' failed: {error}")
 ```
 
-## API Reference
+## Referencia de la API
 
-### Core Methods
+### Métodos principales
 
 ```python
-# Execute tool with arguments
+# Ejecutar la herramienta con argumentos
 def execute(self, **kwargs):
-    """Main execution method - implemented by subclasses"""
+    """Método de ejecución principal - lo implementan las subclases"""
 
-# Get tool definition for AI models
+# Obtener la definición de la herramienta para los modelos de IA
 def get_tool_definition(self):
-    """Return tool definition in OpenAI function calling format"""
+    """Devuelve la definición en formato function calling de OpenAI"""
 
-# Validate execution permissions
+# Validar los permisos de ejecución
 def check_execution_permissions(self, user_id=None):
-    """Check if user can execute this tool"""
+    """Verifica si el usuario puede ejecutar esta herramienta"""
 
-# Generate input schema
+# Generar el esquema de entrada
 def get_input_schema(self):
-    """Return JSON schema for tool inputs"""
+    """Devuelve el esquema JSON de las entradas de la herramienta"""
 
-# MCP integration
+# Integración con MCP
 def get_mcp_tool_definition(self):
-    """Return MCP-compatible tool definition"""
+    """Devuelve una definición de herramienta compatible con MCP"""
 ```
 
-### Tool Registration
+### Registro de herramientas
 
 ```python
 @api.model
 def _get_available_implementations(self):
-    """Return available tool implementation types"""
+    """Devuelve los tipos de implementación de herramienta disponibles"""
     return [
         ('search', 'Search Records'),
         ('server_action', 'Server Action'),
@@ -560,19 +562,19 @@ def _get_available_implementations(self):
     ]
 ```
 
-## Performance Optimizations
+## Optimizaciones de rendimiento
 
-### Execution Caching
+### Caché de ejecución
 
 ```python
 @api.model
 @tools.ormcache('tool_id', 'cache_key')
 def _get_cached_execution_result(self, tool_id, cache_key):
-    """Cache tool execution results for read-only operations"""
+    """Cachea los resultados de ejecución de las operaciones de solo lectura"""
     return self._execute_without_cache()
 
 def execute_with_cache(self, **kwargs):
-    """Execute with result caching for read-only tools"""
+    """Ejecuta con caché de resultados para herramientas de solo lectura"""
     if not self.read_only_hint:
         return self.execute(**kwargs)
     
@@ -580,25 +582,25 @@ def execute_with_cache(self, **kwargs):
     return self._get_cached_execution_result(self.id, cache_key)
 ```
 
-### Batch Operations
+### Operaciones por lotes
 
 ```python
 def execute_batch(self, operation_list):
-    """Execute multiple tool operations in batch"""
+    """Ejecuta varias operaciones de la herramienta por lotes"""
     results = []
     
-    # Group operations by type for optimization
+    # Agrupar las operaciones por tipo para optimizar
     grouped_ops = self._group_operations_by_type(operation_list)
     
     for op_type, operations in grouped_ops.items():
         if op_type == 'search':
-            # Batch search operations
+            # Búsquedas por lotes
             batch_results = self._execute_batch_search(operations)
         elif op_type == 'method_call':
-            # Batch method calls
+            # Llamadas a método por lotes
             batch_results = self._execute_batch_method_calls(operations)
         else:
-            # Execute individually
+            # Ejecutar individualmente
             batch_results = [self.execute(**op) for op in operations]
         
         results.extend(batch_results)
@@ -606,30 +608,30 @@ def execute_batch(self, operation_list):
     return results
 ```
 
-## Migration Notes
+## Notas de migración
 
-### Version 16.0.3.0.0 Changes
+### Cambios de la versión 16.0.3.0.0
 
-**Major Refactoring:**
-- **Tool message format** changed to structured `body_json` format
-- **Enhanced execution** with better error handling and logging
-- **MCP integration** added for standardized tool definitions
-- **Security improvements** with enhanced permission framework
+**Refactorización importante:**
+- El **formato de los mensajes de herramientas** pasó al formato estructurado `body_json`
+- **Ejecución mejorada** con mejor manejo de errores y registro
+- **Integración con MCP** para definiciones de herramientas estandarizadas
+- **Mejoras de seguridad** con un marco de permisos reforzado
 
-**Migration Script:** Automatically converts existing tool messages:
+**Script de migración:** convierte automáticamente los mensajes de herramientas existentes:
 ```python
 def migrate_tool_messages(env):
-    """Convert old tool messages to new body_json format"""
+    """Convierte los mensajes de herramientas viejos al nuevo formato body_json"""
     tool_messages = env['mail.message'].search([
         ('llm_role', '=', 'tool'),
         ('body_json', '=', False)
     ])
     
     for message in tool_messages:
-        # Extract tool data from old format
+        # Extraer los datos de la herramienta del formato anterior
         old_data = message._extract_legacy_tool_data()
         
-        # Convert to new format
+        # Convertir al nuevo formato
         new_format = {
             "tool_call_id": old_data.get('call_id'),
             "function": old_data.get('function_name'),
@@ -641,51 +643,51 @@ def migrate_tool_messages(env):
         message.body_json = new_format
 ```
 
-**Breaking Changes:** None for end users - internal message format only
+**Cambios incompatibles:** ninguno para los usuarios finales; solo cambia el formato interno de los mensajes
 
-## Technical Specifications
+## Especificaciones técnicas
 
-### Module Information
+### Información del módulo
 
-- **Name**: LLM Tool
-- **Version**: 16.0.3.0.0
-- **Category**: Technical
-- **License**: LGPL-3
-- **Dependencies**: `serfe_llm`, `mail`
-- **Author**: Apexive Solutions LLC
+- **Nombre**: LLM Tool
+- **Versión**: 16.0.3.0.0
+- **Categoría**: Technical
+- **Licencia**: LGPL-3
+- **Dependencias**: `serfe_llm`, `mail`
+- **Autor**: Apexive Solutions LLC
 
-### Key Models
+### Modelos principales
 
-- **`llm.tool`**: Base tool framework
-- **`llm.tool.execution.log`**: Execution logging and monitoring
-- **Tool implementation models**: Various specialized tool types
+- **`llm.tool`**: framework base de herramientas
+- **`llm.tool.execution.log`**: registro y monitoreo de ejecuciones
+- **Modelos de implementación**: varios tipos de herramientas especializadas
 
-### Security Features
+### Funciones de seguridad
 
-- User consent system for sensitive operations
-- Permission-based access control
-- Execution logging and audit trails
-- Safe execution environments for custom code
+- Sistema de consentimiento del usuario para operaciones sensibles
+- Control de acceso basado en permisos
+- Registro de ejecuciones y pistas de auditoría
+- Entornos de ejecución seguros para el código personalizado
 
-## Related Modules
+## Módulos relacionados
 
-- **`serfe_llm`**: Base infrastructure and messaging system
-- **`llm_assistant`**: Assistant configuration with tool selection
-- **`llm_thread`**: Chat interface with tool execution display
-- **`llm_tool_knowledge`**: Knowledge base search tool
-- **`llm_mcp`**: Model Context Protocol server implementation
+- **`serfe_llm`**: infraestructura base y sistema de mensajería
+- **`llm_assistant`**: configuración de asistentes con selección de herramientas
+- **`llm_thread`**: interfaz de chat con visualización de la ejecución de herramientas
+- **`llm_tool_knowledge`**: herramienta de búsqueda en la base de conocimiento
+- **`llm_mcp`**: implementación del servidor Model Context Protocol
 
-## Support & Resources
+## Soporte y recursos
 
-- **Documentation**: [GitHub Repository](https://github.com/apexive/odoo-llm)
-- **Architecture Guide**: [OVERVIEW.md](../OVERVIEW.md)
-- **Tool Examples**: [Tool Development Guide](examples/)
-- **Community**: [GitHub Discussions](https://github.com/apexive/odoo-llm/discussions)
+- **Documentación**: [repositorio de GitHub](https://github.com/apexive/odoo-llm)
+- **Guía de arquitectura**: [OVERVIEW.md](../OVERVIEW.md)
+- **Ejemplos de herramientas**: [guía de desarrollo de herramientas](examples/)
+- **Comunidad**: [GitHub Discussions](https://github.com/apexive/odoo-llm/discussions)
 
-## License
+## Licencia
 
-This module is licensed under [LGPL-3](https://www.gnu.org/licenses/lgpl-3.0.html).
+Este módulo está licenciado bajo [LGPL-3](https://www.gnu.org/licenses/lgpl-3.0.html).
 
 ---
 
-*© 2025 Apexive Solutions LLC. All rights reserved.*
+*© 2025 Apexive Solutions LLC. Todos los derechos reservados.*

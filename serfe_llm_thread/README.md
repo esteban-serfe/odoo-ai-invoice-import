@@ -1,37 +1,39 @@
-# LLM Thread Module
+# Módulo LLM Thread
 
-This Odoo module provides functionality for managing and interacting with threads in a Large Language Model (LLM) context. It includes components for chat threads, message lists, and composer views.
+[English](README.en.md)
 
-## Features
+Este módulo de Odoo ofrece la funcionalidad para gestionar e interactuar con hilos en el contexto de un modelo de lenguaje (LLM). Incluye componentes para hilos de chat, listas de mensajes y vistas de composición.
 
-- **Chat Thread Management**: Create, update, and manage chat threads.
-- **Message List**: Display and interact with messages in a thread.
-- **Composer View**: Input and send messages within a thread.
-- **Tool Integration**: Support for function calling and tools that allow LLM models to perform actions in Odoo.
+## Características
 
-## Installation
+- **Gestión de hilos de chat**: crear, actualizar y administrar hilos de chat.
+- **Lista de mensajes**: mostrar los mensajes de un hilo e interactuar con ellos.
+- **Vista de composición**: escribir y enviar mensajes dentro de un hilo.
+- **Integración de herramientas**: soporte de function calling y de herramientas que permiten a los modelos LLM realizar acciones en Odoo.
 
-1. Clone the repository into your Odoo addons directory.
-2. Install the module via the Odoo Apps menu.
+## Instalación
 
-## Usage
+1. Clonar el repositorio en el directorio de addons de Odoo.
+2. Instalar el módulo desde el menú Aplicaciones de Odoo.
 
-1. First, install and configure at least one LLM provider module (e.g., llm_openai, llm_anthropic, llm_ollama).
-2. Configure the provider with appropriate API keys and settings.
-3. Navigate to **LLM → Chat** menu item in your Odoo instance.
-4. Click on "New Chat" to start a new conversation thread.
-5. You can create multiple threads, view existing ones, and interact with messages.
-6. If you have installed the serfe_llm_tool module, you can enable function calling capabilities that allow the AI to perform actions in Odoo, such as creating records, searching for information, or executing specific business logic.
+## Uso
 
-## Dependencies
+1. Primero, instalar y configurar al menos un módulo de proveedor LLM (por ejemplo, llm_openai, llm_anthropic, llm_ollama).
+2. Configurar el proveedor con las API keys y ajustes correspondientes.
+3. Ir al menú **LLM → Chat** de Odoo.
+4. Hacer clic en "New Chat" para iniciar un hilo de conversación nuevo.
+5. Se pueden crear varios hilos, ver los existentes e interactuar con los mensajes.
+6. Si instalaste el módulo serfe_llm_tool, podés habilitar el function calling, que permite a la IA realizar acciones en Odoo, como crear registros, buscar información o ejecutar lógica de negocio específica.
 
-- Odoo 16.0 or later
-- Python 3.8 or later
+## Dependencias
 
-## Contributing
+- Odoo 16.0 o posterior
+- Python 3.8 o posterior
 
-Contributions are welcome! Please follow the contribution guidelines in the repository.
+## Contribuir
 
-## License
+¡Las contribuciones son bienvenidas! Seguí las pautas de contribución del repositorio.
 
-This module is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+## Licencia
+
+Este módulo está licenciado bajo la [Licencia MIT](https://opensource.org/licenses/MIT).

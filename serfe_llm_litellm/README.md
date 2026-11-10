@@ -1,39 +1,41 @@
-# LiteLLM Proxy Integration for Odoo
+# Integración del proxy LiteLLM para Odoo
 
-This module integrates LiteLLM proxy with the Odoo LLM framework, providing access to multiple LLM providers through a single proxy.
+[English](README.en.md)
 
-## Features
+Este módulo integra el proxy LiteLLM con el framework LLM de Odoo, dando acceso a múltiples proveedores de LLM a través de un único proxy.
 
-- Connect to LiteLLM proxy with proper authentication
-- Support for multiple LLM providers through a single endpoint
-- Text generation capabilities
-- Automatic model discovery
-- Rate limiting and cost tracking through proxy
+## Características
 
-## Configuration
+- Conexión al proxy LiteLLM con autenticación adecuada
+- Soporte de múltiples proveedores de LLM a través de un único endpoint
+- Generación de texto
+- Descubrimiento automático de modelos
+- Límites de uso y seguimiento de costos a través del proxy
 
-1. Install the module
-2. Navigate to **LLM > Configuration > Providers**
-3. Create a new provider and select "LiteLLM" as the provider type
-4. Enter your LiteLLM proxy URL and API key (if required)
-5. Click "Fetch Models" to import available models
+## Configuración
 
-## Current Status
+1. Instalar el módulo
+2. Ir a **LLM > Configuración > Proveedores**
+3. Crear un proveedor nuevo y elegir "LiteLLM" como tipo de proveedor
+4. Ingresar la URL de tu proxy LiteLLM y la API key (si hace falta)
+5. Hacer clic en "Fetch Models" para importar los modelos disponibles
 
-This module is in an early stage of development. Basic functionality for connecting to LiteLLM proxy and generating text is implemented, but advanced features are still under development.
+## Estado actual
 
-## Technical Details
+Este módulo está en una etapa temprana de desarrollo. Está implementada la funcionalidad básica para conectarse al proxy LiteLLM y generar texto, pero las funciones avanzadas siguen en desarrollo.
 
-This module extends the base LLM integration framework with LiteLLM-specific implementations:
+## Detalles técnicos
 
-- Implements the LiteLLM proxy client with proper authentication
-- Provides model mapping between LiteLLM formats and Odoo LLM formats
-- Handles basic error cases
+Este módulo extiende el framework base de integración LLM con implementaciones específicas de LiteLLM:
 
-## Dependencies
+- Implementa el cliente del proxy LiteLLM con autenticación adecuada
+- Mapea los formatos de LiteLLM a los formatos LLM de Odoo
+- Maneja los casos de error básicos
+
+## Dependencias
 
 - llm (LLM Integration Base)
 
-## License
+## Licencia
 
 LGPL-3

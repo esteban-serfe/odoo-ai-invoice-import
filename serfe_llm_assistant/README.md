@@ -1,38 +1,40 @@
-# LLM Assistant for Odoo
+# Asistente LLM para Odoo
 
-Advanced AI assistant management with integrated prompt templates, testing capabilities, and intelligent configuration orchestration. This module serves as the intelligence layer that defines how Odoo data connects to AI models.
+[English](README.en.md)
 
-## Overview
+Gestión avanzada de asistentes de IA con plantillas de prompts integradas, capacidades de prueba y una orquestación inteligente de la configuración. Este módulo es la capa de inteligencia que define cómo los datos de Odoo se conectan con los modelos de IA.
 
-The LLM Assistant module provides sophisticated AI assistant management that goes far beyond simple chatbots. It serves as the intelligent configuration layer that orchestrates how AI models interact with Odoo data, with integrated prompt template management and comprehensive testing capabilities.
+## Descripción general
 
-### Core Capabilities
+El módulo LLM Assistant ofrece una gestión de asistentes de IA que va mucho más allá de un simple chatbot. Es la capa de configuración inteligente que orquesta cómo los modelos de IA interactúan con los datos de Odoo, con gestión integrada de plantillas de prompts y capacidades de prueba completas.
 
-- **AI Assistant Configuration** - Define specialized AI personas with specific roles and capabilities
-- **Integrated Prompt Management** - Consolidated prompt template system (formerly separate `llm_prompt` module)
-- **Template Testing** - Built-in testing wizard for prompt validation and optimization
-- **Context Orchestration** - Intelligent mapping between Odoo data and AI inputs
-- **Tool Management** - Configure available tools and their usage patterns
-- **Generation Configuration** - Templates for different content types (text, images, etc.)
+### Capacidades principales
 
-## Key Features
+- **Configuración de asistentes de IA** - Definir personas de IA especializadas con roles y capacidades específicas
+- **Gestión integrada de prompts** - Sistema consolidado de plantillas de prompts (antes el módulo separado `llm_prompt`)
+- **Pruebas de plantillas** - Asistente de pruebas integrado para validar y optimizar prompts
+- **Orquestación de contexto** - Mapeo inteligente entre los datos de Odoo y las entradas de la IA
+- **Gestión de herramientas** - Configurar las herramientas disponibles y sus patrones de uso
+- **Configuración de generación** - Plantillas para distintos tipos de contenido (texto, imágenes, etc.)
 
-### Consolidated Architecture
+## Características clave
 
-**Version 16.0.1.4.0** consolidates functionality from the former `llm_prompt` module:
+### Arquitectura consolidada
 
-- ✅ **Prompt templates integrated** into assistant management
-- ✅ **Enhanced testing wizard** with context simulation  
-- ✅ **Streamlined UI** with unified assistant and prompt selection
-- ✅ **Auto-argument detection** for template variables
-- ✅ **Schema synchronization** between templates and forms
+La **versión 16.0.1.4.0** consolida la funcionalidad del antiguo módulo `llm_prompt`:
 
-### Assistant Types & Use Cases
+- ✅ **Plantillas de prompts integradas** en la gestión de asistentes
+- ✅ **Asistente de pruebas mejorado** con simulación de contexto  
+- ✅ **Interfaz simplificada** con selección unificada de asistente y prompt
+- ✅ **Detección automática de argumentos** de las variables de la plantilla
+- ✅ **Sincronización de esquemas** entre plantillas y formularios
 
-#### 1. Chat Assistants
-Configure conversational AI with specific personas:
+### Tipos de asistente y casos de uso
+
+#### 1. Asistentes de chat
+Configurar una IA conversacional con personas específicas:
 ```python
-# Customer service assistant
+# Asistente de atención al cliente
 assistant = env['llm.assistant'].create({
     'name': 'Customer Support Bot',
     'role': 'Customer Service Representative',
@@ -48,10 +50,10 @@ assistant = env['llm.assistant'].create({
 })
 ```
 
-#### 2. Content Generation Assistants
-Configure specialized content creation workflows:
+#### 2. Asistentes de generación de contenido
+Configurar flujos especializados de creación de contenido:
 ```python
-# Marketing content generator
+# Generador de contenido de marketing
 assistant = env['llm.assistant'].create({
     'name': 'Marketing Content Creator',
     'role': 'Marketing Specialist',
@@ -64,10 +66,10 @@ assistant = env['llm.assistant'].create({
 })
 ```
 
-#### 3. Analysis Assistants
-Configure data analysis and insights:
+#### 3. Asistentes de análisis
+Configurar el análisis de datos y la obtención de conclusiones:
 ```python
-# Business intelligence assistant
+# Asistente de inteligencia de negocios
 assistant = env['llm.assistant'].create({
     'name': 'BI Analyst',
     'role': 'Business Intelligence Analyst', 
@@ -76,11 +78,11 @@ assistant = env['llm.assistant'].create({
 })
 ```
 
-### Integrated Prompt Template System
+### Sistema integrado de plantillas de prompts
 
-#### Template Management
+#### Gestión de plantillas
 ```python
-# Create prompt template with auto-detection
+# Crear una plantilla de prompt con detección automática
 prompt = env['llm.prompt'].create({
     'name': 'Sales Email Generator',
     'template': '''
@@ -98,13 +100,13 @@ Email should be {{tone}} and focus on {{key_benefits}}.
     'category_id': sales_category.id
 })
 
-# Arguments automatically detected and schema generated
+# Los argumentos se detectan solos y se genera el esquema
 prompt.auto_detect_arguments()
 ```
 
-#### Advanced Template Formats
+#### Formatos avanzados de plantilla
 
-**YAML Format** for structured conversations:
+**Formato YAML** para conversaciones estructuradas:
 ```yaml
 messages:
   - type: system
@@ -116,7 +118,7 @@ messages:
       {{user_request}}
 ```
 
-**JSON Format** for direct API compatibility:
+**Formato JSON** para compatibilidad directa con la API:
 ```json
 {
   "messages": [
@@ -134,14 +136,14 @@ messages:
 }
 ```
 
-### Testing & Validation
+### Pruebas y validación
 
-#### Enhanced Testing Wizard
+#### Asistente de pruebas mejorado
 
-The integrated testing wizard provides comprehensive validation:
+El asistente de pruebas integrado ofrece una validación completa:
 
 ```python
-# Launch testing wizard
+# Abrir el asistente de pruebas
 wizard = env['llm.assistant.test.wizard'].create({
     'assistant_id': assistant.id,
     'test_context': {
@@ -151,7 +153,7 @@ wizard = env['llm.assistant.test.wizard'].create({
     }
 })
 
-# Test with different scenarios
+# Probar con distintos escenarios
 wizard.run_test_scenarios([
     {'tone': 'professional', 'urgency': 'high'},
     {'tone': 'friendly', 'urgency': 'low'},
@@ -159,20 +161,20 @@ wizard.run_test_scenarios([
 ])
 ```
 
-#### Auto-Detection Features
+#### Funciones de detección automática
 
-- **Template Arguments**: Automatically detect `{{variables}}` in templates
-- **Schema Generation**: Create JSON schemas for form generation
-- **Validation**: Ensure template-schema consistency
-- **Default Values**: Smart defaults based on context
+- **Argumentos de la plantilla**: detecta automáticamente las `{{variables}}` de las plantillas
+- **Generación de esquemas**: crea esquemas JSON para generar formularios
+- **Validación**: asegura la consistencia entre plantilla y esquema
+- **Valores por defecto**: valores por defecto inteligentes según el contexto
 
-### Context Orchestration
+### Orquestación de contexto
 
-#### Data Mapping Configuration
+#### Configuración del mapeo de datos
 
 ```python
 def prepare_context(self, record=None, user_input=None):
-    """Transform Odoo data into LLM-compatible context"""
+    """Transforma los datos de Odoo en un contexto compatible con el LLM"""
     context = {}
     
     if record and record._name == 'sale.order':
@@ -183,29 +185,29 @@ def prepare_context(self, record=None, user_input=None):
             'sales_person': record.user_id.name
         })
     
-    # Add user input and system context
+    # Agregar la entrada del usuario y el contexto del sistema
     context['user_input'] = user_input
     context['current_date'] = fields.Date.today()
     
     return context
 ```
 
-#### Intelligent History Management
+#### Gestión inteligente del historial
 
 ```python
 def trim_conversation_history(self, messages, max_tokens=4000):
-    """Intelligent context window management"""
-    # Keep system message and recent context
-    # Remove older messages while preserving important context
-    # Maintain conversation coherence
+    """Gestión inteligente de la ventana de contexto"""
+    # Conservar el mensaje del sistema y el contexto reciente
+    # Eliminar los mensajes más antiguos preservando el contexto importante
+    # Mantener la coherencia de la conversación
 ```
 
-## Configuration Guide
+## Guía de configuración
 
-### 1. Basic Assistant Setup
+### 1. Configuración básica de un asistente
 
 ```python
-# Create specialized assistant
+# Crear un asistente especializado
 assistant = env['llm.assistant'].create({
     'name': 'Sales Assistant',
     'role': 'Sales Representative',
@@ -224,10 +226,10 @@ assistant = env['llm.assistant'].create({
 })
 ```
 
-### 2. Prompt Template Integration
+### 2. Integración de plantillas de prompts
 
 ```python
-# Create template for the assistant
+# Crear una plantilla para el asistente
 template = env['llm.prompt'].create({
     'name': 'Sales Conversation Template',
     'template': '''
@@ -251,76 +253,76 @@ Guidelines: {{instructions}}
     }
 })
 
-# Link template to assistant
+# Vincular la plantilla al asistente
 assistant.prompt_id = template.id
 ```
 
-### 3. Tool Configuration
+### 3. Configuración de herramientas
 
 ```python
-# Configure available tools for assistant
+# Configurar las herramientas disponibles para el asistente
 assistant.tool_ids = [(6, 0, [
-    crm_search_tool.id,      # Search CRM records
-    product_catalog_tool.id,  # Access product information
-    pricing_tool.id,         # Get pricing and discounts
-    calendar_tool.id,        # Schedule meetings
-    email_tool.id           # Send follow-up emails
+    crm_search_tool.id,      # Buscar registros del CRM
+    product_catalog_tool.id,  # Acceder a la información de productos
+    pricing_tool.id,         # Obtener precios y descuentos
+    calendar_tool.id,        # Agendar reuniones
+    email_tool.id           # Enviar correos de seguimiento
 ])]
 ```
 
-## API Reference
+## Referencia de la API
 
-### Assistant Methods
+### Métodos del asistente
 
 ```python
-# Get system prompt with context
+# Obtener el prompt del sistema con contexto
 system_prompt = assistant.get_system_prompt(context={
     'customer_name': 'John Doe',
     'customer_company': 'ABC Corp'
 })
 
-# Prepare conversation context
+# Preparar el contexto de la conversación
 context = assistant.prepare_context(
     record=sale_order,
     user_input="Tell me about pricing options"
 )
 
-# Get available tools
+# Obtener las herramientas disponibles
 tools = assistant.get_available_tools()
 
-# Render prompt template
+# Renderizar la plantilla del prompt
 messages = assistant.prompt_id.get_messages(arguments={
     'customer_name': 'John Doe',
     'role': 'Sales Assistant'
 })
 ```
 
-### Template Methods
+### Métodos de la plantilla
 
 ```python
-# Auto-detect template arguments
+# Detectar automáticamente los argumentos de la plantilla
 prompt.auto_detect_arguments()
 
-# Render template with arguments
+# Renderizar la plantilla con argumentos
 rendered = prompt.get_messages(arguments={
     'customer_name': 'John Smith',
     'product_name': 'Enterprise Suite'
 })
 
-# Validate template syntax
+# Validar la sintaxis de la plantilla
 is_valid, errors = prompt.validate_template()
 ```
 
-## Integration Examples
+## Ejemplos de integración
 
-### CRM Integration
+### Integración con CRM
 
 ```python
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     def create_ai_assistant_thread(self):
-        """Create AI assistant thread for this sale order"""
+        """Crea un hilo con el asistente de IA para este pedido de venta"""
         thread = self.env['llm.thread'].create({
             'name': f'Sales Discussion - {self.name}',
             'model': self._name,
@@ -328,7 +330,7 @@ class SaleOrder(models.Model):
             'assistant_id': self.env.ref('my_module.sales_assistant').id
         })
         
-        # Initialize with order context
+        # Inicializar con el contexto del pedido
         context = {
             'customer_name': self.partner_id.name,
             'order_total': self.amount_total,
@@ -344,14 +346,14 @@ class SaleOrder(models.Model):
         return thread
 ```
 
-### Project Management Integration
+### Integración con gestión de proyectos
 
 ```python
 class ProjectTask(models.Model):
     _inherit = 'project.task'
     
     def get_ai_assistance(self, query):
-        """Get AI assistance for project tasks"""
+        """Obtiene ayuda de la IA para las tareas de un proyecto"""
         assistant = self.env.ref('my_module.project_assistant')
         
         context = assistant.prepare_context(
@@ -359,7 +361,7 @@ class ProjectTask(models.Model):
             user_input=query
         )
         
-        # Generate AI response with project context
+        # Generar la respuesta de la IA con el contexto del proyecto
         response = assistant.generate_response(
             context=context,
             tools=['project_search', 'time_tracking', 'resource_planning']
@@ -368,77 +370,77 @@ class ProjectTask(models.Model):
         return response
 ```
 
-## Migration Notes
+## Notas de migración
 
-### From llm_prompt Module
+### Desde el módulo llm_prompt
 
-**Automatic Migration** (Version 16.0.1.4.0):
-- All existing prompts automatically migrated to assistant module
-- Template functionality seamlessly integrated
-- Enhanced testing capabilities added
-- No data loss or configuration changes required
+**Migración automática** (versión 16.0.1.4.0):
+- Todos los prompts existentes se migran automáticamente al módulo de asistentes
+- La funcionalidad de plantillas queda integrada sin fricciones
+- Se agregan capacidades de prueba mejoradas
+- Sin pérdida de datos ni cambios de configuración
 
-**New Features Added**:
-- Auto-argument detection for existing templates
-- Enhanced testing wizard with context simulation
-- Improved UI with unified assistant/prompt management
-- Better error handling and validation
+**Nuevas funciones:**
+- Detección automática de argumentos para las plantillas existentes
+- Asistente de pruebas mejorado con simulación de contexto
+- Interfaz mejorada con gestión unificada de asistentes y prompts
+- Mejor manejo de errores y validación
 
-### Breaking Changes
+### Cambios incompatibles
 
-None - this is a consolidation update with full backward compatibility.
+Ninguno: es una actualización de consolidación con total compatibilidad hacia atrás.
 
-## Technical Specifications
+## Especificaciones técnicas
 
-### Module Information
+### Información del módulo
 
-- **Name**: LLM Assistant
-- **Version**: 16.0.1.4.0
-- **Category**: Productivity
-- **License**: LGPL-3
-- **Dependencies**: `serfe_llm`, `mail`
-- **Author**: Apexive Solutions LLC
+- **Nombre**: LLM Assistant
+- **Versión**: 16.0.1.4.0
+- **Categoría**: Productivity
+- **Licencia**: LGPL-3
+- **Dependencias**: `serfe_llm`, `mail`
+- **Autor**: Apexive Solutions LLC
 
-### Key Models
+### Modelos principales
 
-- **`llm.assistant`**: Main assistant configuration
-- **`llm.prompt`**: Integrated prompt template management  
-- **`llm.prompt.category`**: Template categorization
-- **`llm.assistant.test.wizard`**: Testing and validation
+- **`llm.assistant`**: configuración principal del asistente
+- **`llm.prompt`**: gestión integrada de plantillas de prompts  
+- **`llm.prompt.category`**: categorización de plantillas
+- **`llm.assistant.test.wizard`**: pruebas y validación
 
-## Performance Features
+## Rendimiento
 
-- **Smart Context Management**: Intelligent conversation history trimming
-- **Template Caching**: Optimized template rendering and argument detection
-- **Async Operations**: Non-blocking testing and validation
-- **Database Optimization**: Efficient storage of assistant configurations
+- **Gestión inteligente del contexto**: recorte inteligente del historial de conversación
+- **Caché de plantillas**: renderizado y detección de argumentos optimizados
+- **Operaciones asíncronas**: pruebas y validación sin bloqueo
+- **Optimización de base de datos**: almacenamiento eficiente de las configuraciones de asistentes
 
-## Security Features
+## Seguridad
 
-- **Role-Based Access**: Control who can create and modify assistants
-- **Tool Permissions**: Granular control over tool access per assistant
-- **Template Validation**: Prevent execution of malicious templates
-- **Audit Trail**: Complete tracking of assistant usage and modifications
+- **Acceso por roles**: controla quién puede crear y modificar asistentes
+- **Permisos de herramientas**: control granular del acceso a herramientas por asistente
+- **Validación de plantillas**: evita la ejecución de plantillas maliciosas
+- **Registro de auditoría**: seguimiento completo del uso y las modificaciones de los asistentes
 
-## Related Modules
+## Módulos relacionados
 
-- **`serfe_llm`**: Base infrastructure and provider management
-- **`serfe_llm_thread`**: Chat interfaces and conversation management
-- **`serfe_llm_tool`**: Function calling and Odoo integration
-- **`llm_generate`**: Content generation with assistant integration
-- **`llm_knowledge`**: RAG and knowledge base integration
+- **`serfe_llm`**: infraestructura base y gestión de proveedores
+- **`serfe_llm_thread`**: interfaces de chat y gestión de conversaciones
+- **`serfe_llm_tool`**: function calling e integración con Odoo
+- **`llm_generate`**: generación de contenido con integración de asistentes
+- **`llm_knowledge`**: integración con RAG y base de conocimiento
 
-## Support & Resources
+## Soporte y recursos
 
-- **Documentation**: [GitHub Repository](https://github.com/apexive/odoo-llm)
-- **Architecture Guide**: [OVERVIEW.md](../OVERVIEW.md)
-- **Examples**: [Assistant Examples](examples/)
-- **Community**: [GitHub Discussions](https://github.com/apexive/odoo-llm/discussions)
+- **Documentación**: [repositorio de GitHub](https://github.com/apexive/odoo-llm)
+- **Guía de arquitectura**: [OVERVIEW.md](../OVERVIEW.md)
+- **Ejemplos**: [ejemplos de asistentes](examples/)
+- **Comunidad**: [GitHub Discussions](https://github.com/apexive/odoo-llm/discussions)
 
-## License
+## Licencia
 
-This module is licensed under [LGPL-3](https://www.gnu.org/licenses/lgpl-3.0.html).
+Este módulo está licenciado bajo [LGPL-3](https://www.gnu.org/licenses/lgpl-3.0.html).
 
 ---
 
-*© 2025 Apexive Solutions LLC. All rights reserved.*
+*© 2025 Apexive Solutions LLC. Todos los derechos reservados.*

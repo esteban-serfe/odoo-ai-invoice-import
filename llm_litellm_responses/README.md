@@ -1,40 +1,43 @@
 # llm_litellm_responses
-Odoo 16 module that extends `serfe_llm_litellm` with the LiteLLM Responses API, OCR through file inputs, and automatic provider creation. It leaves `serfe_llm_litellm` untouched: everything is done through `_inherit` and a client subclass.
 
-## What is this for?
-- **Provider auto-provisioning:** on install, creates or updates an `llm.provider` named `LiteLLM` (service `litellm`, current company, active) from the environment.
-- **Non-streaming `chat_completion()`** returns the parsed dict instead of a generator.
-- **Responses API:** models with `model_info.mode == "responses"` are routed through `/responses`, except when tools are present, in which case `/chat/completions` is used.
-- **Orphaned tool messages** are stripped before sending, avoiding "No tool call found for function call output" errors.
-- **OCR** through the Responses API `input_file` / `input_image`, retrying up to 3 times on transient `invalid_file` errors.
-- **Model info:** model listing is enriched with `model_info` from LiteLLM's `/model/info`, and the *Fetch Models* wizard copies it onto `llm.model.model_info`.
+[English](README.en.md)
 
-## Requirements / Dependencies
+Módulo de Odoo 16 que extiende `serfe_llm_litellm` con la API Responses de LiteLLM, OCR mediante archivos de entrada y creación automática del proveedor. No modifica `serfe_llm_litellm`: todo se hace con `_inherit` y una subclase del cliente.
+
+## Para qué sirve
+- **Alta automática del proveedor:** al instalar, crea o actualiza un `llm.provider` llamado `LiteLLM` (servicio `litellm`, compañía actual, activo) a partir del entorno.
+- **`chat_completion()` sin streaming** devuelve el dict ya parseado en lugar de un generador.
+- **API Responses:** los modelos con `model_info.mode == "responses"` se enrutan por `/responses`, salvo cuando hay herramientas, en cuyo caso se usa `/chat/completions`.
+- **Mensajes de herramienta huérfanos:** se eliminan antes de enviar, evitando errores "No tool call found for function call output".
+- **OCR** mediante `input_file` / `input_image` de la API Responses, con hasta 3 reintentos ante errores transitorios `invalid_file`.
+- **Información del modelo:** el listado de modelos se enriquece con `model_info` de `/model/info` de LiteLLM, y el asistente *Fetch Models* lo copia a `llm.model.model_info`.
+
+## Requisitos / Dependencias
 - Odoo 16 (Community)
-- Odoo modules: `serfe_llm_litellm`
-- A reachable [LiteLLM](https://github.com/BerriAI/litellm) proxy and an API key for it
+- Módulos de Odoo: `serfe_llm_litellm`
+- Un proxy [LiteLLM](https://github.com/BerriAI/litellm) accesible y una API key para él
 
-## Installation
-1. Make the addon and `serfe_llm_litellm` available in your addons path.
-2. Install the module (Apps, or `-i llm_litellm_responses`).
-3. Configure the provider from the UI (*LLM → Configuration → Providers*: *API Base* and *API Key*), or set the optional environment variables below in the Odoo process **before** installing so the provider is created for you.
+## Instalación
+1. Poner el addon y `serfe_llm_litellm` en el `addons_path`.
+2. Instalar el módulo (Aplicaciones, o `-i llm_litellm_responses`).
+3. Configurar el proveedor desde la interfaz (*LLM → Configuración → Proveedores*: *API Base* y *API Key*), o definir las variables de entorno opcionales de abajo en el proceso de Odoo **antes** de instalar para que el proveedor se cree solo.
 
-If `LITELLM_API_BASE` or `LITELLM_API_KEY` is missing, the install logs a warning and skips the provider creation without failing (useful for test/CI databases). Create the provider by hand, or set both variables and reinstall.
+Si falta `LITELLM_API_BASE` o `LITELLM_API_KEY`, la instalación registra una advertencia y omite la creación del proveedor sin fallar (útil para bases de test/CI). Crear el proveedor a mano, o definir ambas variables y reinstalar.
 
-## Configuration
+## Configuración
 
-| Variable | Description |
+| Variable | Descripción |
 |---|---|
-| `LITELLM_API_BASE` | LiteLLM proxy base URL. Optional, there is no default. A trailing `/` is stripped. |
-| `LITELLM_API_KEY` | API key for the LiteLLM proxy. Optional. |
+| `LITELLM_API_BASE` | URL base del proxy LiteLLM. Opcional, sin valor por defecto. Se quita la `/` final. |
+| `LITELLM_API_KEY` | API key del proxy LiteLLM. Opcional. |
 
-Both are needed together to create the provider on install. They are not read at runtime: after install the provider record is the source of truth.
+Se necesitan ambas juntas para crear el proveedor al instalar. No se leen en tiempo de ejecución: después de instalar, la fuente de verdad es el registro del proveedor.
 
-## Security / Access
-No groups, ACLs or record rules are added. The API key is stored on `llm.provider` as a plain field, and every internal user can read that model, so the key is not hidden from them.
+## Seguridad / Acceso
+No agrega grupos, ACLs ni reglas de registro. La API key se guarda en `llm.provider` como un campo común, y todos los usuarios internos pueden leer ese modelo, así que la key no está oculta para ellos.
 
-## Multi-company behavior
-The provider is created for the company active at install time (`env.company`).
+## Multicompañía
+El proveedor se crea para la compañía activa al momento de instalar (`env.company`).
 
-## Licence
+## Licencia
 LGPL-3

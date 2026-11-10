@@ -1,47 +1,48 @@
 # llm_invoice_ocr
 
-[Español](README.es.md)
+[English](README.en.md)
 
-Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: contact Serfe if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
+Módulo de Odoo 16 que afina la importación de facturas con IA para comprobantes de proveedor argentinos (AFIP). Está enfocado en Argentina; otros países no están cubiertos, contactá a Serfe si lo necesitás. Lee el PDF o la imagen de una factura de proveedor con un LLM y crea un borrador de factura para revisar.
 
-## What is this for?
-It extends `serfe_account_invoice_import_llm` so it works through the LiteLLM provider of `llm_litellm_responses` and understands AFIP documents.
+## Para qué sirve
 
-- **LiteLLM instead of the default OCR provider:** the invoice is transcribed and analysed through the model configured on the *Invoice Extraction* assistant, so OCR and extraction use the same provider. Only LiteLLM providers are supported.
-- **Argentine prompt:** the assistant's prompt is replaced with one tuned for AFIP invoices. It first decides whether the document is really an invoice, reads the vendor's CUIT, reads dates day-first, extracts the point-of-sale and number as printed, the voucher letter (A/B/C), and document-level charges. It asks for the printed VAT rate with its evidence instead of a remembered one.
-- **Company VAT rates in the prompt:** the purchase VAT rates configured for the company are added to the prompt, so unusual rates (such as 27% on telecom, gas or electricity) are not replaced by a common one. Only for Argentine companies with `l10n_ar`.
-- **Document type and number:** the detected letter selects the Latam document type and number. For letters B and C every line gets *VAT Not Applicable*, as `l10n_ar` requires.
-- **VAT percentage correction:** the rate implied by the extracted subtotal and total replaces the per-line rate when they disagree. It applies only when all lines agree on a single VAT tax.
-- **Perceptions as taxes:** *Percepción IIBB / IVA* are applied as the matching AFIP tribute tax on the existing lines.
-- **Best effort:** any step that cannot be resolved leaves the draft as extracted for manual review. It never blocks the import.
-- **Upload button:** on vendor bills and refunds, *Upload* opens the review wizard. Other lists use Odoo's standard document decoders.
-- **Switching it off:** archiving the *Invoice Extraction* assistant disables AI import. The *Process with AI* button and the *Import Vendor Bills* menu disappear, the wizard refuses to open, and *Upload* creates the bill with the standard decoders and shows a notice.
-- **Messages:** the *Process with AI* guard errors are translatable.
+Extiende `serfe_account_invoice_import_llm` para que funcione con el proveedor LiteLLM de `llm_litellm_responses` y entienda comprobantes AFIP.
 
-## Requirements / Dependencies
+- **LiteLLM en lugar del proveedor OCR por defecto:** la factura se transcribe y analiza con el modelo configurado en el asistente *Invoice Extraction*, de modo que OCR y extracción usan el mismo proveedor. Solo se admiten proveedores LiteLLM.
+- **Prompt argentino:** el prompt del asistente se reemplaza por uno afinado para comprobantes AFIP. Primero decide si el documento es realmente una factura, lee el CUIT del proveedor, interpreta las fechas día-mes-año, extrae punto de venta y número tal como están impresos, la letra del comprobante (A/B/C) y los cargos a nivel documento. Pide la alícuota de IVA impresa con su evidencia en lugar de una recordada.
+- **Alícuotas de IVA de la compañía en el prompt:** se agregan al prompt las alícuotas de IVA de compras configuradas para la compañía, para que las inusuales (como 27% en telecomunicaciones, gas o electricidad) no se reemplacen por una común. Solo para compañías argentinas con `l10n_ar`.
+- **Tipo y número de documento:** la letra detectada selecciona el tipo de documento Latam y el número. Para las letras B y C todas las líneas reciben *IVA No Corresponde*, como exige `l10n_ar`.
+- **Corrección del porcentaje de IVA:** la alícuota implícita en el subtotal y el total extraídos reemplaza la de las líneas cuando no coinciden. Solo se aplica si todas las líneas coinciden en un único impuesto de IVA.
+- **Percepciones como impuestos:** *Percepción IIBB / IVA* se aplican como el impuesto tributo AFIP correspondiente sobre las líneas existentes.
+- **Mejor esfuerzo:** cualquier paso que no pueda resolverse deja el borrador tal como fue extraído para revisión manual. Nunca bloquea la importación.
+- **Botón Subir:** en facturas y notas de crédito de proveedor, *Upload* abre el asistente de revisión. Otras listas usan los decodificadores de documentos estándar de Odoo.
+- **Desactivación:** archivar el asistente *Invoice Extraction* deshabilita la importación con IA. Desaparecen el botón *Process with AI* y el menú *Import Vendor Bills*, el asistente se niega a abrirse y *Upload* crea la factura con los decodificadores estándar y muestra un aviso.
+- **Mensajes:** los errores de protección de *Process with AI* son traducibles.
+
+## Requisitos / Dependencias
 - Odoo 16 (Community)
-- Odoo modules: `llm_litellm_responses`, `serfe_account_invoice_import_llm`, `serfe_llm_litellm`
-- Optional: `l10n_ar` for the Argentine behavior
-- A LiteLLM proxy and an AI provider account, both provided by you (see `llm_litellm_responses`). LiteLLM works with the API of each provider: refer to the LiteLLM and provider documentation to configure them.
+- Módulos de Odoo: `llm_litellm_responses`, `serfe_account_invoice_import_llm`, `serfe_llm_litellm`
+- Opcional: `l10n_ar` para el comportamiento argentino
+- Un proxy LiteLLM y una cuenta con un proveedor de IA, ambos provistos por vos (ver `llm_litellm_responses`). LiteLLM funciona con la API de cada proveedor: consultá la documentación de LiteLLM y del proveedor para configurarlos.
 
-## Installation
-1. Make the addon and its dependencies available in your addons path.
-2. Install `llm_litellm_responses`. If `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in the environment, it creates the *LiteLLM* provider; otherwise create it from the UI (*LLM → Configuration → Providers*) with your proxy URL and API key.
-3. Fetch the models of that provider (*Fetch Models* in the provider form).
-4. Install the module (Apps, or `-i llm_invoice_ocr`).
+## Instalación
+1. Poner el addon y sus dependencias en el `addons_path`.
+2. Instalar `llm_litellm_responses`. Si `LITELLM_API_BASE` y `LITELLM_API_KEY` están definidas en el entorno, crea el proveedor *LiteLLM*; si no, crearlo desde la interfaz (*LLM → Configuración → Proveedores*) con la URL y la API key de tu proxy.
+3. Traer los modelos de ese proveedor (*Fetch Models* en el formulario del proveedor).
+4. Instalar el módulo (Aplicaciones, o `-i llm_invoice_ocr`).
 
-If a model already exists on the provider, the install sets it on the *Invoice Extraction* assistant. If not, it only logs a warning: assign a model to the assistant under *LLM → Configuration → Assistants*, or upgrade the module again once a model is fetched.
+Si ya existe un modelo en el proveedor, la instalación lo asigna al asistente *Invoice Extraction*. Si no, solo registra una advertencia: asignar un modelo al asistente en *LLM → Configuración → Asistentes*, o actualizar el módulo una vez traído un modelo.
 
-## Configuration
-No environment variables or system parameters of its own. Configuration is the model of the *Invoice Extraction* assistant, and the provider settings of `llm_litellm_responses`.
+## Configuración
+No tiene variables de entorno ni parámetros de sistema propios. La configuración es el modelo del asistente *Invoice Extraction* y los ajustes del proveedor de `llm_litellm_responses`.
 
-## Security / Access
-- No groups, ACLs or record rules are added; standard accounting permissions apply.
-- The invoice document is sent to the AI provider you configured through your LiteLLM proxy. Serfe does not receive it.
-- AI output is a suggestion: totals, taxes and the vendor must be checked before posting.
+## Seguridad / Acceso
+- No agrega grupos, ACLs ni reglas de registro; rigen los permisos estándar de contabilidad.
+- El documento de la factura se envía al proveedor de IA que configuraste a través de tu proxy LiteLLM. Serfe no lo recibe.
+- La salida de la IA es una sugerencia: totales, impuestos y proveedor deben verificarse antes de publicar.
 
-## Multi-company behavior
-VAT rates and the *VAT Not Applicable* tax are read from the company of the bill, so each company uses its own configured taxes. The prompt names the importing company and its CUIT so the model does not confuse it with the vendor. The assistant and provider are shared as configured.
+## Multicompañía
+Las alícuotas de IVA y el impuesto *IVA No Corresponde* se leen de la compañía de la factura, de modo que cada compañía usa sus propios impuestos. El prompt nombra a la compañía que importa y su CUIT para que el modelo no la confunda con el proveedor. El asistente y el proveedor se comparten tal como estén configurados.
 
-## Licence
-AGPL-3 (it depends on `serfe_account_invoice_import_llm`, which is AGPL-3).
+## Licencia
+AGPL-3 (depende de `serfe_account_invoice_import_llm`, que es AGPL-3).

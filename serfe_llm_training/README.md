@@ -1,109 +1,111 @@
-# LLM Training Module
+# Módulo LLM Training
 
-This module provides functionality for managing LLM fine-tuning jobs across different providers. It allows users to create, monitor, and manage fine-tuning jobs directly from the Odoo interface.
+[English](README.en.md)
 
-## Features
+Este módulo ofrece la funcionalidad para gestionar trabajos de fine-tuning de LLM en distintos proveedores. Permite crear, monitorear y administrar trabajos de fine-tuning directamente desde la interfaz de Odoo.
 
-- Create and manage fine-tuning jobs for LLMs
-- Track job status and metrics
-- Support for multiple LLM providers (OpenAI, etc.)
-- Integration with dataset management
-- Job status monitoring and notifications
+## Características
 
-## Usage
+- Crear y gestionar trabajos de fine-tuning de LLM
+- Seguimiento del estado y las métricas de los trabajos
+- Soporte de múltiples proveedores de LLM (OpenAI, etc.)
+- Integración con la gestión de datasets
+- Monitoreo del estado de los trabajos y notificaciones
 
-### Accessing the Module
+## Uso
 
-1. Navigate to **LLM > Training > Jobs** in the main menu
-2. This will display the list of all training jobs with their current status
+### Acceder al módulo
 
-### Creating a New Training Job
+1. Ir a **LLM > Training > Jobs** en el menú principal
+2. Se muestra la lista de todos los trabajos de entrenamiento con su estado actual
 
-1. Click the **Create** button on the training jobs list view
-2. Fill in the required fields:
-   - **Name**: A descriptive name for the job
-   - **Provider**: Select the LLM provider (e.g., OpenAI)
-   - **Base Model**: Select the base model to fine-tune
-   - **Datasets**: Add one or more datasets to use for training
-3. Optionally configure:
-   - **Description**: Add details about the job
-   - **Hyperparameters**: Adjust training parameters in JSON format
-4. Click **Save** to create the job in draft state
-5. Click **Submit** to start the training process
+### Crear un trabajo de entrenamiento
 
-### Monitoring Job Status
+1. Hacer clic en el botón **Crear** de la lista de trabajos
+2. Completar los campos obligatorios:
+   - **Nombre**: un nombre descriptivo del trabajo
+   - **Proveedor**: elegir el proveedor de LLM (por ejemplo, OpenAI)
+   - **Modelo base**: elegir el modelo base a ajustar
+   - **Datasets**: agregar uno o más datasets para el entrenamiento
+3. Opcionalmente configurar:
+   - **Descripción**: agregar detalles sobre el trabajo
+   - **Hiperparámetros**: ajustar los parámetros de entrenamiento en formato JSON
+4. Hacer clic en **Guardar** para crear el trabajo en estado borrador
+5. Hacer clic en **Submit** para iniciar el entrenamiento
 
-1. The job will progress through several states:
+### Monitorear el estado del trabajo
 
-   - **Draft**: Initial state
-   - **Validating**: Validating datasets
-   - **Preparing**: Preparing data for training
-   - **Queued**: Job is queued with the provider
-   - **Training**: Training is in progress
-   - **Completed**: Training completed successfully
-   - **Failed**: Training failed
-   - **Cancelled**: Training was cancelled
+1. El trabajo pasa por varios estados:
 
-2. For jobs in progress, click the **Check Status** button to update the status
+   - **Draft**: estado inicial
+   - **Validating**: validando los datasets
+   - **Preparing**: preparando los datos para el entrenamiento
+   - **Queued**: el trabajo está en cola en el proveedor
+   - **Training**: el entrenamiento está en curso
+   - **Completed**: el entrenamiento terminó con éxito
+   - **Failed**: el entrenamiento falló
+   - **Cancelled**: el entrenamiento fue cancelado
 
-### Viewing Results
+2. Para los trabajos en curso, hacer clic en el botón **Check Status** para actualizar el estado
 
-1. Once a job is completed, go to the **Results** tab
-2. Here you can find:
-   - The resulting fine-tuned model
-   - Training metrics
-   - Training logs
+### Ver los resultados
 
-### Using Fine-tuned Models
+1. Cuando un trabajo termina, ir a la pestaña **Results**
+2. Ahí se encuentra:
+   - El modelo ajustado resultante
+   - Las métricas de entrenamiento
+   - Los logs de entrenamiento
 
-After successful training, the fine-tuned model will be automatically added to your available models and can be used in:
+### Usar los modelos ajustados
 
-- LLM Threads
-- LLM Agents
-- Any other component that uses LLM models
+Tras un entrenamiento exitoso, el modelo ajustado se agrega automáticamente a los modelos disponibles y puede usarse en:
 
-## Security
+- Hilos LLM
+- Agentes LLM
+- Cualquier otro componente que use modelos LLM
 
-The module follows the standard two-tier security model:
+## Seguridad
 
-- Regular users (base.group_user) have read-only access
-- LLM Managers (serfe_llm.group_llm_manager) have full CRUD access
+El módulo sigue el modelo de seguridad estándar de dos niveles:
 
-## Technical Information
+- Los usuarios comunes (base.group_user) tienen acceso de solo lectura
+- Los LLM Managers (serfe_llm.group_llm_manager) tienen acceso completo (CRUD)
 
-### Model Structure
+## Información técnica
 
-- `llm.training.job`: Main model for training jobs
-- `llm.training.dataset`: Model for managing training datasets
+### Estructura de modelos
 
-### Provider Integration
+- `llm.training.job`: modelo principal de los trabajos de entrenamiento
+- `llm.training.dataset`: modelo para gestionar los datasets de entrenamiento
 
-The module uses a standardized interface for provider integration:
+### Integración con proveedores
 
-- `start_training_job`: Initiates the training process
-- `check_training_job_status`: Checks the current status
-- `cancel_training_job`: Cancels an ongoing job
+El módulo usa una interfaz estandarizada para integrar proveedores:
 
-Providers implement these methods to handle provider-specific logic.
+- `start_training_job`: inicia el entrenamiento
+- `check_training_job_status`: consulta el estado actual
+- `cancel_training_job`: cancela un trabajo en curso
 
-## Troubleshooting
+Los proveedores implementan estos métodos para manejar la lógica propia de cada uno.
 
-### Common Issues
+## Resolución de problemas
 
-1. **Job stuck in validating state**:
+### Problemas frecuentes
 
-   - Check that datasets are properly formatted
-   - Verify provider credentials
+1. **Trabajo atascado en estado validating**:
 
-2. **Failed jobs**:
+   - Verificar que los datasets tengan el formato correcto
+   - Verificar las credenciales del proveedor
 
-   - Check the Results tab for error details
-   - Verify hyperparameters are correctly formatted
+2. **Trabajos fallidos**:
 
-3. **Missing models after completion**:
-   - Use the Check Status button to refresh the job status
-   - Verify provider access to the fine-tuned model
+   - Revisar la pestaña Results para ver el detalle del error
+   - Verificar que los hiperparámetros tengan el formato correcto
 
-## Contributing
+3. **Faltan modelos después de completar**:
+   - Usar el botón Check Status para refrescar el estado del trabajo
+   - Verificar el acceso del proveedor al modelo ajustado
 
-Please follow the standard Odoo development guidelines when contributing to this module.
+## Contribuir
+
+Seguí las guías estándar de desarrollo de Odoo al contribuir a este módulo.

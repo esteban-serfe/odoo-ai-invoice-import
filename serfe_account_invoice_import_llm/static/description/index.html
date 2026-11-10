@@ -1,4 +1,18 @@
 <section class="pt-5 pb-4" style="background-color:#f8f9fa"><div class="container text-center">
+<h1 class="font-weight-bold" style="font-size:2.5rem">Extracción de datos de facturas de proveedor con IA</h1>
+<p class="mt-3" style="font-size:1.2rem;color:#495057">Leé una factura de proveedor (PDF o imagen) y obtené un borrador de factura, construido sobre la importación de facturas de OCA.</p>
+</div></section>
+<div class="container my-5">
+<div class="alert alert-info" role="alert"><strong>Tus datos van al proveedor de IA que elijas.</strong> El documento de la factura se envía al proveedor de IA que configurás; este módulo no envía datos a Serfe ni a ningún servicio fijo.</div>
+<div class="alert alert-warning" role="alert"><strong>Instalalo junto con LLM Invoice OCR (AR).</strong> El paso de OCR heredado de Apexive busca un proveedor Mistral, que no forma parte de este repositorio. <em>LLM Invoice OCR (AR)</em> lo reemplaza por LiteLLM y agrega el comportamiento argentino. Sin él, o sin un proveedor Mistral propio, la extracción se detiene con un error.</div>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Qué hace</h2><ul><li><strong>Process with AI</strong>: un botón en los borradores de factura de proveedor que completa el formulario a partir del PDF o la imagen adjunta.</li><li><strong>Respaldo del asistente de importación</strong>: cuando la factura no trae XML embebido, el asistente de OCA usa esta extracción.</li><li><strong>Extracción en un solo paso</strong>: el texto del OCR va al asistente <em>Invoice Extraction</em> en una única llamada.</li><li><strong>Reconocimiento estándar</strong>: el resultado se convierte al Invoice Pivot Format de OCA, así que el reconocimiento de proveedor, producto e impuestos es el habitual.</li></ul></section>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Qué extrae</h2><ul><li>Nombre y número de IVA del proveedor</li><li>Número y referencia de la factura</li><li>Fechas de factura y de vencimiento, y moneda</li><li>Subtotal, impuesto y total</li><li>Líneas con descripción, cantidad, precio unitario y alícuota</li></ul></section>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Cómo se usa</h2><ol><li>Subí un PDF o una imagen a una nueva factura de proveedor, o presioná <em>Process with AI</em> en un borrador.</li><li>O usá <em>Contabilidad &rarr; Proveedores &rarr; Import Vendor Bill</em>.</li><li>Revisá el resultado: la salida de la IA es una sugerencia, así que verificá totales, impuestos y proveedor antes de publicar.</li></ol><img class="img-fluid" src="screenshot-press-process.png" alt="Botón Process with AI"/><img class="img-fluid mt-3" src="screenshot-filled-up-invoice.png" alt="Factura completada"/></section>
+<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Qué necesitás</h2><ul><li>Odoo 16 Community con los módulos <code>account_invoice_import</code> de OCA.</li><li>Una cuenta con un proveedor de IA y un proxy LiteLLM, ambos provistos y operados por vos. Seguí la documentación de LiteLLM y de tu proveedor para configurarlos.</li><li>En <em>LLM &rarr; Configuración</em>, configurá el proveedor <em>LiteLLM</em> y asigná un modelo al asistente <em>Invoice Extraction</em>.</li></ul></section>
+</div>
+<hr class="my-5"/>
+<div class="container"><p class="text-muted text-center">English version</p></div>
+<section class="pt-5 pb-4" style="background-color:#f8f9fa"><div class="container text-center">
 <h1 class="font-weight-bold" style="font-size:2.5rem">Vendor Bill Data Extraction with AI</h1>
 <p class="mt-3" style="font-size:1.2rem;color:#495057">Read a supplier invoice (PDF or image) and get a draft vendor bill, built on OCA's invoice import.</p>
 </div></section>

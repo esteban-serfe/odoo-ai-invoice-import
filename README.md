@@ -41,20 +41,20 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 ## Limitaciones
 
 * **Solo Argentina.** La extracción está afinada para comprobantes AFIP (CUIT, letras, impuestos AFIP, `l10n_ar`). Otros países, como Uruguay, no están cubiertos: [contactanos](https://www.serfe.com/) si lo necesitás.
-* **Solo Odoo 16 Community.** No se revisaron otras versiones.
+* **Solo Odoo 16 Community.**
 * **El modelo puede equivocarse.** El resultado es una sugerencia: verificá totales, impuestos y proveedor antes de publicar. Escaneos de mala calidad o diseños poco comunes pueden dar borradores incompletos.
 
 ## Costos y datos
 
 * **Sin costo de licencia.** Los módulos son gratuitos y de código abierto.
-* **Tus costos:** el uso de tu proveedor de IA, que depende del proveedor, del modelo y del tamaño de los documentos. Serfe no provee el servicio de IA.
-* **Tus datos:** cada factura se envía al proveedor de IA que configurás. Serfe no la recibe. Revisá la política de datos de tu proveedor antes de procesar documentos.
+* **Tus costos:** el uso de tu proveedor de IA, que depende del proveedor, del modelo y del tamaño de los documentos.
+* **Tus datos:** cada factura se envía al proveedor de IA que configurás. Revisá la política de datos de tu proveedor antes de procesar documentos.
 * **Tu clave de API:** se guarda en el registro del proveedor de Odoo y todos los usuarios internos pueden leerla. Usá una clave con presupuesto limitado, o restringí quién tiene acceso como usuario interno.
 
 ## Requisitos
 
 * Odoo 16 Community, con `l10n_ar` para el comportamiento argentino.
-* Una cuenta con un proveedor de IA (OpenAI, Anthropic, Mistral, etc.), provista por vos.
+* Una cuenta con un proveedor de IA (OpenAI, Anthropic, Mistral, etc.).
 
 ## Instalación
 

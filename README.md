@@ -54,7 +54,6 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 ## Requisitos
 
 * Odoo 16 Community, con `l10n_ar` para el comportamiento argentino.
-* `account_invoice_import` de [OCA/edi](https://github.com/OCA/edi), más los demás repositorios de `oca_dependencies.txt`.
 * Una cuenta con un proveedor de IA (OpenAI, Anthropic, Mistral, etc.), provista por vos.
 
 ## Instalación
@@ -62,13 +61,13 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 1. Clonar este repositorio (rama `16.0`) y los repositorios de `oca_dependencies.txt`.
 2. Agregarlos al `addons_path` de Odoo.
 3. Instalar las dependencias de Python: `pip install -r requirements.txt`.
-4. Actualizar la lista de aplicaciones e instalar `llm_invoice_ocr` (en Aplicaciones aparece como *LLM Invoice OCR (AR)*). Es el módulo de Serfe y el único que hay que instalar: sus dependencias, incluida la base de importación vendorizada de [Apexive](https://github.com/apexive/odoo-llm), se instalan con él.
+4. Actualizar la lista de aplicaciones e instalar `serfe_invoice_ocr` (en Aplicaciones aparece como *Serfe Invoice OCR*). Es el módulo de Serfe y el único que hay que instalar: sus dependencias, incluida la base de importación vendorizada de [Apexive](https://github.com/apexive/odoo-llm), se instalan con él.
 
 Cada módulo tiene su propio README.
 
 ## Configuración
 
-1. Configurá la conexión con tu proveedor de IA siguiendo la documentación del módulo base: [`serfe_llm_litellm`](serfe_llm_litellm/README.md). Si preferís, [contactanos](https://www.serfe.com/) y te ayudamos.
+1. Configurá la conexión con tu proveedor de IA siguiendo la documentación del módulo base: [`apx_llm_litellm`](apx_llm_litellm/README.md). Si preferís, [contactanos](https://www.serfe.com/) y te ayudamos.
 2. Asignar un modelo al asistente *Invoice Extraction* (*LLM → Configuración → Asistentes*).
 
 Para desactivar la importación con IA, archivá el asistente *Invoice Extraction*: *Upload* vuelve a los decodificadores estándar de Odoo.

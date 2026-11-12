@@ -8,7 +8,7 @@
 
    ```
    scripts/run-tests.sh                      # all modules
-   scripts/run-tests.sh llm_invoice_ocr      # some modules
+   scripts/run-tests.sh serfe_invoice_ocr      # some modules
    pre-commit run --all-files                # black, isort, flake8, pylint-odoo
    ```
 

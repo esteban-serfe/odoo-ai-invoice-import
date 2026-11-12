@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+    t-name="serfe_llm_access_groups.ChatterTopbar"
+    t-inherit="mail.ChatterTopbar"
+    t-inherit-mode="extension"
+    owl="1"
+  >
+        <!-- Hide the apx_llm_thread "AI" button (and its divider) from users outside "User: LLM Chatter" -->
+        <xpath
+      expr="//button[@t-on-click='chatterTopbar.chatter.toggleLLMChat']"
+      position="attributes"
+    >
+            <attribute name="t-if">chatterTopbar.chatter.isLLMChatterUser</attribute>
+        </xpath>
+        <xpath
+      expr="//div[hasclass('o_ChatterTopbar_borderLeft') and hasclass('ms-2')]"
+      position="attributes"
+    >
+            <attribute name="t-if">chatterTopbar.chatter.isLLMChatterUser</attribute>
+        </xpath>
+    </t>
+</templates>

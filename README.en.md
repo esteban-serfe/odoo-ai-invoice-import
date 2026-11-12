@@ -54,7 +54,6 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 ## Requirements
 
 * Odoo 16 Community, with `l10n_ar` for the Argentine behavior.
-* `account_invoice_import` from [OCA/edi](https://github.com/OCA/edi), plus the other repositories in `oca_dependencies.txt`.
 * An AI provider account (OpenAI, Anthropic, Mistral, etc.), provided by you.
 
 ## Installation
@@ -62,13 +61,13 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 1. Clone this repository (branch `16.0`) and the repositories listed in `oca_dependencies.txt`.
 2. Add them to the `addons_path` of Odoo.
 3. Install the Python dependencies: `pip install -r requirements.txt`.
-4. Update the apps list and install `llm_invoice_ocr` (shown in Apps as *LLM Invoice OCR (AR)*). It is the Serfe module and the only one you need to install: its dependencies, including the vendored import base from [Apexive](https://github.com/apexive/odoo-llm), are installed with it.
+4. Update the apps list and install `serfe_invoice_ocr` (shown in Apps as *Serfe Invoice OCR*). It is the Serfe module and the only one you need to install: its dependencies, including the vendored import base from [Apexive](https://github.com/apexive/odoo-llm), are installed with it.
 
 Each module has its own README.
 
 ## Configuration
 
-1. Set up the connection to your AI provider following the documentation of the base module: [`serfe_llm_litellm`](serfe_llm_litellm/README.en.md). If you prefer, [contact us](https://www.serfe.com/en/) and we will help you.
+1. Set up the connection to your AI provider following the documentation of the base module: [`apx_llm_litellm`](apx_llm_litellm/README.en.md). If you prefer, [contact us](https://www.serfe.com/en/) and we will help you.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*).
 
 To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* goes back to Odoo's standard decoders.

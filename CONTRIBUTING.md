@@ -8,7 +8,7 @@ Español · [English](CONTRIBUTING.en.md)
 
    ```
    scripts/run-tests.sh                      # todos los módulos
-   scripts/run-tests.sh llm_invoice_ocr      # algunos módulos
+   scripts/run-tests.sh serfe_invoice_ocr      # algunos módulos
    pre-commit run --all-files                # black, isort, flake8, pylint-odoo
    ```
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Hides the "Process with AI" button (added by
+apx_account_invoice_import_llm/views/account_move_views.xml) when the
+invoice_extraction llm.assistant is disabled (archived), and also
+restricts it to vendor bills/refunds (move_type in ('in_invoice',
+'in_refund'), same scope as account_journal.py's _VENDOR_MOVE_TYPES) -
+the vendored button's own attrs only ever checked state, so it showed on
+Customer Invoices too even though "Process with AI" only ever does
+anything for vendor bills. Reuses that button's existing view instead of
+adding a new xpath into account.view_move_form directly, so this stays a
+small attribute change rather than a second inheritance layer on the
+same button.
+-->
+<odoo>
+    <record id="view_move_form_process_llm_ocr" model="ir.ui.view">
+        <field name="name">account.move.form.process.llm.ocr</field>
+        <field name="model">account.move</field>
+        <field
+            name="inherit_id"
+            ref="apx_account_invoice_import_llm.view_move_form_process_llm"
+        />
+        <field name="arch" type="xml">
+            <button name="action_process_with_llm" position="attributes">
+                <attribute name="attrs">
+                    {'invisible': ['|', '|', ('state', '!=', 'draft'), ('llm_ocr_enabled', '=', False), ('move_type', 'not in', ['in_invoice', 'in_refund'])]}
+                </attribute>
+            </button>
+            <button name="action_process_with_llm" position="before">
+                <field name="llm_ocr_enabled" invisible="1" />
+            </button>
+        </field>
+    </record>
+</odoo>

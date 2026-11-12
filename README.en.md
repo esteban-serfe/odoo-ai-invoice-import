@@ -11,8 +11,6 @@
 
 [Español](README.md) · English
 
-Upload a supplier invoice (PDF or image) to Odoo 16 and get a draft vendor bill with the Argentine (AFIP) data already filled in, ready for review. It uses a language model (ChatGPT or another) that you choose, through the API of your own provider.
-
 ## The problem
 
 Loading vendor bills by hand is repetitive: copying the vendor, CUIT, voucher type, point of sale and number, dates, VAT and perceptions, line by line. It takes operating time and invites typing mistakes.

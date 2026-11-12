@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-12
+
 ### Added
 
 - Vendored from apexive/odoo-llm at `a6a229d`, renamed with the `apx_` prefix (for Apexive) so they do not clash with Apexive's modules in the Odoo Apps store: `apx_llm`, `apx_llm_thread`, `apx_llm_tool`, `apx_llm_assistant`, `apx_llm_litellm`, `apx_llm_training`, `apx_web_json_editor`, `apx_account_invoice_import_llm`.

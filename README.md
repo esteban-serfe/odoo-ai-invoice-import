@@ -2,6 +2,8 @@
 
 [English](README.en.md)
 
+![Importación de facturas de proveedor con IA para Odoo, por Serfe](docs/banner.png)
+
 Subí una factura de proveedor (PDF o imagen) a Odoo 16 y obtené un borrador de factura con los datos argentinos (AFIP) ya cargados, listo para revisar. Usa un modelo de lenguaje (ChatGPT u otro) que elegís vos, a través de la API de tu propio proveedor.
 
 ## El problema
@@ -55,7 +57,7 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 1. Clonar este repositorio (rama `16.0`) y los repositorios de `oca_dependencies.txt`.
 2. Agregarlos al `addons_path` de Odoo.
 3. Instalar las dependencias de Python: `pip install -r requirements.txt`.
-4. Actualizar la lista de aplicaciones e instalar `llm_invoice_ocr` (en Aplicaciones aparece como *LLM Invoice OCR (AR)*). Instala con él, como dependencia, `serfe_account_invoice_import_llm` (*Invoice Import LLM*), el módulo de Serfe que hace la importación; no hace falta instalarlo aparte.
+4. Actualizar la lista de aplicaciones e instalar `llm_invoice_ocr` (en Aplicaciones aparece como *LLM Invoice OCR (AR)*). Es el módulo de Serfe y el único que hay que instalar: sus dependencias, incluida la base de importación vendorizada de [Apexive](https://github.com/apexive/odoo-llm), se instalan con él.
 
 Cada módulo tiene su propio README.
 
@@ -72,13 +74,13 @@ Mixta, según el módulo. Ver [LICENSE](LICENSE).
 
 ## Acerca de Serfe
 
-[Serfe](https://www.serfe.com/) es una empresa de desarrollo de software especializada en Odoo, y mantiene estos módulos. Podemos acompañarte en todo el camino:
+[Serfe](https://www.serfe.com/) es una empresa de desarrollo de software especializada en construir aplicaciones web e integraciones de calidad y escalables. Apostamos al código abierto y a ayudar a las organizaciones a adoptar los estándares web modernos, incluida la incipiente Web Agéntica. Estos módulos son parte de ese trabajo, y podemos acompañarte en todo el camino:
 
 * **Implementación y configuración:** dejamos funcionando la conexión con tu proveedor de IA y la importación en tu Odoo.
 * **Adaptación a tu caso:** otros países (por ejemplo Uruguay), formatos de comprobante propios y reglas de tu negocio.
 * **Soporte y capacitación** para tu equipo de administración.
 * **Opciones de infraestructura** cuando tu caso las necesite.
 
-Contanos qué necesitás en [serfe.com](https://www.serfe.com/).
+Conocé más y contanos qué necesitás en [serfe.com](https://www.serfe.com/).
 
 ¿Querés colaborar con el proyecto? Mirá [CONTRIBUTING.md](CONTRIBUTING.md).

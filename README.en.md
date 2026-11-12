@@ -2,6 +2,8 @@
 
 [Español](README.md)
 
+![AI vendor bill import for Odoo, by Serfe](docs/banner.png)
+
 Upload a supplier invoice (PDF or image) to Odoo 16 and get a draft vendor bill with the Argentine (AFIP) data already filled in, ready for review. It uses a language model (ChatGPT or another) that you choose, through the API of your own provider.
 
 ## The problem
@@ -55,7 +57,7 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 1. Clone this repository (branch `16.0`) and the repositories listed in `oca_dependencies.txt`.
 2. Add them to the `addons_path` of Odoo.
 3. Install the Python dependencies: `pip install -r requirements.txt`.
-4. Update the apps list and install `llm_invoice_ocr` (shown in Apps as *LLM Invoice OCR (AR)*). It brings in `serfe_account_invoice_import_llm` (*Invoice Import LLM*) as a dependency, the Serfe module that does the import; you do not need to install it separately.
+4. Update the apps list and install `llm_invoice_ocr` (shown in Apps as *LLM Invoice OCR (AR)*). It is the Serfe module and the only one you need to install: its dependencies, including the vendored import base from [Apexive](https://github.com/apexive/odoo-llm), are installed with it.
 
 Each module has its own README.
 
@@ -72,13 +74,13 @@ Mixed, per module. See [LICENSE](LICENSE).
 
 ## About Serfe
 
-[Serfe](https://www.serfe.com/en/) is a software company specialized in Odoo, and maintains these modules. We can support you all the way:
+[Serfe](https://www.serfe.com/en/) is a software development company that specializes in building high-quality, scalable web applications and integrations. We are committed to open source and to helping organizations embrace modern web standards, including the emerging Agentic Web. These modules are part of that work, and we can support you all the way:
 
 * **Implementation and setup:** we get the connection to your AI provider and the import working in your Odoo.
 * **Adaptation to your case:** other countries (for example Uruguay), your own voucher formats and your business rules.
 * **Support and training** for your accounting team.
 * **Infrastructure options** when your case needs them.
 
-Tell us what you need at [serfe.com](https://www.serfe.com/en/).
+Learn more and tell us what you need at [serfe.com](https://www.serfe.com/en/).
 
 Want to contribute to the project? See [CONTRIBUTING.en.md](CONTRIBUTING.en.md).

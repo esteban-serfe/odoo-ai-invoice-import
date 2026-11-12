@@ -40,7 +40,7 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 
 ## Limitaciones
 
-* **Solo Argentina.** La extracción está afinada para comprobantes AFIP (CUIT, letras, impuestos AFIP, `l10n_ar`). Otros países, como Uruguay, no están cubiertos: [contactanos](https://www.serfe.com/) si lo necesitás.
+* **Solo Argentina.** La extracción está afinada para comprobantes AFIP (CUIT, letras, impuestos AFIP, `l10n_ar`). Otros países, como Uruguay, no están cubiertos: [contactanos](https://www.serfe.com/es/contacto) si lo necesitás.
 * **Solo Odoo 16 Community.**
 * **El modelo puede equivocarse.** El resultado es una sugerencia: verificá totales, impuestos y proveedor antes de publicar. Escaneos de mala calidad o diseños poco comunes pueden dar borradores incompletos.
 
@@ -67,7 +67,7 @@ Cada módulo tiene su propio README.
 
 ## Configuración
 
-1. En *LLM → Configuración → Proveedores*, abrí el proveedor, completá *API Base* y *API Key* con los datos de tu proveedor de IA y presioná *Fetch Models* para traer sus modelos. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, [contactanos](https://www.serfe.com/) y te ayudamos.
+1. En *LLM → Configuración → Proveedores*, abrí el proveedor, completá *API Base* y *API Key* con los datos de tu proveedor de IA y presioná *Fetch Models* para traer sus modelos. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, [contactanos](https://www.serfe.com/es/contacto) y te ayudamos.
 2. Asignar un modelo al asistente *Invoice Extraction* (*LLM → Configuración → Asistentes*).
 
 Para desactivar la importación con IA, archivá el asistente *Invoice Extraction*: *Upload* vuelve a los decodificadores estándar de Odoo.
@@ -78,14 +78,14 @@ Para desactivar la importación con IA, archivá el asistente *Invoice Extractio
 
 ## Acerca de Serfe
 
-[Serfe](https://www.serfe.com/) es una empresa de desarrollo de software especializada en construir aplicaciones web e integraciones de calidad y escalables. Apostamos al código abierto y a ayudar a las organizaciones a adoptar los estándares web modernos, incluida la incipiente Web Agéntica. Estos módulos son parte de ese trabajo, y podemos acompañarte en todo el camino:
+[Serfe](https://www.serfe.com/es/) es una empresa de desarrollo de software especializada en construir aplicaciones web e integraciones de calidad y escalables. Apostamos al código abierto y a ayudar a las organizaciones a adoptar los estándares web modernos, incluida la incipiente Web Agéntica. Estos módulos son parte de ese trabajo, y podemos acompañarte en todo el camino:
 
 * **Implementación y configuración:** dejamos funcionando la conexión con tu proveedor de IA y la importación en tu Odoo.
 * **Adaptación a tu caso:** otros países (por ejemplo Uruguay), formatos de comprobante propios y reglas de tu negocio.
 * **Soporte y capacitación** para tu equipo de administración.
 * **Opciones de infraestructura** cuando tu caso las necesite.
 
-Conocé más y contanos qué necesitás en [serfe.com](https://www.serfe.com/).
+Conocé más en [serfe.com](https://www.serfe.com/es/) y [contanos qué necesitás](https://www.serfe.com/es/contacto).
 
 ## Licencia
 

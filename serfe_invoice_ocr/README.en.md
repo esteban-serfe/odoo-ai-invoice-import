@@ -2,7 +2,7 @@
 
 [Español](README.md) · English
 
-Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: contact Serfe if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
+Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: [contact Serfe](https://www.serfe.com/en/contact-us) if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
 
 ## What is this for?
 It extends `apx_account_invoice_import_llm` so it uses the AI provider of `serfe_llm_litellm_responses` and understands AFIP documents.
@@ -26,7 +26,7 @@ It extends `apx_account_invoice_import_llm` so it uses the AI provider of `serfe
 
 ## Installation
 1. Make the addon and its dependencies available in your addons path.
-2. Install `serfe_llm_litellm_responses` and set up the provider from the UI (*LLM → Configuration → Providers*): fill in the *API Base* and *API Key* of your AI provider. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, contact Serfe and we will help you.
+2. Install `serfe_llm_litellm_responses` and set up the provider from the UI (*LLM → Configuration → Providers*): fill in the *API Base* and *API Key* of your AI provider. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact Serfe](https://www.serfe.com/en/contact-us) and we will help you.
 3. Fetch the models of that provider (*Fetch Models* in the provider form).
 4. Install the module (Apps, or `-i serfe_invoice_ocr`).
 

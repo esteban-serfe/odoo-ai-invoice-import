@@ -40,7 +40,7 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 
 ## Limitations
 
-* **Argentina only.** The extraction is tuned for AFIP invoices (CUIT, voucher letters, AFIP taxes, `l10n_ar`). Other countries, such as Uruguay, are not covered: [contact us](https://www.serfe.com/en/) if you need them.
+* **Argentina only.** The extraction is tuned for AFIP invoices (CUIT, voucher letters, AFIP taxes, `l10n_ar`). Other countries, such as Uruguay, are not covered: [contact us](https://www.serfe.com/en/contact-us) if you need them.
 * **Odoo 16 Community only.** Other versions have not been reviewed.
 * **The model can be wrong.** The result is a suggestion: check totals, taxes and the vendor before posting. Poor scans or unusual layouts may give incomplete drafts.
 
@@ -67,7 +67,7 @@ Each module has its own README.
 
 ## Configuration
 
-1. In *LLM → Configuration → Providers*, open the provider, fill in the *API Base* and *API Key* of your AI provider, and press *Fetch Models* to import its models. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact us](https://www.serfe.com/en/) and we will help you.
+1. In *LLM → Configuration → Providers*, open the provider, fill in the *API Base* and *API Key* of your AI provider, and press *Fetch Models* to import its models. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact us](https://www.serfe.com/en/contact-us) and we will help you.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*).
 
 To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* goes back to Odoo's standard decoders.
@@ -86,7 +86,7 @@ To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* 
 * **Support and training** for your accounting team.
 * **Infrastructure options** when your case needs them.
 
-Learn more and tell us what you need at [serfe.com](https://www.serfe.com/en/).
+Learn more at [serfe.com](https://www.serfe.com/en/) and [tell us what you need](https://www.serfe.com/en/contact-us).
 
 ## License
 

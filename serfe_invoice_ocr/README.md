@@ -2,7 +2,7 @@
 
 Español · [English](README.en.md)
 
-Módulo de Odoo 16 que afina la importación de facturas con IA para comprobantes de proveedor argentinos (AFIP). Está enfocado en Argentina; otros países no están cubiertos, contactá a Serfe si lo necesitás. Lee el PDF o la imagen de una factura de proveedor con un LLM y crea un borrador de factura para revisar.
+Módulo de Odoo 16 que afina la importación de facturas con IA para comprobantes de proveedor argentinos (AFIP). Está enfocado en Argentina; otros países no están cubiertos, [contactá a Serfe](https://www.serfe.com/es/contacto) si lo necesitás. Lee el PDF o la imagen de una factura de proveedor con un LLM y crea un borrador de factura para revisar.
 
 ## Para qué sirve
 
@@ -27,7 +27,7 @@ Extiende `apx_account_invoice_import_llm` para que use el proveedor de IA de `se
 
 ## Instalación
 1. Poner el addon y sus dependencias en el `addons_path`.
-2. Instalar `serfe_llm_litellm_responses` y configurar el proveedor desde la interfaz (*LLM → Configuración → Proveedores*): completar *API Base* y *API Key* con los datos de tu proveedor de IA. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, contactá a Serfe y te ayudamos.
+2. Instalar `serfe_llm_litellm_responses` y configurar el proveedor desde la interfaz (*LLM → Configuración → Proveedores*): completar *API Base* y *API Key* con los datos de tu proveedor de IA. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, [contactá a Serfe](https://www.serfe.com/es/contacto) y te ayudamos.
 3. Traer los modelos de ese proveedor (*Fetch Models* en el formulario del proveedor).
 4. Instalar el módulo (Aplicaciones, o `-i serfe_invoice_ocr`).
 

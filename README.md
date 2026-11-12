@@ -1,10 +1,16 @@
 # Importación de facturas de proveedor con IA para Odoo (Argentina)
 
+> Leé facturas de proveedor en PDF o imagen con IA y obtené un borrador listo para revisar en Odoo.
+
+[![Odoo](https://img.shields.io/badge/Odoo-16.0%20Community-714B67.svg)](https://www.odoo.com/)
+[![Localización](https://img.shields.io/badge/Localizaci%C3%B3n-Argentina-75AADB.svg)](https://github.com/odoo/odoo/tree/16.0/addons/l10n_ar)
+[![Licencia](https://img.shields.io/badge/Licencia-AGPL--3%20%2F%20LGPL--3-green.svg)](LICENSE)
+
 [English](README.en.md)
 
 ![Importación de facturas de proveedor con IA para Odoo, por Serfe](docs/banner.png)
 
-Subí una factura de proveedor (PDF o imagen) a Odoo 16 y obtené un borrador de factura con los datos argentinos (AFIP) ya cargados, listo para revisar. Usa un modelo de lenguaje (ChatGPT u otro) que elegís vos, a través de la API de tu propio proveedor.
+Subí una factura de proveedor (PDF o imagen) a Odoo 16 y obtené un borrador de factura con los datos argentinos ya cargados, listo para revisar.
 
 ## El problema
 
@@ -68,9 +74,9 @@ Cada módulo tiene su propio README.
 
 Para desactivar la importación con IA, archivá el asistente *Invoice Extraction*: *Upload* vuelve a los decodificadores estándar de Odoo.
 
-## Licencia
+## Colaboración y soporte
 
-Mixta, según el módulo. Ver [LICENSE](LICENSE).
+* **Contribuir:** leé [CONTRIBUTING.md](CONTRIBUTING.md) para ver las pautas y cómo verificar los cambios localmente.
 
 ## Acerca de Serfe
 
@@ -83,4 +89,6 @@ Mixta, según el módulo. Ver [LICENSE](LICENSE).
 
 Conocé más y contanos qué necesitás en [serfe.com](https://www.serfe.com/).
 
-¿Querés colaborar con el proyecto? Mirá [CONTRIBUTING.md](CONTRIBUTING.md).
+## Licencia
+
+Mixta, según el módulo. Ver [LICENSE](LICENSE).

@@ -1,5 +1,11 @@
 # AI vendor bill import for Odoo (Argentina)
 
+> Read supplier invoices from a PDF or image with AI and get a draft vendor bill ready for review in Odoo.
+
+[![Odoo](https://img.shields.io/badge/Odoo-16.0%20Community-714B67.svg)](https://www.odoo.com/)
+[![Localization](https://img.shields.io/badge/Localization-Argentina-75AADB.svg)](https://github.com/odoo/odoo/tree/16.0/addons/l10n_ar)
+[![License](https://img.shields.io/badge/License-AGPL--3%20%2F%20LGPL--3-green.svg)](LICENSE)
+
 [Español](README.md)
 
 ![AI vendor bill import for Odoo, by Serfe](docs/banner.png)
@@ -68,9 +74,10 @@ Each module has its own README.
 
 To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* goes back to Odoo's standard decoders.
 
-## License
+## Collaboration & Support
 
-Mixed, per module. See [LICENSE](LICENSE).
+* **Contributing:** read [CONTRIBUTING.en.md](CONTRIBUTING.en.md) for guidelines and local verification steps.
+
 
 ## About Serfe
 
@@ -83,4 +90,6 @@ Mixed, per module. See [LICENSE](LICENSE).
 
 Learn more and tell us what you need at [serfe.com](https://www.serfe.com/en/).
 
-Want to contribute to the project? See [CONTRIBUTING.en.md](CONTRIBUTING.en.md).
+## License
+
+Mixed, per module. See [LICENSE](LICENSE).

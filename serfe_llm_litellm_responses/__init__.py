@@ -7,11 +7,11 @@ from . import models, utils, wizards  # noqa: F401
 
 _logger = logging.getLogger(__name__)
 
-PROVIDER_NAME = "LiteLLM"
+PROVIDER_NAME = "Proveedor de IA"
 
 
 def post_init_hook(cr, registry):
-    """Auto-provision the "LiteLLM" llm.provider so any module that depends
+    """Auto-provision the PROVIDER_NAME llm.provider so any module that depends
     on this one has a working provider without a manual step.
 
     Reads LITELLM_API_BASE and LITELLM_API_KEY from the environment. If either

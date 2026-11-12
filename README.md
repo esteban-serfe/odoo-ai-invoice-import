@@ -67,7 +67,7 @@ Cada módulo tiene su propio README.
 
 ## Configuración
 
-1. Configurá la conexión con tu proveedor de IA siguiendo la documentación del módulo base: [`apx_llm_litellm`](apx_llm_litellm/README.md). Si preferís, [contactanos](https://www.serfe.com/) y te ayudamos.
+1. En *LLM → Configuración → Proveedores*, abrí el proveedor, completá *API Base* y *API Key* con los datos de tu proveedor de IA y presioná *Fetch Models* para traer sus modelos. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, [contactanos](https://www.serfe.com/) y te ayudamos.
 2. Asignar un modelo al asistente *Invoice Extraction* (*LLM → Configuración → Asistentes*).
 
 Para desactivar la importación con IA, archivá el asistente *Invoice Extraction*: *Upload* vuelve a los decodificadores estándar de Odoo.

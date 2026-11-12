@@ -9,7 +9,7 @@ class TestPostInitHook(TransactionCase):
     def setUp(self):
         super().setUp()
         # A real LITELLM_API_KEY in the environment makes this module's own
-        # post_init_hook auto-create "LiteLLM" for real at install
+        # post_init_hook auto-create the PROVIDER_NAME provider for real at install
         # time, before any test runs - start each test from a clean slate
         # instead of assuming a pristine database.
         self._find_provider().unlink()

@@ -115,9 +115,9 @@ class AccountInvoiceImportOCR(models.AbstractModel):
         if provider.service != "litellm":
             raise UserError(
                 _(
-                    "OCR is only supported for LiteLLM providers. The "
-                    "Invoice Extraction assistant's model is configured on "
-                    "a '%s' provider."
+                    "OCR is only supported for providers of the 'AI Service' "
+                    "type. The Invoice Extraction assistant's model is "
+                    "configured on a '%s' provider."
                 )
                 % provider.service
             )

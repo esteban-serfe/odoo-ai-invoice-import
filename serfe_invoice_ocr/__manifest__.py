@@ -9,8 +9,7 @@ point of sale and number, day-first dates, printed VAT rate, perceptions and
 document-level charges. Focused on Argentina.
 
 Data notice: the documents and prompts are sent to the AI provider that you
-configure through your own LiteLLM proxy. The module does not send data to
-Serfe or to any fixed service.
+configure. The module does not send data to Serfe or to any fixed service.
     """,
     "author": "Serfe",
     "license": "AGPL-3",

@@ -2,7 +2,7 @@ import base64
 import logging
 import time
 
-from odoo import models
+from odoo import _, api, models
 
 from ..utils.litellm_message_validator import LiteLLMMessageValidator
 from .http_client import LiteLLMResponsesClient
@@ -19,6 +19,17 @@ _OCR_MAX_ATTEMPTS = 3
 
 class LLMProvider(models.Model):
     _inherit = "llm.provider"
+
+    @api.model
+    def _get_available_services(self):
+        """Show the "litellm" service as a generic "AI Service" instead of the
+        vendored "LiteLLM Proxy" label. Only the label changes: the stored key
+        stays "litellm", so every service dispatch keeps working.
+        """
+        return [
+            (key, _("AI Service") if key == "litellm" else label)
+            for key, label in super()._get_available_services()
+        ]
 
     def litellm_format_messages(self, messages, system_prompt=None):
         """Strip messages the vendored formatter can leave orphaned (e.g. a

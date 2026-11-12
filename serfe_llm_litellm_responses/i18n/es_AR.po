@@ -21,3 +21,9 @@ msgstr "Importar modelos LLM"
 #: model:ir.model,name:serfe_llm_litellm_responses.model_llm_provider
 msgid "LLM Provider"
 msgstr "Proveedor LLM"
+
+#. module: serfe_llm_litellm_responses
+#: code:addons/serfe_llm_litellm_responses/models/llm_provider.py:0
+#, python-format
+msgid "AI Service"
+msgstr "Servicio de IA"

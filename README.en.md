@@ -67,7 +67,7 @@ Each module has its own README.
 
 ## Configuration
 
-1. Set up the connection to your AI provider following the documentation of the base module: [`apx_llm_litellm`](apx_llm_litellm/README.en.md). If you prefer, [contact us](https://www.serfe.com/en/) and we will help you.
+1. In *LLM → Configuration → Providers*, open the provider, fill in the *API Base* and *API Key* of your AI provider, and press *Fetch Models* to import its models. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact us](https://www.serfe.com/en/) and we will help you.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*).
 
 To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* goes back to Odoo's standard decoders.

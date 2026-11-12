@@ -161,12 +161,12 @@ msgstr ""
 #: code:addons/serfe_invoice_ocr/models/account_invoice_import_ocr.py:0
 #, python-format
 msgid ""
-"OCR is only supported for LiteLLM providers. The Invoice Extraction "
-"assistant's model is configured on a '%s' provider."
+"OCR is only supported for providers of the 'AI Service' type. The Invoice "
+"Extraction assistant's model is configured on a '%s' provider."
 msgstr ""
-"El OCR solo es compatible con proveedores LiteLLM. El modelo del "
-"asistente de Extracción de Facturas está configurado en un proveedor "
-"'%s'."
+"El OCR solo es compatible con proveedores de tipo 'Servicio de IA'. El "
+"modelo del asistente de Extracción de Facturas está configurado en un "
+"proveedor '%s'."
 
 #. module: serfe_invoice_ocr
 #. odoo-python

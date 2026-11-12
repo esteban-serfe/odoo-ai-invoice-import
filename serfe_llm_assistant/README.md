@@ -1,6 +1,6 @@
 # Asistente LLM para Odoo
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Gestión avanzada de asistentes de IA con plantillas de prompts integradas, capacidades de prueba y una orquestación inteligente de la configuración. Este módulo es la capa de inteligencia que define cómo los datos de Odoo se conectan con los modelos de IA.
 

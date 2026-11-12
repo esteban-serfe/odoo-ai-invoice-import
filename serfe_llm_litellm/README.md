@@ -1,6 +1,6 @@
 # Integración del proxy LiteLLM para Odoo
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Este módulo integra el proxy LiteLLM con el framework LLM de Odoo, dando acceso a múltiples proveedores de LLM a través de un único proxy.
 

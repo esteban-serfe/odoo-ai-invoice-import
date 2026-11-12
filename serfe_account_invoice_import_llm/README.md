@@ -1,6 +1,6 @@
 # serfe_account_invoice_import_llm
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Módulo de Odoo 16 que lee una factura de proveedor (PDF o imagen) con un paso de OCR y una llamada a un LLM, y convierte el resultado en un borrador de factura de proveedor a través de `account_invoice_import` de OCA. Fork de `account_invoice_import_llm` de [apexive/odoo-llm](https://github.com/apexive/odoo-llm), ver [UPSTREAM.md](../UPSTREAM.md).
 

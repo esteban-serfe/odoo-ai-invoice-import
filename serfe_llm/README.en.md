@@ -1,6 +1,6 @@
 # LLM Integration Base for Odoo
 
-[Español](README.md)
+[Español](README.md) · English
 
 The foundational module for integrating Large Language Models into Odoo. This base module provides the core infrastructure, provider abstraction, and enhanced messaging system that enables all other LLM modules in the ecosystem.
 

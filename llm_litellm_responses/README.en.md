@@ -1,6 +1,6 @@
 # llm_litellm_responses
 
-[Español](README.md)
+[Español](README.md) · English
 Odoo 16 module that extends `serfe_llm_litellm` with the LiteLLM Responses API, OCR through file inputs, and automatic provider creation. It leaves `serfe_llm_litellm` untouched: everything is done through `_inherit` and a client subclass.
 
 ## What is this for?

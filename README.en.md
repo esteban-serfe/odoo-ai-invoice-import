@@ -6,9 +6,10 @@
 [![Localization](https://img.shields.io/badge/Localization-Argentina-75AADB.svg)](https://github.com/odoo/odoo/tree/16.0/addons/l10n_ar)
 [![License](https://img.shields.io/badge/License-AGPL--3%20%2F%20LGPL--3-green.svg)](LICENSE)
 
-[Español](README.md)
 
 ![AI vendor bill import for Odoo, by Serfe](docs/banner.png)
+
+[Español](README.md) · English
 
 Upload a supplier invoice (PDF or image) to Odoo 16 and get a draft vendor bill with the Argentine (AFIP) data already filled in, ready for review. It uses a language model (ChatGPT or another) that you choose, through the API of your own provider.
 

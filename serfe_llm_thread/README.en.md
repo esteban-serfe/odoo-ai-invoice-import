@@ -1,6 +1,6 @@
 # LLM Thread Module
 
-[Español](README.md)
+[Español](README.md) · English
 
 This Odoo module provides functionality for managing and interacting with threads in a Large Language Model (LLM) context. It includes components for chat threads, message lists, and composer views.
 

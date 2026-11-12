@@ -1,6 +1,6 @@
 # llm_access_groups
 
-[Español](README.md)
+[Español](README.md) · English
 Odoo 16 module that restricts who can use the `odoo-llm` features. It leaves those modules untouched: records are patched by external ID.
 
 ## What is this for?

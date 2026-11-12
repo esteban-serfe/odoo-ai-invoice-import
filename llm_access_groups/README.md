@@ -1,6 +1,6 @@
 # llm_access_groups
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Módulo de Odoo 16 que restringe quién puede usar las funciones de `odoo-llm`. No modifica esos módulos: los registros se parchean por ID externo.
 

@@ -1,6 +1,6 @@
 # llm_invoice_ocr
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Módulo de Odoo 16 que afina la importación de facturas con IA para comprobantes de proveedor argentinos (AFIP). Está enfocado en Argentina; otros países no están cubiertos, contactá a Serfe si lo necesitás. Lee el PDF o la imagen de una factura de proveedor con un LLM y crea un borrador de factura para revisar.
 

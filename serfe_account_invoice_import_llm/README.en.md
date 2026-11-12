@@ -1,6 +1,6 @@
 # serfe_account_invoice_import_llm
 
-[Español](README.md)
+[Español](README.md) · English
 Odoo 16 module that reads a supplier invoice (PDF or image) with an OCR step and one LLM call, and turns the result into a draft vendor bill through OCA's `account_invoice_import`. Fork of `account_invoice_import_llm` from [apexive/odoo-llm](https://github.com/apexive/odoo-llm), see [UPSTREAM.md](../UPSTREAM.md).
 
 ## What is this for?

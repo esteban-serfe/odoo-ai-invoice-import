@@ -1,6 +1,6 @@
 # Contribuir
 
-[English](CONTRIBUTING.en.md)
+Español · [English](CONTRIBUTING.en.md)
 
 1. Hacer un fork del repositorio y crear una rama desde `16.0`.
 2. Hacer el cambio, usando [conventional commits](https://www.conventionalcommits.org/).

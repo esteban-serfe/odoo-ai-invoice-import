@@ -1,6 +1,6 @@
 # Contributing
 
-[Español](CONTRIBUTING.md)
+[Español](CONTRIBUTING.md) · English
 
 1. Fork the repository and create a branch from `16.0`.
 2. Make your change, using [conventional commits](https://www.conventionalcommits.org/).

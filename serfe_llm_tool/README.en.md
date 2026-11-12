@@ -1,6 +1,6 @@
 # LLM Tool for Odoo
 
-[Español](README.md)
+[Español](README.md) · English
 
 Enhanced function calling framework with structured data storage, comprehensive error handling, and MCP integration. This module enables LLMs to interact with Odoo data and execute actions through a powerful and secure tool system.
 

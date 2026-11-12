@@ -1,6 +1,6 @@
 # Base de integración LLM para Odoo
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 El módulo fundacional para integrar modelos de lenguaje (LLM) en Odoo. Este módulo base aporta la infraestructura central, la abstracción de proveedores y un sistema de mensajería mejorado sobre el que se apoyan todos los demás módulos LLM del ecosistema.
 

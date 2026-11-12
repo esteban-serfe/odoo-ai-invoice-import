@@ -1,6 +1,6 @@
 # llm_litellm_responses
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Módulo de Odoo 16 que extiende `serfe_llm_litellm` con la API Responses de LiteLLM, OCR mediante archivos de entrada y creación automática del proveedor. No modifica `serfe_llm_litellm`: todo se hace con `_inherit` y una subclase del cliente.
 

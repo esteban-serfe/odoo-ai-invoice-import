@@ -6,11 +6,10 @@
 [![Localización](https://img.shields.io/badge/Localizaci%C3%B3n-Argentina-75AADB.svg)](https://github.com/odoo/odoo/tree/16.0/addons/l10n_ar)
 [![Licencia](https://img.shields.io/badge/Licencia-AGPL--3%20%2F%20LGPL--3-green.svg)](LICENSE)
 
-[English](README.en.md)
 
 ![Importación de facturas de proveedor con IA para Odoo, por Serfe](docs/banner.png)
 
-Subí una factura de proveedor (PDF o imagen) a Odoo 16 y obtené un borrador de factura con los datos argentinos ya cargados, listo para revisar.
+Español · [English](README.en.md)
 
 ## El problema
 

@@ -1,6 +1,6 @@
 # llm_invoice_ocr
 
-[Español](README.md)
+[Español](README.md) · English
 
 Odoo 16 module that tunes the AI invoice import for Argentine vendor bills (AFIP). It is focused on Argentina and other countries are not covered: contact Serfe if you need them. It reads the PDF or image of a supplier invoice with an LLM and creates a draft vendor bill for review.
 

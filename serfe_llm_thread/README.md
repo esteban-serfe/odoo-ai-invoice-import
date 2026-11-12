@@ -1,6 +1,6 @@
 # Módulo LLM Thread
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Este módulo de Odoo ofrece la funcionalidad para gestionar e interactuar con hilos en el contexto de un modelo de lenguaje (LLM). Incluye componentes para hilos de chat, listas de mensajes y vistas de composición.
 

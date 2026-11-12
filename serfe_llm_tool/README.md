@@ -1,6 +1,6 @@
 # Herramientas LLM para Odoo
 
-[English](README.en.md)
+Español · [English](README.en.md)
 
 Framework mejorado de function calling con almacenamiento de datos estructurados, manejo de errores completo e integración con MCP. Este módulo permite a los LLM interactuar con los datos de Odoo y ejecutar acciones a través de un sistema de herramientas potente y seguro.
 

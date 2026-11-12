@@ -1,6 +1,6 @@
 # LLM Training Module
 
-[Español](README.md)
+[Español](README.md) · English
 
 This module provides functionality for managing LLM fine-tuning jobs across different providers. It allows users to create, monitor, and manage fine-tuning jobs directly from the Odoo interface.
 

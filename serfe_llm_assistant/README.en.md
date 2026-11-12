@@ -1,6 +1,6 @@
 # LLM Assistant for Odoo
 
-[Español](README.md)
+[Español](README.md) · English
 
 Advanced AI assistant management with integrated prompt templates, testing capabilities, and intelligent configuration orchestration. This module serves as the intelligence layer that defines how Odoo data connects to AI models.
 

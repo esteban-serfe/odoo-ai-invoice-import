@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/License-AGPL--3%20%2F%20LGPL--3-green.svg)](LICENSE)
 
 
-![AI vendor bill import for Odoo, by Serfe](docs/banner.png)
+![AI vendor bill import for Odoo, by Serfe](docs/banner.en.png)
 
 [Español](README.md) · English
 
@@ -31,6 +31,8 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 1. On a vendor bill or refund list, press *Upload* and choose the PDF or image.
 2. The document is read and the data is extracted with the model you configured.
 3. A review wizard opens with the result. You check totals, taxes and the vendor, fix what is needed and post.
+
+![Importing a vendor bill with AI in Odoo](serfe_invoice_ocr/static/description/demo.en.gif)
 
 ### On an existing bill
 

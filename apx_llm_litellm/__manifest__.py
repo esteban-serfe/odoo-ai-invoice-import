@@ -12,7 +12,7 @@
         - Rate limiting and cost tracking through proxy
     """,
     "category": "Technical",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "depends": ["apx_llm"],
     "external_dependencies": {
         "python": ["requests"],

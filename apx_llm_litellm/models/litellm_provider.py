@@ -114,6 +114,12 @@ class LLMProvider(models.Model):
         """Send chat messages using LiteLLM proxy"""
         model = self.get_model(model, "chat")
         messages = self.litellm_format_messages(messages)
+        # The assistant's prompt (system instructions, and the whole request
+        # for one-shot calls such as the invoice extraction) comes here.
+        prepend_messages = kwargs.get("prepend_messages")
+        if prepend_messages and isinstance(prepend_messages, list):
+            messages = prepend_messages + messages
+        messages = [self._litellm_flatten_system_content(m) for m in messages]
         tools = kwargs.get("tools")
         params = {
             "messages": messages,
@@ -132,30 +138,53 @@ class LLMProvider(models.Model):
             result = {"role": choice["role"], "content": choice.get("content")}
             if choice.get("tool_calls"):
                 result["tool_calls"] = choice["tool_calls"]
-            yield result
-        else:
-            tool_calls = {}
-            for chunk in response:
-                delta = chunk["choices"][0].get("delta", {})
-                if "content" in delta and delta["content"]:
-                    yield {"role": "assistant", "content": delta["content"]}
-                for tool_call in delta.get("tool_calls", []):
-                    index = tool_call.get("index", 0)
-                    current = tool_calls.setdefault(
-                        index,
-                        {
-                            "id": "",
-                            "type": "function",
-                            "function": {"name": "", "arguments": ""},
-                        },
-                    )
-                    current["id"] = tool_call.get("id") or current["id"]
-                    current["type"] = tool_call.get("type") or current["type"]
-                    function = tool_call.get("function") or {}
-                    current["function"]["name"] += function.get("name") or ""
-                    current["function"]["arguments"] += function.get("arguments") or ""
-            if tool_calls:
-                yield {"tool_calls": list(tool_calls.values())}
+            return result
+        # Streaming lives in its own generator so that a non-streaming call
+        # returns the dict above instead of a generator.
+        return self._litellm_stream_chat(response)
+
+    @staticmethod
+    def _litellm_flatten_system_content(message):
+        """Send a text-only system message as a plain string.
+
+        Prompts build every message with a list of content parts. Some
+        OpenAI-compatible backends only accept a string for the system role
+        (e.g. they map it to the request instructions) and reject the list
+        with "System messages are not allowed".
+        """
+        content = message.get("content")
+        if message.get("role") != "system" or not isinstance(content, list):
+            return message
+        if not all(
+            isinstance(part, dict) and part.get("type") == "text" for part in content
+        ):
+            return message
+        return {**message, "content": "\n\n".join(p.get("text", "") for p in content)}
+
+    def _litellm_stream_chat(self, response):
+        """Yield incremental chat results for a streaming chat completion."""
+        tool_calls = {}
+        for chunk in response:
+            delta = chunk["choices"][0].get("delta", {})
+            if "content" in delta and delta["content"]:
+                yield {"role": "assistant", "content": delta["content"]}
+            for tool_call in delta.get("tool_calls", []):
+                index = tool_call.get("index", 0)
+                current = tool_calls.setdefault(
+                    index,
+                    {
+                        "id": "",
+                        "type": "function",
+                        "function": {"name": "", "arguments": ""},
+                    },
+                )
+                current["id"] = tool_call.get("id") or current["id"]
+                current["type"] = tool_call.get("type") or current["type"]
+                function = tool_call.get("function") or {}
+                current["function"]["name"] += function.get("name") or ""
+                current["function"]["arguments"] += function.get("arguments") or ""
+        if tool_calls:
+            yield {"tool_calls": list(tool_calls.values())}
 
     def litellm_embedding(self, texts, model=None):
         """Generate embeddings using LiteLLM proxy"""

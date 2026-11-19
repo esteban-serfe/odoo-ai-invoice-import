@@ -42,7 +42,11 @@ Paths are relative to the renamed module directory.
 | `apx_llm_assistant` | `views/llm_assistant_views.xml` | Fix: remove an invalid `attrs` on the ace widget. |
 | `apx_llm_assistant` | `views/llm_prompt_views.xml` | Fix: remove an invalid `attrs` on the ace widget. |
 | `apx_llm_litellm` | `models/http_client.py` | `chat_completion` accepts `**kwargs`. |
+| `apx_llm_litellm` | `models/http_client.py` | Fix: a non-streaming `chat_completion` returns the response instead of a generator (the streaming loop moves to `_iter_chat_completion_stream`). Candidate for upstream. |
 | `apx_llm_litellm` | `models/litellm_provider.py` | Tool calling: message and tool formatting, `tool_choice`, streamed `tool_calls`. |
+| `apx_llm_litellm` | `models/litellm_provider.py` | Fix: a non-streaming `litellm_chat` returns the result dict instead of a generator (the streaming loop moves to `_litellm_stream_chat`). Candidate for upstream. |
+| `apx_llm_litellm` | `models/litellm_provider.py` | Fix: `litellm_chat` sends `prepend_messages` (the assistant's prompt), which it ignored. Candidate for upstream. |
+| `apx_llm_litellm` | `models/litellm_provider.py` | A text-only system message is sent as a string (`_litellm_flatten_system_content`): some OpenAI-compatible backends reject a list of parts there with "System messages are not allowed". Candidate for upstream. |
 | `apx_account_invoice_import_llm` | `__manifest__.py` | Depend on `apx_llm_litellm` instead of `llm_mistral`. |
 
 Besides these, every file that named a renamed module was updated, the

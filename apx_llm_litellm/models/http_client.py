@@ -48,17 +48,23 @@ class LiteLLMClient:
 
         if not stream:
             return response.json()
-        else:
-            for line in response.iter_lines():
-                if line:
-                    if line.startswith(b"data: "):
-                        line = line[6:]  # Remove "data: " prefix
-                    if line.strip() == b"[DONE]":
-                        break
-                    try:
-                        yield json.loads(line)
-                    except json.JSONDecodeError:
-                        continue
+        # The streaming loop lives in its own generator: a `yield` here would
+        # turn this whole method into a generator, and the non-streaming
+        # `return` above would never reach the caller.
+        return self._iter_chat_completion_stream(response)
+
+    def _iter_chat_completion_stream(self, response):
+        """Yield the parsed SSE chunks of a streaming chat completion."""
+        for line in response.iter_lines():
+            if line:
+                if line.startswith(b"data: "):
+                    line = line[6:]  # Remove "data: " prefix
+                if line.strip() == b"[DONE]":
+                    break
+                try:
+                    yield json.loads(line)
+                except json.JSONDecodeError:
+                    continue
 
     def create_embeddings(self, texts, model):
         """Create embeddings"""

@@ -16,9 +16,6 @@ class TestModuleInstalled(TransactionCase):
         )
         return module.state
 
-    def test_serfe_llm_litellm_responses_dependency_is_installed(self):
-        self.assertEqual(self._get_module_state("serfe_llm_litellm_responses"), "installed")
-
     def test_account_invoice_import_llm_dependency_is_installed(self):
         self.assertEqual(
             self._get_module_state("apx_account_invoice_import_llm"), "installed"

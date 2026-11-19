@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- The provider the README and the store page tell the user to open:
+         it only needs the API Base and API Key of their AI provider. -->
+    <record id="llm_provider_ai" model="llm.provider">
+        <field name="name">Proveedor de IA</field>
+        <field name="service">litellm</field>
+    </record>
+</odoo>

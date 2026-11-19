@@ -12,7 +12,6 @@ LGPL-3  (LICENSES/LGPL-3.txt)
     apx_llm, apx_llm_thread, apx_llm_tool, apx_llm_assistant,
     apx_llm_litellm, apx_llm_training,
     apx_web_json_editor        (Apexive Solutions LLC, Serfe)
-    serfe_llm_litellm_responses
     serfe_llm_access_groups
 
 Modules taken from https://github.com/apexive/odoo-llm keep their original

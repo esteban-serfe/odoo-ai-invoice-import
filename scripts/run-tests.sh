@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the tests of this repo on a clean database, offline and without LITELLM_* set.
+# Run the tests of this repo on a clean database, offline and without provider credentials.
 # Network is only used for the setup (cloning OCA repos, pulling/building images);
 # the Odoo container runs on an internal Docker network.
 #

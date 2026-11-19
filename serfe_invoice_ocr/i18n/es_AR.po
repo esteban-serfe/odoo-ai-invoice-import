@@ -314,3 +314,10 @@ msgstr ""
 #: model:ir.model,name:serfe_invoice_ocr.model_account_invoice_import
 msgid "Wizard to import supplier invoices/refunds"
 msgstr "Asistente para importar facturas y notas de crédito de proveedores"
+
+#. module: serfe_invoice_ocr
+#. odoo-python
+#: code:addons/serfe_invoice_ocr/models/llm_provider.py:0
+#, python-format
+msgid "AI Service"
+msgstr "Servicio de IA"

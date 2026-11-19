@@ -4,5 +4,6 @@ from . import (  # noqa: F401
     account_move,
     business_document_import,
     ir_ui_menu,
+    llm_provider,
     res_company,
 )

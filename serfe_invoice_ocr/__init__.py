@@ -1,49 +1,43 @@
 import logging
 
 from odoo import SUPERUSER_ID, api
-from odoo.addons.serfe_llm_litellm_responses import PROVIDER_NAME
 
 from . import models, wizard  # noqa: F401
 
 _logger = logging.getLogger(__name__)
 
+PROVIDER_NAME = "Proveedor de IA"
+
 
 def post_init_hook(cr, registry):
-    """Wire a LiteLLM model onto the invoice_extraction assistant, so a
-    fresh install works out of the box - if one is already available.
+    """Set a model of the "Proveedor de IA" provider on the invoice_extraction
+    assistant, so a fresh install works out of the box if a model is already
+    available.
 
-    serfe_llm_litellm_responses's own post_init_hook only auto-provisions the
-    LiteLLM provider itself, not a specific model (model selection
-    is a deliberate manual step via the LLM > Configuration > Providers > Fetch Models
-    wizard). On a fresh install there is usually no model yet, in which
-    case this just logs and skips - an admin can assign one to the
-    "Invoice Extraction" assistant afterwards (LLM -> Configuration ->
-    Assistants), or re-run this hook via a module upgrade once a model has
-    been fetched.
+    On a fresh install the provider has no API settings nor models yet, so
+    this only logs and skips: the admin fills in the provider, fetches its
+    models and assigns one to the "Invoice Extraction" assistant (LLM ->
+    Configuration -> Assistants), or upgrades this module to re-run the hook.
     """
     env = api.Environment(cr, SUPERUSER_ID, {})
 
-    provider = (
-        env["llm.provider"].sudo().search([("name", "=", PROVIDER_NAME)], limit=1)
-    )
+    provider = env.ref("serfe_invoice_ocr.llm_provider_ai", raise_if_not_found=False)
     if not provider:
         _logger.warning(
-            "LiteLLM provider not found; skipping invoice_extraction "
-            "assistant wiring. Create the LiteLLM provider (or set "
-            "LITELLM_API_BASE and LITELLM_API_KEY when installing "
-            "serfe_llm_litellm_responses), fetch its models and assign one to "
-            "the assistant."
+            "'%s' provider not found; skipping invoice_extraction assistant "
+            "wiring. Create an 'AI Service' provider (LLM > Configuration > "
+            "Providers), fetch its models and assign one to the assistant.",
+            PROVIDER_NAME,
         )
         return
 
     model = env["llm.model"].sudo().search([("provider_id", "=", provider.id)], limit=1)
     if not model:
         _logger.warning(
-            "No LiteLLM model found for provider '%s' yet; skipping "
-            "invoice_extraction assistant wiring. Fetch a model via "
-            "LLM > Configuration > Providers > LiteLLM > Fetch Models, "
-            "then assign it to the 'Invoice Extraction' assistant "
-            "manually, or upgrade this module again.",
+            "No model found for provider '%s' yet; skipping invoice_extraction "
+            "assistant wiring. Fill in its API Base and API Key, press Fetch "
+            "Models (LLM > Configuration > Providers), then assign a model to "
+            "the 'Invoice Extraction' assistant, or upgrade this module again.",
             provider.name,
         )
         return
@@ -54,12 +48,8 @@ def post_init_hook(cr, registry):
         .search([("code", "=", "invoice_extraction")], limit=1)
     )
     if not assistant:
-        _logger.warning(
-            "invoice_extraction assistant not found; LiteLLM model was " "not assigned."
-        )
+        _logger.warning("invoice_extraction assistant not found; no model assigned.")
         return
 
     assistant.write({"model_id": model.id})
-    _logger.info(
-        "Auto-configured LiteLLM model '%s' for invoice_extraction", model.name
-    )
+    _logger.info("Auto-configured model '%s' for invoice_extraction", model.name)

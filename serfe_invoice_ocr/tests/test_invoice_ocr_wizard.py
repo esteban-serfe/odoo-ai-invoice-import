@@ -60,9 +60,9 @@ MOCK_LLM_JSON = json.dumps(
 
 def _fake_responses_sse(text):
     """Build a fake requests.Response mimicking the real LiteLLM /responses
-    SSE stream shape (captured live against litellm.example.test): the final
+    SSE stream shape: the final
     aggregated object carries no output, only the response.output_text.done
-    event does - see LiteLLMClient._aggregate_response_text.
+    event does - see llm.provider._litellm_responses_text.
     """
     lines = [
         b'data: {"type": "response.created"}',
@@ -75,6 +75,16 @@ def _fake_responses_sse(text):
     ]
     fake_response = MagicMock()
     fake_response.iter_lines.return_value = lines
+    fake_response.raise_for_status.return_value = None
+    return fake_response
+
+
+def _fake_chat_completion(content):
+    """A non-streaming /chat/completions response carrying `content`."""
+    fake_response = MagicMock()
+    fake_response.json.return_value = {
+        "choices": [{"message": {"role": "assistant", "content": content}}]
+    }
     fake_response.raise_for_status.return_value = None
     return fake_response
 
@@ -98,7 +108,6 @@ class TestInvoiceImportLiteLLM(TransactionCase):
                 "name": "chatgpt-gpt-5.4",
                 "provider_id": cls.provider.id,
                 "model_use": "chat",
-                "model_info": {"mode": "responses"},
             }
         )
         cls.assistant = cls.env["llm.assistant"].search(
@@ -208,13 +217,13 @@ class TestInvoiceImportLiteLLM(TransactionCase):
         )
 
     @patch("requests.Session.request")
-    def test_import_invoice_via_litellm_responses_mode(self, mock_request):
-        # First call is the OCR transcription (litellm_process_ocr), second
-        # is the structured extraction (_litellm_chat_responses_mode) - both
-        # go through LiteLLMClient.create_response -> POST /responses.
+    def test_import_invoice(self, mock_request):
+        # First call is the OCR transcription (litellm_process_ocr, POST
+        # /responses), second is the structured extraction (non-streaming
+        # chat, POST /chat/completions).
         mock_request.side_effect = [
             _fake_responses_sse(MOCK_OCR_TEXT),
-            _fake_responses_sse(MOCK_LLM_JSON),
+            _fake_chat_completion(MOCK_LLM_JSON),
         ]
 
         attachment = self.env["ir.attachment"].create(
@@ -230,10 +239,17 @@ class TestInvoiceImportLiteLLM(TransactionCase):
         action = wizard.import_invoices()
 
         # No real HTTP call: only our mocked transport, hit exactly twice
-        # (OCR, then extraction), both against /responses.
+        # (OCR, then extraction).
         self.assertEqual(mock_request.call_count, 2)
-        for call in mock_request.call_args_list:
-            self.assertIn("/responses", call.kwargs["url"])
+        ocr_call, extraction_call = mock_request.call_args_list
+        self.assertIn("/responses", ocr_call.kwargs["url"])
+        self.assertIn("/chat/completions", extraction_call.kwargs["url"])
+        # The extraction prompt reaches the model, with the system message as
+        # plain text (see apx_llm_litellm in UPSTREAM.md).
+        sent_messages = extraction_call.kwargs["json"]["messages"]
+        self.assertEqual([m["role"] for m in sent_messages], ["system", "user"])
+        self.assertIsInstance(sent_messages[0]["content"], str)
+        self.assertIn(MOCK_OCR_TEXT, json.dumps(sent_messages))
 
         invoice_id = action["params"]["next"]["res_id"]
         invoice = self.env["account.move"].browse(invoice_id)

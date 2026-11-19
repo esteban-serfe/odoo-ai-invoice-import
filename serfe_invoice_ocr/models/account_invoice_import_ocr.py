@@ -94,7 +94,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
 
         Reuses the same provider/model already configured on the
         "invoice_extraction" assistant to transcribe the document, so OCR
-        and extraction always go through the same LLM provider (LiteLLM),
+        and extraction always go through the same AI provider,
         instead of the base module's hardcoded Mistral OCR provider lookup.
 
         Raises:

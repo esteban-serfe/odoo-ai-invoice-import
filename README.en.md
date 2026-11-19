@@ -32,7 +32,7 @@ It is built on [`account_invoice_import`](https://github.com/OCA/edi) from OCA, 
 2. The document is read and the data is extracted with the model you configured.
 3. A review wizard opens with the result. You check totals, taxes and the vendor, fix what is needed and post.
 
-![Importing a vendor bill with AI in Odoo](serfe_invoice_ocr/static/description/demo.en.gif)
+![Importing a vendor bill with AI in Odoo](docs/flow.en.gif)
 
 ### On an existing bill
 

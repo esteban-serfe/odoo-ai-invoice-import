@@ -32,7 +32,7 @@ Está construido sobre [`account_invoice_import`](https://github.com/OCA/edi) de
 2. Se lee el documento y se extraen los datos con el modelo que configuraste.
 3. Se abre un asistente de revisión con el resultado. Verificás totales, impuestos y proveedor, corregís lo necesario y publicás.
 
-![Importación de una factura de proveedor con IA en Odoo](serfe_invoice_ocr/static/description/demo.gif)
+![Importación de una factura de proveedor con IA en Odoo](docs/flow.gif)
 
 ### Sobre una factura ya creada
 

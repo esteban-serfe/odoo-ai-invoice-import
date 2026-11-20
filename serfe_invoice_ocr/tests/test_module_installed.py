@@ -24,6 +24,9 @@ class TestModuleInstalled(TransactionCase):
     def test_llm_litellm_dependency_is_installed(self):
         self.assertEqual(self._get_module_state("apx_llm_litellm"), "installed")
 
+    def test_argentine_localization_is_installed(self):
+        self.assertEqual(self._get_module_state("l10n_ar"), "installed")
+
     def test_exactly_one_invoice_extraction_assistant(self):
         """Guards against data/invoice_extraction_assistant_data.xml
         accidentally creating a second llm.assistant with the same code

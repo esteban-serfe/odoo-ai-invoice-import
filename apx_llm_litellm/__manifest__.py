@@ -1,5 +1,5 @@
 {
-    "name": "LiteLLM Proxy Integration",
+    "name": "LiteLLM Proxy",
     "summary": "LiteLLM proxy integration for LLM module",
     "description": """
         Implements LiteLLM proxy service for the LLM integration module.
@@ -12,7 +12,7 @@
         - Rate limiting and cost tracking through proxy
     """,
     "category": "Technical",
-    "version": "16.0.1.1.1",
+    "version": "16.0.1.1.2",
     "depends": ["apx_llm"],
     "external_dependencies": {
         "python": ["requests"],

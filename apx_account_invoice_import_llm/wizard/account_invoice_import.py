@@ -23,11 +23,14 @@ class AccountInvoiceImport(models.TransientModel):
         if res:
             return res
 
-        # Don't break OCA flow if our extraction fails
+        return self._fallback_parse_with_ai(file_data, company)
+
+    @api.model
+    def _fallback_parse_with_ai(self, file_data, company):
         try:
-            return self.env["account.invoice.import.ocr"].extract_invoice_data(
+            return self.env["account.invoice.import.ocr"]._extract_invoice_data(
                 file_data, company
             )
         except Exception:
-            _logger.exception("LLM-OCR extraction failed, skipping")
-            return res
+            _logger.warning("LLM-OCR extraction failed, skipping")
+            return False

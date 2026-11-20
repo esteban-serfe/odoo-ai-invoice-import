@@ -31,6 +31,10 @@ class AccountMove(models.Model):
             dict: Action to reload form view with populated data
         """
         self.ensure_one()
+        self.check_access_rights("write")
+        self.check_access_rule("write")
+        if self.move_type not in ("in_invoice", "in_refund"):
+            raise UserError("Only vendor bills and refunds can be processed.")
 
         # Validate invoice state
         if self.state != "draft":
@@ -48,9 +52,9 @@ class AccountMove(models.Model):
             )
 
         # Extract pivot data using OCR AbstractModel
-        # Note: extract_invoice_data() raises UserError with details if it fails
-        file_data = base64.b64decode(attachment.datas)
-        pivot_data = self.env["account.invoice.import.ocr"].extract_invoice_data(
+        # Never accept RPC context bin_size in place of the actual attachment.
+        file_data = base64.b64decode(attachment.with_context(bin_size=False).datas)
+        pivot_data = self.env["account.invoice.import.ocr"]._extract_invoice_data(
             file_data, self.company_id, attachment.mimetype or "application/pdf"
         )
 

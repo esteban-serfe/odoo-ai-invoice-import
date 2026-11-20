@@ -48,20 +48,20 @@ Loading vendor bills by hand is repetitive: copying the vendor, CUIT, voucher ty
 
 * **No license fee.** The modules are free and open source.
 * **Your costs:** the usage of your AI provider, which depends on the provider, the model and the size of the documents. Serfe does not provide the AI service.
-* **Your data:** each invoice is sent to the AI provider that you configure. Serfe does not receive it. Check your provider's data policy before processing documents.
-* **Your API key:** it is stored in the Odoo provider record, and every internal user can read it. Use a key with a limited budget, or restrict who has internal user access.
+* **Your data:** only after company opt-in, Odoo sends the full invoice, its transcription, extraction prompts, and company name, CUIT, currency and purchase VAT rates to your configured endpoint. That endpoint may forward data to other providers. Review their privacy and retention terms.
+* **Your API key:** Odoo stores it in the provider record; only LLM Managers can read it through the ORM. Restrict database and backup access, use scoped credentials, and rotate keys used with versions before `16.0.1.1.0`.
 
 ## Requirements
 
 * Odoo 16 Community, with `l10n_ar` for the Argentine behavior.
-* An AI provider account (OpenAI, Anthropic, Mistral, etc.), provided by you.
+* A LiteLLM or OpenAI-compatible endpoint with `/models`, document input via streaming `/responses`, and `/chat/completions`. Not every provider or model supports both document input and chat.
 
 ## Installation
 
 1. Clone this repository (branch `16.0`) and the repositories listed in `oca_dependencies.txt`.
 2. Add them to the `addons_path` of Odoo.
 3. Install the Python dependencies: `pip install -r requirements.txt`.
-4. Update the apps list and install `serfe_invoice_ocr` (shown in Apps as *Serfe Invoice OCR*). It is the Serfe module and the only one you need to install: its dependencies, including the vendored import base from [Apexive](https://github.com/apexive/odoo-llm), are installed with it.
+4. Update the apps list and install `serfe_invoice_ocr` (shown in Apps as *Argentina Invoice OCR*). Its dependencies, including the vendored import base from [Apexive](https://github.com/apexive/odoo-llm), are installed with it.
 
 Each module has its own README.
 
@@ -69,8 +69,11 @@ Each module has its own README.
 
 1. In *LLM → Configuration → Providers*, open the provider, fill in the *API Base* and *API Key* of your AI provider, and press *Fetch Models* to import its models. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact us](https://www.serfe.com/en/contact-us) and we will help you.
 2. Assign a model to the *Invoice Extraction* assistant (*LLM → Configuration → Assistants*).
+3. As an administrator, open *Settings → Users & Companies → Companies → Invoice AI*, review the notice, then enable **Allow external AI invoice processing** for each company that authorizes the transfer. On upgrade, existing credentials are kept, but AI stays off until opt-in.
 
-To turn the AI import off, archive the *Invoice Extraction* assistant: *Upload* goes back to Odoo's standard decoders.
+Revoke the company option to turn off future invoice AI requests for that company, or archive *Invoice Extraction* to turn it off globally. *Upload* returns to Odoo's standard decoders. Use HTTPS outside a trusted private network. Files must be PDF, PNG or JPEG and at most 20 MiB. Direct LiteLLM use outside invoice OCR requires LLM Manager or the optional LLM Chatter group.
+
+See the [release audit and checklist](docs/ODOO_APPS_RELEASE.md).
 
 ## Collaboration & Support
 

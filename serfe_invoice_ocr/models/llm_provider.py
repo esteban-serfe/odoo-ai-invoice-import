@@ -1,7 +1,10 @@
 import base64
 import json
 
+from requests.exceptions import RequestException
+
 from odoo import _, api, models
+from odoo.exceptions import UserError
 
 OCR_INSTRUCTIONS = (
     "Transcribe this document to plain text/markdown, preserving its "
@@ -23,7 +26,7 @@ class LLMProvider(models.Model):
             for key, label in super()._get_available_services()
         ]
 
-    def litellm_process_ocr(self, model_name, data, mimetype, **kwargs):
+    def _litellm_process_ocr(self, model_name, data, mimetype):
         """Transcribe a document to text with the provider's Responses API.
 
         The file goes inline, base64 encoded, as an "input_file" content part
@@ -57,24 +60,31 @@ class LLMProvider(models.Model):
         providers leave the final "response.completed" object without output
         and only send the text through those events.
         """
-        response = self.client._make_request(
+        response = self._litellm_get_client()._make_request(
             "POST",
             "/responses",
             data={"model": model_name, "input": input_messages, "stream": True},
             stream=True,
         )
         text_parts = []
-        for line in response.iter_lines():
-            if not line:
-                continue
-            if line.startswith(b"data: "):
-                line = line[6:]
-            if line.strip() == b"[DONE]":
-                break
-            try:
-                event = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if event.get("type") == "response.output_text.done":
-                text_parts.append(event.get("text", ""))
+        try:
+            for line in response.iter_lines():
+                if not line:
+                    continue
+                if line.startswith(b"data: "):
+                    line = line[6:]
+                if line.strip() == b"[DONE]":
+                    break
+                try:
+                    event = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if event.get("type") in ("error", "response.failed"):
+                    raise UserError(_("The AI service could not transcribe the invoice."))
+                if event.get("type") == "response.output_text.done":
+                    text_parts.append(event.get("text", ""))
+        except RequestException:
+            raise UserError(_("The AI transcription connection was interrupted.")) from None
+        finally:
+            response.close()
         return "".join(text_parts)

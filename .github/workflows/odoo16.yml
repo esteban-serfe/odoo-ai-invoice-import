@@ -1,0 +1,15 @@
+name: Odoo 16 tests
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install addons and run offline tests
+        run: bash scripts/run-tests.sh

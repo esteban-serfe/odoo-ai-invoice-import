@@ -14,16 +14,16 @@ It extends `apx_account_invoice_import_llm` so it reads the invoice through your
 - **Document type and number:** the detected letter selects the Latam document type and number. For letters B and C every line gets *VAT Not Applicable*, as `l10n_ar` requires.
 - **VAT percentage correction:** the rate implied by the extracted subtotal and total replaces the per-line rate when they disagree. It applies only when all lines agree on a single VAT tax.
 - **Perceptions as taxes:** *Percepción IIBB / IVA* are applied as the matching AFIP tribute tax on the existing lines.
-- **Best effort:** any step that cannot be resolved leaves the draft as extracted for manual review. It never blocks the import.
+- **Best effort:** the upload wizard falls back to a draft with a warning when AI extraction fails. The button on an existing draft reports errors without posting it.
 - **Upload button:** on vendor bills and refunds, *Upload* opens the review wizard. Other lists use Odoo's standard document decoders.
 - **Switching it off:** archiving the *Invoice Extraction* assistant disables AI import. The *Process with AI* button and the *Import Vendor Bills* menu disappear, the wizard refuses to open, and *Upload* creates the bill with the standard decoders and shows a notice.
 - **Messages:** the *Process with AI* guard errors are translatable.
 
 ## Requirements / Dependencies
 - Odoo 16 (Community)
-- Odoo modules: `apx_account_invoice_import_llm`, `apx_llm_litellm`
-- Optional: `l10n_ar` for the Argentine behavior
-- An AI provider account, provided by you.
+- Odoo modules: `apx_account_invoice_import_llm`, `apx_llm_litellm`, `l10n_ar`
+- Your Argentine chart of accounts, AFIP responsibility and configured purchase taxes.
+- A LiteLLM or compatible endpoint with streaming `/responses` for PDFs/images and `/chat/completions` for structured extraction.
 
 ## Installation
 1. Make the addon and its dependencies available in your addons path.
@@ -31,14 +31,15 @@ It extends `apx_account_invoice_import_llm` so it reads the invoice through your
 3. In *LLM → Configuration → Providers*, open *Proveedor de IA* and fill in the *API Base* and *API Key* of your AI provider. The module connects to your provider's API: see its documentation to get the API URL and key. If you prefer, [contact Serfe](https://www.serfe.com/en/contact-us) and we will help you.
 4. Fetch the models of that provider (*Fetch Models* in the provider form).
 
-If a model already exists on the provider, the install sets it on the *Invoice Extraction* assistant. If not, it only logs a warning: assign a model to the assistant under *LLM → Configuration → Assistants*, or upgrade the module again once a model is fetched.
+5. Assign the model under *LLM → Configuration → Assistants → Invoice Extraction*.
+6. As a Settings administrator, review the privacy notice on the company's *Invoice AI* tab and enable external processing. Repeat for each participating company.
 
 ## Configuration
-No environment variables or system parameters of its own. Configuration is the model of the *Invoice Extraction* assistant, and the provider settings.
+Use HTTPS for external endpoints. Supported files are PDF, PNG and JPEG up to 20 MiB. Disable the company option to stop subsequent AI invoice requests.
 
 ## Security / Access
-- No groups, ACLs or record rules are added; standard accounting permissions apply.
-- The invoice document is sent to the AI provider you configured. Serfe does not receive it.
+- Standard accounting permissions apply to import and bill edits. The API key is readable only by LLM Managers via Odoo; protect database backups and rotate legacy credentials.
+- The configured endpoint receives the complete invoice, transcription, prompts, company name, CUIT, currency and configured purchase VAT rates. It may pass them to downstream providers.
 - AI output is a suggestion: totals, taxes and the vendor must be checked before posting.
 
 ## Multi-company behavior

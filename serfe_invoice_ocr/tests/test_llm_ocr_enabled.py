@@ -11,7 +11,9 @@ itself (already seeded by data/invoice_extraction_assistant_data.xml)
 plus, for the menu-visibility tests, res.users.
 """
 
-from odoo.exceptions import UserError
+from unittest.mock import patch
+
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -23,6 +25,20 @@ class TestLlmOcrEnabled(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.company.invoice_ocr_external_processing = True
+        Journal = cls.env["account.journal"]
+        for journal_type in ("purchase", "sale"):
+            if not Journal.search_count(
+                [("company_id", "=", cls.env.company.id), ("type", "=", journal_type)]
+            ):
+                Journal.create(
+                    {
+                        "name": f"Test {journal_type} journal",
+                        "code": "OCRP" if journal_type == "purchase" else "OCRS",
+                        "type": journal_type,
+                        "company_id": cls.env.company.id,
+                    }
+                )
         cls.assistant = cls.env["llm.assistant"].search(
             [("code", "=", "invoice_extraction")], limit=1
         )
@@ -45,6 +61,40 @@ class TestLlmOcrEnabled(TransactionCase):
         self.assertTrue(self.ocr._is_invoice_extraction_enabled())
         found = self.ocr._get_invoice_extraction_assistant()
         self.assertEqual(found, self.assistant)
+
+    @patch("requests.Session.request")
+    def test_revoking_opt_in_blocks_stale_wizard_and_draft_action(self, request):
+        self.env.company.invoice_ocr_external_processing = False
+        self.assertFalse(self.ocr._is_invoice_extraction_enabled())
+        company = self.env.company
+        wizard = self.env["account.invoice.import"]
+        self.assertFalse(wizard.fallback_parse_pdf_invoice(b"%PDF-1.4", company))
+        with self.assertRaises(UserError):
+            self.ocr._extract_invoice_data(b"%PDF-1.4", company)
+        move = self.env["account.move"].create({"move_type": "in_invoice"})
+        self._create_fake_attachment().write(
+            {"res_model": "account.move", "res_id": move.id, "mimetype": "application/pdf"}
+        )
+        with self.assertRaises(UserError):
+            move.action_process_with_llm()
+        request.assert_not_called()
+
+    @patch("requests.Session.request")
+    def test_unauthorized_user_cannot_request_ocr(self, request):
+        user = self._create_internal_user("ocr_unauthorized")
+        with self.assertRaises(AccessError):
+            self.ocr.with_user(user)._extract_invoice_data(b"%PDF-1.4")
+        request.assert_not_called()
+
+    @patch("requests.Session.request")
+    def test_other_company_requires_its_own_opt_in(self, request):
+        company = self.env["res.company"].create({"name": "Other OCR Company"})
+        self.assertFalse(company.invoice_ocr_external_processing)
+        ocr = self.ocr.with_context(allowed_company_ids=[self.env.company.id, company.id])
+        self.assertFalse(ocr._is_invoice_extraction_enabled(company))
+        with self.assertRaises(UserError):
+            ocr._extract_invoice_data(b"%PDF-1.4", company)
+        request.assert_not_called()
 
     def test_account_move_llm_ocr_enabled_reflects_assistant_state(self):
         move = self.env["account.move"].create({"move_type": "in_invoice"})

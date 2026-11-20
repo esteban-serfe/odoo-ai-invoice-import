@@ -22,9 +22,9 @@ Extiende `apx_account_invoice_import_llm` para que lea la factura con la API de 
 
 ## Requisitos / Dependencias
 - Odoo 16 (Community)
-- Módulos de Odoo: `apx_account_invoice_import_llm`, `apx_llm_litellm`
-- Opcional: `l10n_ar` para el comportamiento argentino
-- Una cuenta con un proveedor de IA, provista por vos.
+- Módulos de Odoo: `apx_account_invoice_import_llm`, `apx_llm_litellm`, `l10n_ar`
+- Plan contable argentino, responsabilidad AFIP e impuestos de compras configurados.
+- Un servicio LiteLLM o compatible con `/responses` en streaming y `/chat/completions`.
 
 ## Instalación
 1. Poner el addon y sus dependencias en el `addons_path`.
@@ -32,14 +32,15 @@ Extiende `apx_account_invoice_import_llm` para que lea la factura con la API de 
 3. En *LLM → Configuración → Proveedores*, abrir *Proveedor de IA* y completar *API Base* y *API Key* con los datos de tu proveedor de IA. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Si preferís, [contactá a Serfe](https://www.serfe.com/es/contacto) y te ayudamos.
 4. Traer los modelos de ese proveedor (*Fetch Models* en el formulario del proveedor).
 
-Si ya existe un modelo en el proveedor, la instalación lo asigna al asistente *Invoice Extraction*. Si no, solo registra una advertencia: asignar un modelo al asistente en *LLM → Configuración → Asistentes*, o actualizar el módulo una vez traído un modelo.
+5. Asigná el modelo en *LLM → Configuración → Asistentes → Invoice Extraction*.
+6. Como administrador, revisá el aviso de privacidad en la pestaña *IA de facturas* y autorizá el procesamiento externo para cada compañía.
 
 ## Configuración
-No tiene variables de entorno ni parámetros de sistema propios. La configuración es el modelo del asistente *Invoice Extraction* y los ajustes del proveedor.
+Usá HTTPS para servicios externos. Archivos admitidos: PDF, PNG o JPEG de hasta 20 MiB. Desactivá el permiso por compañía para detener futuros envíos.
 
 ## Seguridad / Acceso
-- No agrega grupos, ACLs ni reglas de registro; rigen los permisos estándar de contabilidad.
-- El documento de la factura se envía al proveedor de IA que configuraste. Serfe no lo recibe.
+- Rigen los permisos de contabilidad. Solo LLM Manager puede leer la clave por el ORM. Protegé la base, las copias de seguridad y rotá las claves anteriores.
+- El servicio configurado recibe la factura completa, su transcripción, las instrucciones, el nombre, CUIT, moneda y alícuotas de IVA de compras de la compañía; puede reenviar datos a otros proveedores.
 - La salida de la IA es una sugerencia: totales, impuestos y proveedor deben verificarse antes de publicar.
 
 ## Multicompañía

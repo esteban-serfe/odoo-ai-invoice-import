@@ -20,7 +20,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
     _description = "Invoice data extraction using LLM and OCR"
 
     @api.model
-    def extract_invoice_data(self, file_data, company=None, mimetype="application/pdf"):
+    def _extract_invoice_data(self, file_data, company=None, mimetype="application/pdf"):
         """Extract invoice data from file bytes using OCR + LLM.
 
         Args:
@@ -191,12 +191,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
         """
         # Call model.chat() directly (no streaming needed for one-shot)
         # Returns standardized dict: {"content": "...", "tool_calls": [...]}
-        response = assistant.model_id.chat(
-            messages=[],  # No conversation history for one-shot
-            tools=False,  # No tool calling needed
-            stream=False,  # Non-streaming for simplicity
-            prepend_messages=prepend_messages,
-        )
+        response = self._request_invoice_extraction(assistant, prepend_messages)
 
         # Extract content from standardized response dict
         if isinstance(response, dict) and "content" in response:
@@ -204,20 +199,15 @@ class AccountInvoiceImportOCR(models.AbstractModel):
             if content:
                 return content
 
-        # Fallback error if response format is unexpected
-        raise UserError(
-            _(
-                "Invalid LLM Response Format\n\n"
-                "The LLM returned an unexpected response format.\n\n"
-                "Expected: dict with 'content' key\n"
-                "Received: %s\n\n"
-                "This could indicate:\n"
-                "1. Model configuration issue\n"
-                "2. Provider API changes\n"
-                "3. Network/connection problem\n\n"
-                "Please check logs for detailed error information"
-            )
-            % type(response).__name__
+        raise UserError(_("The AI service returned an unexpected extraction response."))
+
+    @api.model
+    def _request_invoice_extraction(self, assistant, prepend_messages):
+        return assistant.model_id.chat(
+            messages=[],  # No conversation history for one-shot
+            tools=False,  # No tool calling needed
+            stream=False,  # Non-streaming for simplicity
+            prepend_messages=prepend_messages,
         )
 
     @api.model
@@ -254,10 +244,10 @@ class AccountInvoiceImportOCR(models.AbstractModel):
 
         try:
             return json.loads(json_str)
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             raise UserError(
-                _("Failed to parse JSON from LLM response: %s") % str(e)
-            ) from e
+                _("Failed to parse JSON from the AI response.")
+            ) from None
 
     @api.model
     def _convert_llm_data_to_pivot(self, llm_data):

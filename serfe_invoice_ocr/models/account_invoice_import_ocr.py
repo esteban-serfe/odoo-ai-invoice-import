@@ -10,45 +10,98 @@ module and not overridden here.
 """
 
 import logging
+import math
 
 from odoo import _, api, models
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
+from odoo.tools.mimetypes import guess_mimetype
 
 _logger = logging.getLogger(__name__)
+_SUPPORTED_MIMETYPES = {"application/pdf", "image/png", "image/jpeg"}
+_MAX_DOCUMENT_BYTES = 20 * 1024 * 1024
+
+
+def _finite_amount(value):
+    amount = float(value)
+    if not math.isfinite(amount):
+        raise ValueError("Expected a finite invoice amount")
+    return amount
 
 
 class AccountInvoiceImportOCR(models.AbstractModel):
     _inherit = "account.invoice.import.ocr"
 
     @api.model
-    def extract_invoice_data(self, file_data, company=None, mimetype="application/pdf"):
+    def _extract_invoice_data(self, file_data, company=None, mimetype="application/pdf"):
         """Same orchestration as the base implementation, except the
         company context is threaded through to _render_invoice_extraction_prompt()
         so _get_l10n_ar_vat_rates_note() reads the right company's VAT
         rates rather than silently falling back to self.env.company.
         """
-        ocr_text = self._run_ocr_on_file_data(file_data, mimetype)
-        if not ocr_text:
+        company = company or self.env.company
+        self._check_invoice_ocr_access(company)
+        if not company.sudo().invoice_ocr_external_processing:
             raise UserError(
-                _("OCR returned empty text. The document may be unreadable or empty.")
+                _("External AI invoice processing is not enabled for this company.")
             )
+        if not file_data or len(file_data) > _MAX_DOCUMENT_BYTES:
+            raise UserError(_("The invoice file must be non-empty and at most 20 MiB."))
+        mimetype = guess_mimetype(file_data)
+        if mimetype not in _SUPPORTED_MIMETYPES:
+            raise UserError(_("AI invoice processing accepts only PDF, PNG and JPEG."))
 
-        prepend_messages, assistant = self._render_invoice_extraction_prompt(
-            ocr_text, company
-        )
-        llm_response = self._call_llm_for_extraction(prepend_messages, assistant)
-        invoice_data = self._parse_llm_response(llm_response)
-        return self._convert_llm_data_to_pivot(invoice_data)
+        try:
+            ocr_text = self._run_ocr_on_file_data(file_data, mimetype)
+            if not ocr_text:
+                raise UserError(
+                    _("OCR returned empty text. The document may be unreadable or empty.")
+                )
+            prepend_messages, assistant = self._render_invoice_extraction_prompt(
+                ocr_text, company
+            )
+            llm_response = self._call_llm_for_extraction(prepend_messages, assistant)
+            invoice_data = self._parse_llm_response(llm_response)
+            return self._convert_llm_data_to_pivot(invoice_data)
+        except (AttributeError, KeyError, TypeError, ValueError, OverflowError):
+            raise UserError(_("The AI service returned invalid invoice data.")) from None
 
     @api.model
-    def _is_invoice_extraction_enabled(self):
+    def _check_invoice_ocr_access(self, company):
+        company.ensure_one()
+        if (
+            not self.env.user.has_group("account.group_account_invoice")
+            or company not in self.env.companies
+        ):
+            raise AccessError(_("You cannot process invoices for this company."))
+
+    @api.model
+    def _request_invoice_extraction(self, assistant, prepend_messages):
+        model = assistant.model_id
+        return model.provider_id._litellm_chat(
+            [], model=model, stream=False, prepend_messages=prepend_messages
+        )
+
+    @api.model
+    def _is_invoice_extraction_enabled(self, company=None):
         """Non-raising check for callers that just need to know
         whether AI-based invoice import is currently usable,
         without wanting the UserError _get_invoice_extraction_assistant()
         raises when it isn't.
         """
+        company = company or self.env.company
+        return (
+            self.env.user.has_group("account.group_account_invoice")
+            and company in self.env.companies
+            and company.sudo().invoice_ocr_external_processing
+            and self._is_invoice_extraction_assistant_active()
+        )
+
+    @api.model
+    def _is_invoice_extraction_assistant_active(self):
         return bool(
-            self.env["llm.assistant"].get_assistant_by_code("invoice_extraction")
+            self.env["llm.assistant"]
+            .with_context(active_test=True)
+            .get_assistant_by_code("invoice_extraction")
         )
 
     @api.model
@@ -64,7 +117,9 @@ class AccountInvoiceImportOCR(models.AbstractModel):
         otherwise both surface as the same confusing "not found" message.
         """
         Assistant = self.env["llm.assistant"]
-        assistant = Assistant.get_assistant_by_code("invoice_extraction")
+        assistant = Assistant.with_context(active_test=True).get_assistant_by_code(
+            "invoice_extraction"
+        )
         if assistant:
             return assistant
 
@@ -122,7 +177,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
                 % provider.service
             )
 
-        return provider.litellm_process_ocr(
+        return provider._litellm_process_ocr(
             model_name=assistant.model_id.name,
             data=file_data,
             mimetype=mimetype,
@@ -243,6 +298,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
                     "invoice manually."
                 )
             )
+            return parsed_inv
 
         if llm_data.get("vendorName") or llm_data.get("vat"):
             partner_data = {}
@@ -286,7 +342,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
             other_charges.append(
                 {
                     "description": charge.get("description") or _("Other Charge"),
-                    "amount": float(charge["amount"]),
+                    "amount": _finite_amount(charge["amount"]),
                     "type": (charge.get("type") or "other").strip().lower(),
                 }
             )
@@ -294,20 +350,20 @@ class AccountInvoiceImportOCR(models.AbstractModel):
             parsed_inv["l10n_ar_other_charges"] = other_charges
 
         if llm_data.get("subtotalAmount") is not None:
-            parsed_inv["amount_untaxed"] = float(llm_data["subtotalAmount"])
+            parsed_inv["amount_untaxed"] = _finite_amount(llm_data["subtotalAmount"])
         if llm_data.get("totalAmount") is not None:
-            parsed_inv["amount_total"] = float(llm_data["totalAmount"])
+            parsed_inv["amount_total"] = _finite_amount(llm_data["totalAmount"])
 
         if llm_data.get("lines"):
             pivot_lines = []
             for llm_line in llm_data["lines"]:
-                qty = float(llm_line.get("quantity", 1.0))
-                price_unit = float(llm_line.get("unitPrice", 0.0))
+                qty = _finite_amount(llm_line.get("quantity", 1.0))
+                price_unit = _finite_amount(llm_line.get("unitPrice", 0.0))
 
                 if llm_line.get("lineSubtotal") is not None:
-                    price_subtotal = float(llm_line["lineSubtotal"])
+                    price_subtotal = _finite_amount(llm_line["lineSubtotal"])
                 else:
-                    price_subtotal = qty * price_unit
+                    price_subtotal = _finite_amount(qty * price_unit)
 
                 pivot_line = {
                     "name": llm_line.get("description", "Invoice Line"),
@@ -336,7 +392,7 @@ class AccountInvoiceImportOCR(models.AbstractModel):
                 # tax from the line. Matching on amount_type + amount alone
                 # still works for AR.
                 if llm_line.get("taxPercent") is not None:
-                    tax_percent = float(llm_line["taxPercent"])
+                    tax_percent = _finite_amount(llm_line["taxPercent"])
                     pivot_line["taxes"] = [
                         {
                             "amount_type": "percent",

@@ -41,6 +41,8 @@ class MailMessage(models.Model):
     def set_user_vote(self, vote_value):
         """Sets the user vote on this message, performing validation checks."""
         self.ensure_one()
+        self.check_access_rights("read")
+        self.check_access_rule("read")
         if self.llm_role not in ("assistant", "tool"):
             raise UserError(
                 _(

@@ -26,9 +26,10 @@ kept for the modules written by Serfe, so the name tells which is which:
 | `web_json_editor` | `apx_web_json_editor` | yes |
 | `account_invoice_import_llm` | `apx_account_invoice_import_llm` | yes |
 
-Models, fields, tables and the Python/JS code are unchanged; only the module
-name changes (dependencies, external IDs, asset paths, OWL templates, imports,
-translation files). Do not install an `apx_*` module together with the upstream
+The original rename retained model and table names and updated module references
+(dependencies, external IDs, asset paths, OWL templates, imports, translations).
+Later changes also touch Python and views; see the publication audit. Do not
+install an `apx_*` module together with the upstream
 module of the same name: they define the same models and data.
 
 ## Modified files
@@ -59,6 +60,11 @@ To list the content changes against the base commit, ignoring the rename:
 ```
 git diff a6a229d-vendor HEAD -M --stat
 ```
+
+Publication hardening adds restricted provider credential access, HTTP request
+limits and sanitization, sandboxed prompt rendering, a guarded invoice pipeline,
+and retirement of the generic method-execution tool. See
+[the release audit](docs/ODOO_APPS_RELEASE.md) before rebasing these changes.
 
 ## Updating
 

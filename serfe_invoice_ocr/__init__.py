@@ -17,7 +17,7 @@ def post_init_hook(cr, registry):
     On a fresh install the provider has no API settings nor models yet, so
     this only logs and skips: the admin fills in the provider, fetches its
     models and assigns one to the "Invoice Extraction" assistant (LLM ->
-    Configuration -> Assistants), or upgrades this module to re-run the hook.
+    Configuration -> Assistants).
     """
     env = api.Environment(cr, SUPERUSER_ID, {})
 
@@ -37,7 +37,7 @@ def post_init_hook(cr, registry):
             "No model found for provider '%s' yet; skipping invoice_extraction "
             "assistant wiring. Fill in its API Base and API Key, press Fetch "
             "Models (LLM > Configuration > Providers), then assign a model to "
-            "the 'Invoice Extraction' assistant, or upgrade this module again.",
+            "the 'Invoice Extraction' assistant.",
             provider.name,
         )
         return

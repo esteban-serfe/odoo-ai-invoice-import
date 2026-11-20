@@ -1,26 +1,30 @@
-<section class="pt-5 pb-4" style="background-color:#f8f9fa"><div class="container text-center">
-<h1 class="font-weight-bold" style="font-size:2.5rem">Importación de facturas de proveedor con IA para Argentina</h1>
-<p class="mt-3" style="font-size:1.2rem;color:#495057">Subí una factura de proveedor (PDF o imagen) y obtené un borrador de factura con los datos AFIP ya cargados, listo para tu revisión.</p></div></section>
-<div class="container mt-4 text-center"><img src="demo.gif" class="img-fluid shadow" style="border-radius:8px;max-width:1000px" alt="Importación de una factura de proveedor con IA en Odoo"/></div>
-<div class="container my-5">
-<div class="alert alert-info" role="alert"><strong>Tus datos van al proveedor de IA que elijas.</strong> El documento de la factura se envía al proveedor de IA que configurás. Este módulo no envía datos a Serfe ni a ningún servicio fijo.</div>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Qué entiende</h2><ul><li><strong>¿Es realmente una factura?</strong> Se verifica el documento antes de crear nada.</li><li><strong>CUIT del proveedor</strong>, para encontrar el contacto correcto. La compañía que importa y su CUIT se nombran en el prompt para que no se confundan con el proveedor.</li><li><strong>Letra del comprobante (A, B o C)</strong> y el tipo de documento Latam y el número que le corresponden. Para las letras B y C todas las líneas reciben <em>IVA No Corresponde</em>, como exige <code>l10n_ar</code>.</li><li><strong>Punto de venta y número</strong> como están impresos, y <strong>fechas día-mes-año</strong>.</li><li><strong>La alícuota de IVA impresa</strong>, con su evidencia, en lugar de una recordada. Se respetan las alícuotas inusuales, como 27% en telecomunicaciones, gas o electricidad, porque las alícuotas de IVA de compras de tu compañía son parte del prompt.</li><li><strong>Corrección del porcentaje de IVA</strong> cuando el subtotal y el total no coinciden con la alícuota de las líneas.</li><li><strong>Percepciones</strong> (IIBB e IVA) aplicadas como el impuesto tributo AFIP correspondiente, y cargos a nivel documento.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Pensado para revisarse</h2><ul><li>La salida de la IA es una sugerencia: verificá totales, impuestos y proveedor antes de publicar.</li><li>Mejor esfuerzo: cualquier paso que no pueda resolverse deja el borrador tal como fue extraído. Nunca bloquea la importación.</li><li>Archivá el asistente <em>Invoice Extraction</em> para apagar la importación con IA. <em>Upload</em> pasa a crear la factura con los decodificadores estándar de Odoo.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Cómo se usa</h2><ol><li>En la lista de facturas o notas de crédito de proveedor, presioná <em>Upload</em> y elegí el PDF o la imagen.</li><li>Revisá el borrador en el asistente, o usá <em>Process with AI</em> en una factura existente.</li><li>Corregí lo necesario y publicá.</li></ol></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Qué necesitás</h2><ul><li>Odoo 16 Community, con <code>l10n_ar</code> para el comportamiento argentino.</li><li>Una cuenta con un proveedor de IA, provista por vos.</li><li>En <em>LLM &rarr; Configuración &rarr; Proveedores</em>, abrí el proveedor, completá <em>API Base</em> y <em>API Key</em> con los datos de tu proveedor de IA y presioná <em>Fetch Models</em>. El módulo se conecta a la API de tu proveedor: consultá su documentación para obtener la URL de la API y la clave. Luego asigná un modelo al asistente <em>Invoice Extraction</em>. Si preferís, <a href="https://www.serfe.com/es/contacto" target="_blank">contactá a Serfe</a> y te ayudamos.</li><li>Los módulos <code>account_invoice_import</code> de OCA, que se instalan como dependencias.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Alcance</h2><p>Enfocado en Argentina (CUIT, letras de comprobante, impuestos AFIP). Otros países no están cubiertos: <a href="https://www.serfe.com/es/contacto" target="_blank">contactá a Serfe</a> si lo necesitás.</p></section>
-</div>
-<hr class="my-5"/>
-<div class="container"><p class="text-muted text-center">English version</p></div>
-<section class="pt-5 pb-4" style="background-color:#f8f9fa"><div class="container text-center">
-<h1 class="font-weight-bold" style="font-size:2.5rem">Vendor Bill Import with AI for Argentina</h1>
-<p class="mt-3" style="font-size:1.2rem;color:#495057">Upload a supplier invoice (PDF or image) and get a draft vendor bill with the AFIP data already filled in, ready for your review.</p></div></section>
-<div class="container mt-4 text-center"><img src="demo.en.gif" class="img-fluid shadow" style="border-radius:8px;max-width:1000px" alt="Importing a vendor bill with AI in Odoo"/></div>
-<div class="container my-5">
-<div class="alert alert-info" role="alert"><strong>Your data goes to the AI provider you choose.</strong> The invoice document is sent to the AI provider that you configure. This module does not send data to Serfe or to any fixed service.</div>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">What it understands</h2><ul><li><strong>Is it really an invoice?</strong> The document is checked before anything is created.</li><li><strong>Vendor CUIT</strong>, so the right partner is found. The importing company and its CUIT are named in the prompt so they are not confused with the vendor.</li><li><strong>Voucher letter (A, B or C)</strong> and the matching Latam document type and number. For letters B and C every line gets <em>VAT Not Applicable</em>, as <code>l10n_ar</code> requires.</li><li><strong>Point of sale and number</strong> as printed, and <strong>day-first dates</strong>.</li><li><strong>The printed VAT rate</strong>, with its evidence, instead of a remembered one. Unusual rates such as 27% on telecom, gas or electricity are kept, because your company's purchase VAT rates are part of the prompt.</li><li><strong>VAT percentage correction</strong> when the subtotal and total disagree with the per-line rate.</li><li><strong>Perceptions</strong> (IIBB and VAT) applied as the matching AFIP tribute tax, and document-level charges.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Built to be reviewed</h2><ul><li>The AI output is a suggestion: check totals, taxes and the vendor before posting.</li><li>Best effort: any step that cannot be resolved leaves the draft as extracted. It never blocks the import.</li><li>Archive the <em>Invoice Extraction</em> assistant to switch AI import off. <em>Upload</em> then creates the bill with Odoo's standard decoders.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">How to use it</h2><ol><li>On a vendor bill or refund list, press <em>Upload</em> and choose the PDF or image.</li><li>Review the draft in the wizard, or use <em>Process with AI</em> on an existing bill.</li><li>Fix what is needed and post.</li></ol></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">What you need</h2><ul><li>Odoo 16 Community, with <code>l10n_ar</code> for the Argentine behavior.</li><li>An AI provider account, provided by you.</li><li>In <em>LLM &rarr; Configuration &rarr; Providers</em>, open the provider, fill in the <em>API Base</em> and <em>API Key</em> of your AI provider, and press <em>Fetch Models</em>. The module connects to your provider's API: see its documentation to get the API URL and key. Then assign a model to the <em>Invoice Extraction</em> assistant. If you prefer, <a href="https://www.serfe.com/en/contact-us" target="_blank">contact Serfe</a> and we will help you.</li><li>The OCA <code>account_invoice_import</code> modules, installed as dependencies.</li></ul></section>
-<section class="mb-5"><h2 style="font-size:1.6rem;color:#875A7B">Scope</h2><p>Focused on Argentina (CUIT, voucher letters, AFIP taxes). Other countries are not covered: <a href="https://www.serfe.com/en/contact-us" target="_blank">contact Serfe</a> if you need them.</p></section>
-</div>
+<section class="container py-4">
+    <h1>Argentina Invoice OCR</h1>
+    <p class="lead">Import a PDF or image as a draft vendor bill in Odoo 16 Community. Review the result before posting.</p>
+    <figure>
+        <img src="draft_bill_screenshot.png" class="img-fluid rounded" alt="Draft Argentine vendor bill with its LATAM document type and VAT"/>
+        <figcaption class="text-muted">Draft bill in Odoo. Invoice and vendor details are redacted.</figcaption>
+    </figure>
+
+    <h2 class="mt-4">Argentine vendor bills</h2>
+    <ul>
+        <li>Match the vendor by CUIT and extract day-first dates, the point of sale and the invoice number.</li>
+        <li>Map invoice letters A, B and C to LATAM document types and apply the company's configured VAT rules.</li>
+        <li>Extract printed VAT, IIBB and VAT perceptions, and document-level charges for review.</li>
+    </ul>
+    <p>Results depend on scan quality, model accuracy and accounting configuration. Always verify the supplier, numbering, dates, taxes and totals. The app does not post bills or verify them with AFIP.</p>
+
+    <h2 class="mt-4">Requirements and setup</h2>
+    <ol>
+        <li>Use Odoo 16 Community with the Argentine chart of accounts and the OCA invoice import dependencies. This Python addon is not supported on Odoo Online.</li>
+        <li>Configure an explicit API Base and, if required, an API key under <em>LLM → Configuration → Providers</em>. Use LiteLLM or a compatible endpoint whose selected model supports PDF/image inputs via <code>/responses</code> and text extraction via <code>/chat/completions</code>.</li>
+        <li>Fetch the models and assign one to <em>Invoice Extraction</em>. An administrator then opts in on the company’s <em>Invoice AI</em> tab.</li>
+        <li>Upload a PDF, PNG or JPEG (up to 20 MiB) from Vendor Bills, or select <em>Process with AI</em> on an existing draft with an attachment.</li>
+    </ol>
+
+    <div class="alert alert-info mt-4" role="alert">
+        <strong>External processing is off by default.</strong> After opt-in, the configured endpoint receives the entire invoice file, transcription, extraction prompts, company name, CUIT, currency and configured purchase VAT rates. LiteLLM may forward these to downstream providers. There is no built-in destination or Serfe service. Review the selected provider’s privacy, retention and pricing terms. This addon is free; the external service may charge for use.
+    </div>
+    <p>Turn off the company option to stop future AI invoice requests and return uploads to standard Odoo decoders. The shared assistant can also be archived to disable AI invoice processing across companies.</p>
+    <p class="text-muted">Published by Serfe. Built on Apexive’s LLM modules and OCA Invoice Import.</p>
+</section>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_company_form_invoice_ocr" model="ir.ui.view">
+        <field name="name">res.company.form.invoice.ocr</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="invoice_ocr" string="Invoice AI" groups="base.group_system">
+                    <p>
+                        If enabled, Odoo sends complete invoice files, their
+                        transcriptions, extraction prompts, company name, CUIT, currency and
+                        purchase VAT rates to the configured AI endpoint. The
+                        endpoint may forward the data to another provider. Review
+                        its privacy, retention and billing terms before enabling.
+                        Disable this option to stop future invoice AI requests.
+                    </p>
+                    <group>
+                        <field name="invoice_ocr_external_processing" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

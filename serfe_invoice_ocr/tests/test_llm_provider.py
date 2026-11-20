@@ -5,7 +5,10 @@
 import json
 from unittest.mock import MagicMock, patch
 
-from odoo.tests.common import TransactionCase
+from requests.exceptions import ReadTimeout
+
+from odoo.exceptions import AccessError, UserError
+from odoo.tests.common import TransactionCase, new_test_user
 
 
 def _fake_responses_sse(text):
@@ -18,6 +21,7 @@ def _fake_responses_sse(text):
         b"data: [DONE]",
     ]
     fake_response = MagicMock()
+    fake_response.status_code = 200
     fake_response.iter_lines.return_value = lines
     fake_response.raise_for_status.return_value = None
     return fake_response
@@ -25,6 +29,7 @@ def _fake_responses_sse(text):
 
 def _fake_json_response(payload):
     fake_response = MagicMock()
+    fake_response.status_code = 200
     fake_response.json.return_value = payload
     fake_response.raise_for_status.return_value = None
     return fake_response
@@ -50,7 +55,7 @@ class TestLLMProvider(TransactionCase):
     def test_ocr_pdf_uses_input_file(self, mock_request):
         mock_request.return_value = _fake_responses_sse("transcribed text")
 
-        result = self.provider.litellm_process_ocr(
+        result = self.provider._litellm_process_ocr(
             self.model.name, data=b"%PDF-1.4 fake", mimetype="application/pdf"
         )
 
@@ -65,12 +70,43 @@ class TestLLMProvider(TransactionCase):
         self.assertTrue(
             file_part["file_data"].startswith("data:application/pdf;base64,")
         )
+        self.assertEqual(mock_request.call_args.kwargs["timeout"], (5, 60))
+        self.assertFalse(mock_request.call_args.kwargs["allow_redirects"])
+        mock_request.return_value.close.assert_called_once()
+
+    @patch("requests.Session.request")
+    def test_transport_failure_does_not_disclose_data(self, mock_request):
+        mock_request.side_effect = ReadTimeout("private invoice content")
+        with self.assertRaises(UserError) as error:
+            self.model.chat([])
+        self.assertNotIn("private invoice content", str(error.exception))
+
+    @patch("requests.Session.request")
+    def test_redirect_is_refused(self, mock_request):
+        response = mock_request.return_value
+        response.status_code = 307
+        with self.assertRaises(UserError):
+            self.model.chat([])
+        mock_request.assert_called_once()
+        response.close.assert_called_once()
+
+    @patch("requests.Session.request")
+    def test_internal_user_cannot_read_key_or_call_provider(self, mock_request):
+        user = new_test_user(self.env, login="invoice_plain", groups="base.group_user")
+        provider = self.provider.with_user(user)
+        with self.assertRaises(AccessError):
+            provider.read(["api_key"])
+        with self.assertRaises(AccessError):
+            list(provider.list_models())
+        with self.assertRaises(AccessError):
+            self.model.with_user(user).chat([])
+        mock_request.assert_not_called()
 
     @patch("requests.Session.request")
     def test_ocr_image_uses_input_image(self, mock_request):
         mock_request.return_value = _fake_responses_sse("transcribed text")
 
-        self.provider.litellm_process_ocr(
+        self.provider._litellm_process_ocr(
             self.model.name, data=b"\x89PNG fake", mimetype="image/png"
         )
 

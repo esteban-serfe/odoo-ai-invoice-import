@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- `serfe_invoice_ocr` 16.0.1.1.0: English Apps listing, Argentine localization dependency, and administrator opt-in per company for external AI.
+- Restricted provider credentials and direct LiteLLM calls, added HTTP timeouts and redirect protection, and disabled arbitrary Odoo method execution in the vendored chat tooling.
+- Added offline privacy, access-control and Argentine localization regressions and a Docker-backed CI workflow.
+
 ## [1.0.1] - 2026-11-19
 
 ### Changed

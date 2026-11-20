@@ -274,13 +274,13 @@ class LLMThread(models.Model):
         }
         if use_streaming:
             # Handle streaming response - process tool calls directly from stream
-            stream_response = self.sudo().model_id.chat(**chat_kwargs)
+            stream_response = self.model_id.chat(**chat_kwargs)
             assistant_message = yield from self._handle_streaming_response(
                 stream_response
             )
         else:
             # Handle non-streaming response
-            response = self.sudo().model_id.chat(**chat_kwargs)
+            response = self.model_id.chat(**chat_kwargs)
             assistant_message = yield from self._handle_non_streaming_response(response)
 
         return assistant_message

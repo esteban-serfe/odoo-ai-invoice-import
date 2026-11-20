@@ -29,6 +29,27 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. module: serfe_invoice_ocr
+#: model:ir.model.fields,field_description:serfe_invoice_ocr.field_res_company__invoice_ocr_external_processing
+msgid "Allow external AI invoice processing"
+msgstr "Permitir el procesamiento externo de facturas con IA"
+
+#. module: serfe_invoice_ocr
+#: model_terms:ir.ui.view,arch_db:serfe_invoice_ocr.view_company_form_invoice_ocr
+msgid "Invoice AI"
+msgstr "IA de facturas"
+
+#. module: serfe_invoice_ocr
+#: model_terms:ir.ui.view,arch_db:serfe_invoice_ocr.view_move_form_process_llm_ocr
+msgid "Send this invoice file and extraction data to the configured AI service? Review the draft before posting."
+msgstr "¿Enviar este archivo de factura y los datos de extracción al servicio de IA configurado? Revisá el borrador antes de publicar."
+
+#. module: serfe_invoice_ocr
+#: code:addons/serfe_invoice_ocr/models/account_invoice_import_ocr.py:0
+#, python-format
+msgid "External AI invoice processing is not enabled for this company."
+msgstr "El procesamiento externo de facturas con IA no está habilitado para esta compañía."
+
 #. module: account_invoice_import
 #: model:ir.actions.act_window,name:account_invoice_import.account_invoice_import_action
 #: model:ir.ui.menu,name:account_invoice_import.account_invoice_import_menu

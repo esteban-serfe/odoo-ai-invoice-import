@@ -22,6 +22,8 @@ same button.
         />
         <field name="arch" type="xml">
             <button name="action_process_with_llm" position="attributes">
+                <attribute name="groups">account.group_account_invoice</attribute>
+                <attribute name="confirm">Send this invoice file and extraction data to the configured AI service? Review the draft before posting.</attribute>
                 <attribute name="attrs">
                     {'invisible': ['|', '|', ('state', '!=', 'draft'), ('llm_ocr_enabled', '=', False), ('move_type', 'not in', ['in_invoice', 'in_refund'])]}
                 </attribute>

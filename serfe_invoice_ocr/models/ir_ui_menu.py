@@ -18,7 +18,7 @@ class IrUiMenu(models.Model):
     @api.model
     def _visible_menu_ids(self, debug=False):
         visible = super()._visible_menu_ids(debug)
-        if self.env["account.invoice.import.ocr"]._is_invoice_extraction_enabled():
+        if self.env["account.invoice.import.ocr"]._is_invoice_extraction_assistant_active():
             return visible
         menu = self.env.ref(
             "account_invoice_import.account_invoice_import_menu",

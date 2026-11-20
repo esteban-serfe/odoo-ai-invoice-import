@@ -1,6 +1,7 @@
 import logging
 
-from jinja2 import Environment, Undefined
+from jinja2 import Undefined
+from jinja2.sandbox import SandboxedEnvironment
 
 from odoo import _
 from odoo.exceptions import ValidationError
@@ -33,7 +34,7 @@ def render_template(template=None, context=None):
             processed_args[arg_name] = arg_value
 
     # Create Jinja2 environment
-    env = Environment(
+    env = SandboxedEnvironment(
         variable_start_string="{{",
         variable_end_string="}}",
         trim_blocks=True,

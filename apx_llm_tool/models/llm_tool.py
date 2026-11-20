@@ -143,6 +143,8 @@ class LLMTool(models.Model):
 
     def execute(self, parameters):
         """Execute this tool with validated parameters"""
+        if self.implementation == "odoo_model_method_executor":
+            raise UserError(_("Arbitrary Odoo method execution is disabled."))
         if not self.implementation:
             raise UserError(_("Tool implementation not configured"))
 

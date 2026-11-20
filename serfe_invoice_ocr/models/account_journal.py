@@ -42,7 +42,9 @@ class AccountJournal(models.Model):
         # left for it to do, so skip it and fall back to the same plain
         # decoder-dispatch path non-vendor-bill uploads already use,
         # with a heads-up toast instead of a silent switch.
-        if not self.env["account.invoice.import.ocr"]._is_invoice_extraction_enabled():
+        company = self.company_id if self else self.env.company
+        ocr = self.env["account.invoice.import.ocr"]
+        if not ocr._is_invoice_extraction_enabled(company):
             action = self._create_document_from_core_decoders(attachment_ids)
             attachments = self.env["ir.attachment"].browse(attachment_ids)
             action["context"] = {
@@ -61,10 +63,9 @@ class AccountJournal(models.Model):
             }
             return action
 
-        company_id = self.company_id.id if self else self.env.company.id
-        wiz = self.env["account.invoice.import"].create(
+        wiz = self.env["account.invoice.import"].with_company(company).create(
             {
-                "company_id": company_id,
+                "company_id": company.id,
                 "invoice_attachment_ids": [Command.set(attachment_ids)],
             }
         )

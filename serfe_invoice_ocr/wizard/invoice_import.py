@@ -12,7 +12,6 @@ import logging
 
 from odoo import Command, _, api, models
 from odoo.exceptions import UserError
-from odoo.tools.mimetypes import guess_mimetype
 
 _logger = logging.getLogger(__name__)
 
@@ -30,47 +29,29 @@ class AccountInvoiceImport(models.TransientModel):
         format module like account_invoice_import_ubl is installed), so
         there's nothing it could usefully do anyway.
 
-        This is the sole gate for the disabled case - fallback_parse_pdf_invoice()
-        below no longer duplicates the check, since a wizard record can
-        only exist here if it was created while enabled. The one narrow
-        gap this leaves (AI gets disabled by someone else after this
-        wizard was already opened, before the user clicks Import) falls
-        through to that method's generic "extraction failed" message
-        instead of a disabled-specific one - accepted as not worth the
-        extra complexity for how rare that race is.
+        This is only a UI gate. The fallback and outbound OCR path also
+        recheck access and consent for the company being processed.
         """
-        if not self.env["account.invoice.import.ocr"]._is_invoice_extraction_enabled():
+        ocr = self.env["account.invoice.import.ocr"]
+        if not ocr._is_invoice_extraction_assistant_active():
             raise UserError(
                 _(
-                    "AI-based invoice import is currently disabled. Go "
-                    "to LLM → Configuration → Assistants to re-enable it, or "
-                    "use the 'Upload' button on the Vendor Bills list "
-                    "instead."
+                    "AI-based invoice import is currently disabled. Check the "
+                    "company's Invoice AI settings and the Invoice Extraction "
+                    "assistant, or use Upload on the Vendor Bills list."
                 )
             )
         return super().default_get(field_names)
 
     @api.model
-    def fallback_parse_pdf_invoice(self, file_data, company):
-        """Fallback parser using LLM-OCR for PDFs without embedded XML."""
-        res = super().fallback_parse_pdf_invoice(file_data, company)
-        if res:
-            return res
-
-        # OCA's parse_pdf_invoice()/fallback_parse_pdf_invoice() only
-        # forward the raw bytes, not the original filename/mimetype
-        # (unlike account_move.py's "Process with AI" button, which
-        # reads the real ir.attachment mimetype directly) - without
-        # sniffing it here, extract_invoice_data() always defaulted to
-        # "application/pdf", silently breaking OCR for images (e.g. a
-        # WhatsApp photo of an invoice) uploaded through this wizard.
-        mimetype = guess_mimetype(file_data, default="application/pdf")
+    def _fallback_parse_with_ai(self, file_data, company):
+        ocr = self.env["account.invoice.import.ocr"]
+        if not ocr._is_invoice_extraction_enabled(company):
+            return False
         try:
-            return self.env["account.invoice.import.ocr"].extract_invoice_data(
-                file_data, company, mimetype
-            )
+            return ocr._extract_invoice_data(file_data, company)
         except Exception:
-            _logger.exception("LLM-OCR extraction failed, skipping")
+            _logger.warning("LLM-OCR extraction failed, skipping")
             # Don't let this fall through to OCA's own "nothing parsed"
             # handling (parsed_inv = {}, no chatter_msg at all) - that's
             # the same silent-empty-import problem
@@ -274,7 +255,11 @@ class AccountInvoiceImport(models.TransientModel):
         doc_type = self.env["l10n_latam.document.type"].search(
             [
                 ("country_id.code", "=", "AR"),
-                ("internal_type", "=", "invoice"),
+                (
+                    "internal_type",
+                    "=",
+                    "credit_note" if parsed_inv["type"] == "in_refund" else "invoice",
+                ),
                 ("l10n_ar_letter", "=", letter),
             ],
             limit=1,

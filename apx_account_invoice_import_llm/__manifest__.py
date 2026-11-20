@@ -13,8 +13,8 @@ with this module.
 Data notice: the documents are sent to the AI provider that you configure.
 The module does not send data to Serfe or to any fixed service.
     """,
-    "category": "Accounting/AI",
-    "version": "16.0.1.0.3",
+    "category": "Hidden",
+    "version": "16.0.1.0.4",
     "depends": [
         "account_invoice_import",  # OCA invoice import wizard (fallback_parse_pdf_invoice)
         "apx_llm_assistant",  # Includes apx_llm, apx_llm_thread, apx_llm_tool

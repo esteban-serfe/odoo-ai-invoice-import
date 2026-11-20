@@ -21,7 +21,7 @@ class LLMProvider(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    api_key = fields.Char()
+    api_key = fields.Char(groups="apx_llm.group_llm_manager", copy=False)
     api_base = fields.Char()
     model_ids = fields.One2many("llm.model", "provider_id", string="Models")
 

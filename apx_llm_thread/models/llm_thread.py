@@ -316,6 +316,8 @@ class LLMThread(models.Model):
     def generate(self, user_message_body, **kwargs):
         """Main generation method with PostgreSQL advisory locking."""
         self.ensure_one()
+        self.check_access_rights("write")
+        self.check_access_rule("write")
         
         with self._generation_lock():
             last_message = False

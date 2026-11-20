@@ -1,6 +1,7 @@
 import json
 
-from odoo import api, models
+from odoo import _, api, models
+from odoo.exceptions import AccessError, UserError
 
 from .http_client import LiteLLMClient
 
@@ -103,15 +104,41 @@ class LLMProvider(models.Model):
         services = super()._get_available_services()
         return services + [("litellm", "LiteLLM Proxy")]
 
-    def litellm_get_client(self):
-        """Get LiteLLM client instance"""
+    def _check_litellm_access(self):
+        self.ensure_one()
+        self.check_access_rights("read")
+        self.check_access_rule("read")
+        chatter_group = self.env.ref(
+            "serfe_llm_access_groups.group_llm_chatter_user", raise_if_not_found=False
+        )
+        if not self.env.user.has_group("apx_llm.group_llm_manager") and not (
+            chatter_group
+            and self.env.user.has_group("serfe_llm_access_groups.group_llm_chatter_user")
+        ):
+            raise AccessError(_("You are not allowed to use this AI service directly."))
+
+    @property
+    def client(self):
+        if self.service != "litellm":
+            return super().client
+        self._check_litellm_access()
+        return self._litellm_get_client()
+
+    def _litellm_get_client(self):
+        self.ensure_one()
+        if not self.active or not self.api_base:
+            raise UserError(_("Configure an active AI provider with an explicit API Base."))
         return LiteLLMClient(
-            api_key=self.api_key,
+            api_key=self.sudo().api_key,
             api_base=self.api_base,
         )
 
     def litellm_chat(self, messages, model=None, stream=False, **kwargs):
         """Send chat messages using LiteLLM proxy"""
+        self._check_litellm_access()
+        return self._litellm_chat(messages, model=model, stream=stream, **kwargs)
+
+    def _litellm_chat(self, messages, model=None, stream=False, **kwargs):
         model = self.get_model(model, "chat")
         messages = self.litellm_format_messages(messages)
         # The assistant's prompt (system instructions, and the whole request
@@ -131,7 +158,7 @@ class LLMProvider(models.Model):
             params["tool_choice"] = kwargs.get("tool_choice", "auto")
 
         # Send chat request
-        response = self.client.chat_completion(**params)
+        response = self._litellm_get_client().chat_completion(**params)
 
         if not stream:
             choice = response["choices"][0]["message"]

@@ -1,19 +1,35 @@
 import json
+from urllib.parse import urlsplit
 
 import requests
 from requests.exceptions import RequestException
+
+from odoo import _
+from odoo.exceptions import UserError
 
 
 class LiteLLMClient:
     """HTTP client for LiteLLM proxy"""
 
     def __init__(self, api_key, api_base=None):
-        self.api_key = api_key
-        self.api_base = api_base or "http://localhost:4000"
+        try:
+            base = urlsplit(api_base)
+            if (
+                base.scheme not in ("https", "http")
+                or not base.hostname
+                or base.username is not None
+                or base.password is not None
+                or base.query
+                or base.fragment
+            ):
+                raise ValueError
+        except ValueError:
+            raise UserError(_("Configure a valid HTTP(S) API Base URL.")) from None
+        self.api_base = api_base.rstrip("/")
         self.session = requests.Session()
-        self.session.headers.update(
-            {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-        )
+        self.session.headers["Content-Type"] = "application/json"
+        if api_key:
+            self.session.headers["Authorization"] = f"Bearer {api_key}"
 
     def _make_request(self, method, endpoint, data=None, stream=False, **kwargs):
         """Make HTTP request to LiteLLM proxy"""
@@ -24,19 +40,20 @@ class LiteLLMClient:
                 url=url,
                 json=data if data else None,
                 stream=stream,
+                timeout=(5, 60),
+                allow_redirects=False,
                 **kwargs,
             )
+            if 300 <= response.status_code < 400:
+                raise RequestException(response=response)
             response.raise_for_status()
             return response
-        except RequestException as e:
-            error_msg = str(e)
-            try:
-                error_data = e.response.json()
-                if "error" in error_data:
-                    error_msg = error_data["error"].get("message", str(e))
-            except (AttributeError, ValueError, json.JSONDecodeError):
-                pass
-            raise Exception(f"LiteLLM API error: {error_msg}") from e
+        except RequestException as exc:
+            if exc.response is not None:
+                exc.response.close()
+            raise UserError(
+                _("The AI request failed. Check the provider configuration and service availability.")
+            ) from None
 
     def chat_completion(self, messages, model, stream=False, **kwargs):
         """Create chat completion"""

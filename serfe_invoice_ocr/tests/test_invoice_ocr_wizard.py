@@ -74,6 +74,7 @@ def _fake_responses_sse(text):
         b"data: [DONE]",
     ]
     fake_response = MagicMock()
+    fake_response.status_code = 200
     fake_response.iter_lines.return_value = lines
     fake_response.raise_for_status.return_value = None
     return fake_response
@@ -82,6 +83,7 @@ def _fake_responses_sse(text):
 def _fake_chat_completion(content):
     """A non-streaming /chat/completions response carrying `content`."""
     fake_response = MagicMock()
+    fake_response.status_code = 200
     fake_response.json.return_value = {
         "choices": [{"message": {"role": "assistant", "content": content}}]
     }
@@ -95,6 +97,7 @@ class TestInvoiceImportLiteLLM(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.company.invoice_ocr_external_processing = True
         cls.provider = cls.env["llm.provider"].create(
             {
                 "name": "Test LiteLLM",
@@ -254,6 +257,7 @@ class TestInvoiceImportLiteLLM(TransactionCase):
         invoice_id = action["params"]["next"]["res_id"]
         invoice = self.env["account.move"].browse(invoice_id)
         self.assertEqual(invoice.move_type, "in_invoice")
+        self.assertEqual(invoice.state, "draft")
         self.assertEqual(invoice.ref, "INV-2024-001")
         # amount_untaxed is not asserted: it depends on this database having
         # a 21% VAT account.tax configured to match against, which is an
@@ -350,6 +354,18 @@ class TestInvoiceImportLiteLLM(TransactionCase):
         self.assertEqual(self.env["account.move"].search_count([]), move_count_before)
 
     def test_upload_button_does_not_open_wizard_for_customer_invoices(self):
+        Journal = self.env["account.journal"]
+        if not Journal.search_count(
+            [("company_id", "=", self.env.company.id), ("type", "=", "sale")]
+        ):
+            Journal.create(
+                {
+                    "name": "Test Sales Journal",
+                    "code": "OCRS",
+                    "type": "sale",
+                    "company_id": self.env.company.id,
+                }
+            )
         """Clicking Upload on a non-vendor-bill list (e.g. Customer
         Invoices, "default_move_type": "out_invoice") must not route
         through the vendor-bill OCR wizard at all - see Ticket 0141016.

@@ -31,9 +31,6 @@ is built in. AI processing may incur provider fees.
     ],
     "installable": True,
     "application": True,
-    "images": [
-        "static/description/cover.png",
-        "static/description/demo.en.gif",
-    ],
+    "images": ["static/description/demo.en.gif"],
     "post_init_hook": "post_init_hook",
 }

@@ -33,7 +33,7 @@ is built in. AI processing may incur provider fees.
     "application": True,
     "images": [
         "static/description/cover.png",
-        "static/description/draft_bill_screenshot.png",
+        "static/description/demo.en.gif",
     ],
     "post_init_hook": "post_init_hook",
 }

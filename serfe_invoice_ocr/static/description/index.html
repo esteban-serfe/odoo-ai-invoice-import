@@ -1,9 +1,9 @@
 <section class="container py-4">
     <h1>Argentina Invoice OCR</h1>
     <p class="lead">Import a PDF or image as a draft vendor bill in Odoo 16 Community. Review the result before posting.</p>
-    <figure>
-        <img src="draft_bill_screenshot.png" class="img-fluid rounded" alt="Draft Argentine vendor bill with its LATAM document type and VAT"/>
-        <figcaption class="text-muted">Draft bill in Odoo. Invoice and vendor details are redacted.</figcaption>
+    <figure class="text-center">
+        <img src="demo.en.gif" class="img-fluid rounded" style="width: 720px; max-width: 100%; height: auto;" alt="Demo of AI invoice import creating a draft vendor bill in Odoo"/>
+        <figcaption class="text-muted">Watch the invoice import workflow in Odoo.</figcaption>
     </figure>
 
     <h2 class="mt-4">Argentine vendor bills</h2>
@@ -17,14 +17,14 @@
     <h2 class="mt-4">Requirements and setup</h2>
     <ol>
         <li>Use Odoo 16 Community with the Argentine chart of accounts and the OCA invoice import dependencies. This Python addon is not supported on Odoo Online.</li>
-        <li>Configure an explicit API Base and, if required, an API key under <em>LLM → Configuration → Providers</em>. Use LiteLLM or a compatible endpoint whose selected model supports PDF/image inputs via <code>/responses</code> and text extraction via <code>/chat/completions</code>.</li>
-        <li>Fetch the models and assign one to <em>Invoice Extraction</em>. An administrator then opts in on the company’s <em>Invoice AI</em> tab.</li>
+        <li>Configure an explicit API Base and, if required, an API key under <em>LLM &rarr; Configuration &rarr; Providers</em>. Use LiteLLM or a compatible endpoint whose selected model supports PDF/image inputs via <code>/responses</code> and text extraction via <code>/chat/completions</code>.</li>
+        <li>Fetch the models and assign one to <em>Invoice Extraction</em>. An administrator then opts in on the company&#39;s <em>Invoice AI</em> tab.</li>
         <li>Upload a PDF, PNG or JPEG (up to 20 MiB) from Vendor Bills, or select <em>Process with AI</em> on an existing draft with an attachment.</li>
     </ol>
 
     <div class="alert alert-info mt-4" role="alert">
-        <strong>External processing is off by default.</strong> After opt-in, the configured endpoint receives the entire invoice file, transcription, extraction prompts, company name, CUIT, currency and configured purchase VAT rates. LiteLLM may forward these to downstream providers. There is no built-in destination or Serfe service. Review the selected provider’s privacy, retention and pricing terms. This addon is free; the external service may charge for use.
+        <strong>External processing is off by default.</strong> After opt-in, the configured endpoint receives the entire invoice file, transcription, extraction prompts, company name, CUIT, currency and configured purchase VAT rates. LiteLLM may forward these to downstream providers. There is no built-in destination or Serfe service. Review the selected provider&#39;s privacy, retention and pricing terms. This addon is free; the external service may charge for use.
     </div>
     <p>Turn off the company option to stop future AI invoice requests and return uploads to standard Odoo decoders. The shared assistant can also be archived to disable AI invoice processing across companies.</p>
-    <p class="text-muted">Published by Serfe. Built on Apexive’s LLM modules and OCA Invoice Import.</p>
+    <p class="text-muted">Published by Serfe. Built on Apexive&#39;s LLM modules and OCA Invoice Import.</p>
 </section>
